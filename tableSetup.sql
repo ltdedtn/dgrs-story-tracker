@@ -47,9 +47,8 @@ CREATE TABLE Roles (
 );
 
 CREATE TABLE UserRoles (
-    UserRoleId INT PRIMARY KEY IDENTITY(1,1),
-    UserId INT,
-    RoleId INT,
+    UserId INT NOT NULL,
+    RoleId INT NOT NULL,
     FOREIGN KEY (UserId) REFERENCES Users(UserId),
     FOREIGN KEY (RoleId) REFERENCES Roles(RoleId)
 );
