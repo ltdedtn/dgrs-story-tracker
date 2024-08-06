@@ -15,9 +15,9 @@ namespace backend.Data
         public DbSet<Character> Characters { get; set; }
         public DbSet<StoryPart> StoryParts { get; set; }
         public DbSet<StoryPartCharacter> StoryPartCharacters { get; set; }
-
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-
         {
             modelBuilder.Entity<StoryPartCharacter>()
                 .HasKey(spc => new { spc.StoryPartId, spc.CharacterId });
@@ -44,6 +44,19 @@ namespace backend.Data
                 .WithMany(s => s.StoryParts)
                 .HasForeignKey(sp => sp.StoryId);
 
+            // Configure many-to-many relationship between User and Role
+            modelBuilder.Entity<UserRole>()
+                .HasKey(ur => new { ur.UserId, ur.RoleId });
+
+            modelBuilder.Entity<UserRole>()
+                .HasOne(ur => ur.User)
+                .WithMany(u => u.UserRoles)
+                .HasForeignKey(ur => ur.UserId);
+
+            modelBuilder.Entity<UserRole>()
+                .HasOne(ur => ur.Role)
+                .WithMany(r => r.UserRoles)
+                .HasForeignKey(ur => ur.RoleId);
         }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using backend.Data;
 using backend.Repositories;
+using backend.Services;
 using Microsoft.OpenApi.Models;
 using DotNetEnv;
 using System.Text;
@@ -62,7 +63,16 @@ builder.Services.AddScoped<IStoryRepository, StoryRepository>();
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IStoryPartRepository, StoryPartRepository>();
 
+// Register the authorization service
+builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 
+// Add authorization policies
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("StandardUser", policy => policy.RequireRole("StandardUser"));
+    options.AddPolicy("Editor", policy => policy.RequireRole("Editor"));
+    options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+});
 
 // Configure CORS
 builder.Services.AddCors(options =>

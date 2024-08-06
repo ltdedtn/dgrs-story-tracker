@@ -41,7 +41,23 @@ CREATE TABLE StoryPartCharacters (
     FOREIGN KEY (StoryPartId) REFERENCES StoryParts(PartId),
     FOREIGN KEY (CharacterId) REFERENCES Characters(CharacterId)
 );
+CREATE TABLE Roles (
+    RoleId INT PRIMARY KEY IDENTITY(1,1),
+    RoleName NVARCHAR(50) NOT NULL
+);
+
+CREATE TABLE UserRoles (
+    UserRoleId INT PRIMARY KEY IDENTITY(1,1),
+    UserId INT,
+    RoleId INT,
+    FOREIGN KEY (UserId) REFERENCES Users(UserId),
+    FOREIGN KEY (RoleId) REFERENCES Roles(RoleId)
+);
+
+
 
 -- Indexes
 CREATE INDEX idx_StoryId ON Characters (StoryId);
 CREATE INDEX idx_StoryId_CharacterId ON StoryPartCharacters (StoryPartId, CharacterId);
+INSERT INTO Roles (RoleName) VALUES ('Guest'), ('Standard User'), ('Editor'), ('Admin');
+

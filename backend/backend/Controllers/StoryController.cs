@@ -4,10 +4,11 @@ using backend.Data;
 using backend.Models;
 using backend.DTOs;
 using backend.Repositories;
+using Microsoft.AspNetCore.Authorization; // Add this
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.IdentityModel.Tokens;
+using System;
 
 namespace backend.Controllers
 {
@@ -23,12 +24,14 @@ namespace backend.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "StandardUser,Editor,Admin")]
         public async Task<ActionResult<IEnumerable<Story>>> GetStories()
         {
             return Ok(await _storyRepository.GetStoriesAsync());
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "StandardUser,Editor,Admin")]
         public async Task<ActionResult<Story>> GetStory(int id)
         {
             var story = await _storyRepository.GetStoryByIdAsync(id);
@@ -40,6 +43,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Editor,Admin")]
         public async Task<ActionResult<Story>> PostStory([FromForm] StoryCreateDto storyDto, [FromForm] IFormFile imageFile)
         {
             try
@@ -49,20 +53,20 @@ namespace backend.Controllers
                     Title = storyDto.Title,
                     Description = storyDto.Description,
                     CreatedAt = DateTime.UtcNow,
-                    UserId = storyDto.UserId // Directly assign the nullable int
+                    UserId = storyDto.UserId
                 };
 
                 if (imageFile != null && imageFile.Length > 0)
                 {
                     var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
-                    var filePath = Path.Combine("wwwroot", "images", fileName); // Save to wwwroot/images folder
+                    var filePath = Path.Combine("wwwroot", "images", fileName);
 
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
                         await imageFile.CopyToAsync(fileStream);
                     }
 
-                    story.ImageUrl = "/images/" + fileName; // Store relative URL in database
+                    story.ImageUrl = "/images/" + fileName;
                 }
 
                 var createdStory = await _storyRepository.AddStoryAsync(story);
@@ -75,10 +79,8 @@ namespace backend.Controllers
             }
         }
 
-
-
-
         [HttpPut("{id}")]
+        [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> PutStory(int id, StoryUpdateDto storyDto)
         {
             if (id != storyDto.StoryId)
@@ -101,6 +103,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteStory(int id)
         {
             var story = await _storyRepository.GetStoryByIdAsync(id);

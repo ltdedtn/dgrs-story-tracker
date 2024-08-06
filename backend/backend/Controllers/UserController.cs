@@ -104,7 +104,16 @@ namespace backend.Controllers
                 return NotFound();
             }
 
+            // Remove associated roles
+            var userRoles = await _context.UserRoles
+                .Where(ur => ur.UserId == id)
+                .ToListAsync();
+
+            _context.UserRoles.RemoveRange(userRoles);
+
+            // Remove the user
             _context.Users.Remove(user);
+
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -136,8 +145,29 @@ namespace backend.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
+            // Get or create the "Guest" role
+            var guestRole = await _context.Roles.FirstOrDefaultAsync(r => r.RoleName == "Guest");
+            if (guestRole == null)
+            {
+                guestRole = new Role { RoleName = "Guest" };
+                _context.Roles.Add(guestRole);
+                await _context.SaveChangesAsync();
+            }
+
+            // Assign the "Guest" role to the new user
+            var userRole = new UserRole
+            {
+                UserId = user.UserId,
+                RoleId = guestRole.RoleId
+            };
+
+            _context.UserRoles.Add(userRole);
+            await _context.SaveChangesAsync();
+
             return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
         }
+
+
 
         [HttpPost("Login")]
         public async Task<ActionResult<User>> Login(LoginDto loginDto)
@@ -163,10 +193,22 @@ namespace backend.Controllers
         private string GenerateJwtToken(User user)
         {
             var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+        new Claim(ClaimTypes.Name, user.Username),
+    };
+
+            // Add roles as claims
+            var userRoles = _context.UserRoles
+                .Include(ur => ur.Role)
+                .Where(ur => ur.UserId == user.UserId)
+                .Select(ur => ur.Role.RoleName)
+                .ToList();
+
+            foreach (var role in userRoles)
             {
-                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                new Claim(ClaimTypes.Name, user.Username),
-            };
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -181,6 +223,89 @@ namespace backend.Controllers
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        [HttpPost("{userId}/roles/{roleId}")]
+        public async Task<IActionResult> AssignRole(int userId, int roleId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            var role = await _context.Roles.FindAsync(roleId);
+
+            if (user == null || role == null)
+            {
+                return NotFound();
+            }
+
+            var userRole = new UserRole
+            {
+                UserId = userId,
+                RoleId = roleId
+            };
+
+            if (await _context.UserRoles.AnyAsync(ur => ur.UserId == userId && ur.RoleId == roleId))
+            {
+                return BadRequest("Role is already assigned to the user.");
+            }
+
+            _context.UserRoles.Add(userRole);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+        [HttpDelete("{userId}/roles/{roleId}")]
+        public async Task<IActionResult> RemoveRole(int userId, int roleId)
+        {
+            var userRole = await _context.UserRoles
+                .FirstOrDefaultAsync(ur => ur.UserId == userId && ur.RoleId == roleId);
+
+            if (userRole == null)
+            {
+                return NotFound();
+            }
+
+            _context.UserRoles.Remove(userRole);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+
+        [HttpPut("{userId}/roles")]
+        public async Task<IActionResult> UpdateUserRoles(int userId, [FromBody] List<int> roleIds)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Remove existing roles
+            var existingUserRoles = await _context.UserRoles
+                .Where(ur => ur.UserId == userId)
+                .ToListAsync();
+
+            _context.UserRoles.RemoveRange(existingUserRoles);
+
+            // Add new roles
+            var newUserRoles = roleIds.Select(roleId => new UserRole
+            {
+                UserId = userId,
+                RoleId = roleId
+            }).ToList();
+
+            _context.UserRoles.AddRange(newUserRoles);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log or handle exception as necessary
+                return StatusCode(500, "An error occurred while updating roles. Please try again later.");
+            }
+
+            return NoContent();
         }
 
         private bool UserExists(int id)

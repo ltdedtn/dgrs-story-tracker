@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using backend.Models;
 using backend.Repositories;
 using backend.DTOs;
+using Microsoft.AspNetCore.Authorization; // Add this
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +16,7 @@ namespace backend.Controllers
     public class CharactersController : ControllerBase
     {
         private readonly ICharacterRepository _characterRepository;
-        private readonly IStoryPartRepository _storyPartRepository; // Add the story part repository
+        private readonly IStoryPartRepository _storyPartRepository;
 
         public CharactersController(ICharacterRepository characterRepository, IStoryPartRepository storyPartRepository)
         {
@@ -24,6 +25,7 @@ namespace backend.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "StandardUser,Editor,Admin")]
         public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
         {
             var characters = await _characterRepository.GetCharactersAsync();
@@ -31,6 +33,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "StandardUser,Editor,Admin")]
         public async Task<ActionResult<Character>> GetCharacter(int id)
         {
             var character = await _characterRepository.GetCharacterByIdAsync(id);
@@ -42,6 +45,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("{id}/storyparts")]
+        [Authorize(Roles = "StandardUser,Editor,Admin")]
         public async Task<ActionResult<IEnumerable<StoryPart>>> GetStoryPartsByCharacterId(int id)
         {
             var storyParts = await _storyPartRepository.GetStoryPartsByCharacterIdAsync(id);
@@ -55,11 +59,11 @@ namespace backend.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Editor,Admin")]
         public async Task<ActionResult<Character>> PostCharacter([FromForm] CharacterCreateDto model, IFormFile imageFile)
         {
             try
             {
-                // Create a new Character instance from the DTO
                 var character = new Character
                 {
                     Name = model.Name,
@@ -67,38 +71,32 @@ namespace backend.Controllers
                     StoryId = model.StoryId
                 };
 
-                // Handle the uploaded image file if it exists
                 if (imageFile != null && imageFile.Length > 0)
                 {
-                    // Generate a unique file name
                     var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
-                    var filePath = Path.Combine("wwwroot", "images", fileName); // Path where the file will be saved
+                    var filePath = Path.Combine("wwwroot", "images", fileName);
 
-                    // Save the file to the server
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
                         await imageFile.CopyToAsync(fileStream);
                     }
 
-                    // Store the relative URL of the uploaded image
                     character.ImageUrl = "/images/" + fileName;
                 }
 
-                // Save the new character to the database
                 var createdCharacter = await _characterRepository.AddCharacterAsync(character);
 
-                // Return a response indicating the character was created successfully
                 return CreatedAtAction(nameof(GetCharacter), new { id = createdCharacter.CharacterId }, createdCharacter);
             }
             catch (Exception ex)
             {
-                // Log the exception and return a 500 Internal Server Error
                 Console.WriteLine($"Error creating character: {ex}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteCharacter(int id)
         {
             try

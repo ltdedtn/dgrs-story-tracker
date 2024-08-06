@@ -12,5 +12,6 @@ namespace backend.Models
         public DateTime CreatedAt { get; set; }
 
         public ICollection<Story> Stories { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
     }
 }
