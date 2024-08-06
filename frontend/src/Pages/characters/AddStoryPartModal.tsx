@@ -99,18 +99,22 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
-        <h2 className="text-2xl font-bold mb-4">Add Story Part to Character</h2>
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg">
+        <h2 className="text-2xl font-bold mb-4 dark:text-white">
+          Add Story Part to Character
+        </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="form-control">
             <label htmlFor="storyId" className="label">
-              <span className="label-text">Select Story</span>
+              <span className="label-text dark:text-gray-300">
+                Select Story
+              </span>
             </label>
             <select
               id="storyId"
               value={selectedStoryId}
               onChange={(e) => setSelectedStoryId(Number(e.target.value))}
-              className="select select-bordered w-full"
+              className="select select-bordered w-full dark:bg-gray-700 dark:text-white"
               required
             >
               <option value="">Select a Story</option>
@@ -127,13 +131,15 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
           </div>
           <div className="form-control">
             <label htmlFor="storyPartId" className="label">
-              <span className="label-text">Select Story Part</span>
+              <span className="label-text dark:text-gray-300">
+                Select Story Part
+              </span>
             </label>
             <select
               id="storyPartId"
               value={selectedStoryPartId}
               onChange={(e) => setSelectedStoryPartId(Number(e.target.value))}
-              className="select select-bordered w-full"
+              className="select select-bordered w-full dark:bg-gray-700 dark:text-white"
               required
             >
               <option value="">Select a Story Part</option>
@@ -148,7 +154,7 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
               )}
             </select>
           </div>
-          {error && <p className="text-red-500">{error}</p>}
+          {error && <p className="text-red-500 dark:text-red-400">{error}</p>}
           <div className="flex justify-end space-x-4 mt-4">
             <button type="submit" className="btn btn-primary">
               Add Story Part
