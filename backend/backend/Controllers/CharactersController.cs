@@ -25,7 +25,7 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "StandardUser,Editor,Admin")]
+        [Authorize(Roles = "Guest, StandardUser,Editor,Admin")]
         public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
         {
             var characters = await _characterRepository.GetCharactersAsync();

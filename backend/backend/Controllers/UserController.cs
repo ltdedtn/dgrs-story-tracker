@@ -32,19 +32,50 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _context.Users
+                .Include(u => u.UserRoles)
+                    .ThenInclude(ur => ur.Role)
+                .ToListAsync();
+
+            // Map the result to include roles in a way that can be serialized
+            var result = users.Select(user => new
+            {
+                user.UserId,
+                user.Username,
+                user.Email,
+                user.CreatedAt,
+                Roles = user.UserRoles.Select(ur => new { ur.Role.RoleId, ur.Role.RoleName }).ToList()
+            });
+
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users
+                .Include(u => u.UserRoles)
+                    .ThenInclude(ur => ur.Role)
+                .FirstOrDefaultAsync(u => u.UserId == id);
+
             if (user == null)
             {
                 return NotFound();
             }
-            return user;
+
+            // Map the result to include roles in a way that can be serialized
+            var result = new
+            {
+                user.UserId,
+                user.Username,
+                user.Email,
+                user.CreatedAt,
+                Roles = user.UserRoles.Select(ur => new { ur.Role.RoleId, ur.Role.RoleName }).ToList()
+            };
+
+            return Ok(result);
         }
+
 
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
@@ -95,29 +126,41 @@ namespace backend.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
+[HttpDelete("{id}")]
+public async Task<IActionResult> DeleteUser(int id)
+{
+    var user = await _context.Users
+        .Include(u => u.UserRoles)
+        .FirstOrDefaultAsync(u => u.UserId == id);
 
-            // Remove associated roles
-            var userRoles = await _context.UserRoles
-                .Where(ur => ur.UserId == id)
-                .ToListAsync();
+    if (user == null)
+    {
+        return NotFound();
+    }
 
-            _context.UserRoles.RemoveRange(userRoles);
+    // Set UserId to null for associated stories
+    var userStories = await _context.Stories
+        .Where(s => s.UserId == id)
+        .ToListAsync();
+    
+    foreach (var story in userStories)
+    {
+        story.UserId = null;
+    }
 
-            // Remove the user
-            _context.Users.Remove(user);
+    // Remove associated roles
+    var userRoles = user.UserRoles.ToList();
+    _context.UserRoles.RemoveRange(userRoles);
 
-            await _context.SaveChangesAsync();
+    // Remove the user
+    _context.Users.Remove(user);
 
-            return NoContent();
-        }
+    await _context.SaveChangesAsync();
+
+    return NoContent();
+}
+
+
 
         [HttpPost("Register")]
         public async Task<ActionResult<User>> Register(RegisterUserDto registerUserDto)
@@ -146,11 +189,11 @@ namespace backend.Controllers
             await _context.SaveChangesAsync();
 
             // Get or create the "Guest" role
-            var guestRole = await _context.Roles.FirstOrDefaultAsync(r => r.RoleName == "Guest");
-            if (guestRole == null)
+            var standardUser = await _context.Roles.FirstOrDefaultAsync(r => r.RoleName == "Standard User");
+            if (standardUser == null)
             {
-                guestRole = new Role { RoleName = "Guest" };
-                _context.Roles.Add(guestRole);
+                standardUser = new Role { RoleName = "Guest" };
+                _context.Roles.Add(standardUser);
                 await _context.SaveChangesAsync();
             }
 
@@ -158,7 +201,7 @@ namespace backend.Controllers
             var userRole = new UserRole
             {
                 UserId = user.UserId,
-                RoleId = guestRole.RoleId
+                RoleId = standardUser.RoleId
             };
 
             _context.UserRoles.Add(userRole);

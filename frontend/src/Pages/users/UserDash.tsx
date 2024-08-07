@@ -63,6 +63,7 @@ const UserDash = () => {
               <th>Username</th>
               <th>Email</th>
               <th>Created At</th>
+              <th>Roles</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -72,6 +73,7 @@ const UserDash = () => {
                 <td>{user.username}</td>
                 <td>{user.email}</td>
                 <td>{new Date(user.createdAt).toLocaleString()}</td>
+                <td>{user.roles.map((role) => role.roleName).join(", ")}</td>
                 <td className="flex flex-col sm:flex-row gap-2">
                   <button
                     className="btn btn-primary btn-sm"

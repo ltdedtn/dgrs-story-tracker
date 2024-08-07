@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const SignUp = () => {
+const NewUserForm = () => {
   const navigate = useNavigate();
 
   const USER_REGEX = /^[a-zA-Z0-9]{5,30}$/;
@@ -16,6 +16,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false); // Add loading state
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
@@ -31,6 +32,7 @@ const SignUp = () => {
     setPassword(event.target.value);
     setValidPassword(PASSWORD_REGEX.test(event.target.value));
   };
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -38,6 +40,8 @@ const SignUp = () => {
       setError("Please fill out the form correctly.");
       return;
     }
+
+    setLoading(true); // Disable button after first click
 
     try {
       const signUpData = {
@@ -67,6 +71,8 @@ const SignUp = () => {
         console.error("Sign up error:", error);
         setError("Sign up failed. Please try again.");
       }
+    } finally {
+      setLoading(false); // Re-enable button after request completes
     }
   };
 
@@ -140,8 +146,12 @@ const SignUp = () => {
               </div>
 
               <div>
-                <button className="btn btn-block" type="submit">
-                  Sign Up
+                <button
+                  className="btn btn-block"
+                  type="submit"
+                  disabled={loading} // Disable button while loading
+                >
+                  {loading ? "Signing Up..." : "Sign Up"}
                 </button>
               </div>
               <div>
@@ -159,4 +169,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default NewUserForm;
