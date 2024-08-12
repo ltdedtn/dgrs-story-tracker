@@ -34,12 +34,11 @@ const Login = () => {
       const token = data.token;
       const username = data.username;
 
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", token); // Ensure token is stored
       localStorage.setItem("username", username);
 
       setUsername(username);
 
-      // Navigate to another page after setting localStorage
       navigate("/dash");
     } catch (error) {
       console.error("Login error:", error);

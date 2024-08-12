@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace backend.Controllers
 {
@@ -25,12 +26,14 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Guest, StandardUser,Editor,Admin")]
+        [AllowAnonymous]
+        [Authorize(Roles = "Guest,StandardUser,Editor,Admin")]
         public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
         {
             var characters = await _characterRepository.GetCharactersAsync();
             return Ok(characters);
         }
+
 
         [HttpGet("{id}")]
         [Authorize(Roles = "StandardUser,Editor,Admin")]

@@ -1,17 +1,17 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using backend.Data;
 using backend.Repositories;
 using backend.Services;
-using Microsoft.OpenApi.Models;
 using DotNetEnv;
+using System;
 using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +22,6 @@ Env.Load();
 var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
 var jwtKey = Environment.GetEnvironmentVariable("jwt_token");
 
-// Check if the JWT key was retrieved properly
 if (string.IsNullOrEmpty(jwtKey))
 {
     throw new InvalidOperationException("JWT_KEY environment variable is not set.");
@@ -30,10 +29,8 @@ if (string.IsNullOrEmpty(jwtKey))
 
 var jwtKeyBytes = Encoding.UTF8.GetBytes(jwtKey);
 
-// Build connection string
 var connectionString = $"Server=192.168.1.4,1433;Database=Phase 2;User Id=Ben;Password={dbPassword};Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;";
 
-// Add JWT authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -47,26 +44,24 @@ builder.Services.AddAuthentication(options =>
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(jwtKeyBytes),
-        ValidateIssuer = false,
-        ValidateAudience = false
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidIssuer = "Phase 2",
+        ValidAudience = "Phase 2"
     };
+
 });
 
-// Configure services
 builder.Services.AddControllers();
 builder.Services.AddDbContext<BackendContext>(options =>
     options.UseSqlServer(connectionString));
 
-// Register repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IStoryRepository, StoryRepository>();
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IStoryPartRepository, StoryPartRepository>();
-
-// Register the authorization service
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 
-// Add authorization policies
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("StandardUser", policy => policy.RequireRole("StandardUser"));
@@ -74,7 +69,6 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
 });
 
-// Configure CORS
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
@@ -85,7 +79,6 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Configure additional services
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -93,7 +86,6 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -110,10 +102,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-// Enable CORS
 app.UseCors();
 
-app.UseAuthentication(); // Ensure authentication is enabled
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

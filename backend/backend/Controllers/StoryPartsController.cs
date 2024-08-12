@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers
 {
@@ -22,6 +23,8 @@ namespace backend.Controllers
 
         // Get all story parts or filter by storyId
         [HttpGet]
+        [AllowAnonymous]
+        [Authorize (Roles = "StandardUser,Editor,Admin")]
         public async Task<IActionResult> GetStoryParts([FromQuery] int? storyId)
         {
             var storyParts = await _storyPartRepository.GetStoryPartsAsync(storyId);
@@ -31,6 +34,8 @@ namespace backend.Controllers
 
         // Get a single story part by ID
         [HttpGet("{id}")]
+        [AllowAnonymous]
+        [Authorize (Roles = "StandardUser,Editor,Admin")]
         public async Task<ActionResult<StoryPart>> GetStoryPart(int id)
         {
             var storyPart = await _storyPartRepository.GetStoryPartByIdAsync(id);
@@ -45,6 +50,7 @@ namespace backend.Controllers
 
         // Add a new story part
         [HttpPost]
+        [Authorize(Roles = "Editor,Admin")]
         public async Task<ActionResult<StoryPart>> PostStoryPart([FromForm] StoryPartCreateDto model, IFormFile? imageFile)
         {
             if (model == null || string.IsNullOrEmpty(model.Content) || model.StoryId <= 0)
@@ -87,6 +93,7 @@ namespace backend.Controllers
 
         // Update an existing story part
         [HttpPut("{id}")]
+        [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> PutStoryPart(int id, StoryPart storyPart)
         {
             if (id != storyPart.PartId)
@@ -115,6 +122,7 @@ namespace backend.Controllers
 
         // Delete a story part
         [HttpDelete("{id}")]
+        [Authorize (Roles = "Admin")]
         public async Task<IActionResult> DeleteStoryPart(int id)
         {
             await _storyPartRepository.DeleteStoryPartAsync(id);
@@ -122,6 +130,7 @@ namespace backend.Controllers
         }
 
         [HttpPost("linkCharacterToStoryPart")]
+        [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> LinkCharacterToStoryPart([FromBody] LinkCharacterToStoryPartDto dto)
         {
             if (dto == null || dto.StoryPartId <= 0 || dto.CharacterId <= 0)
@@ -139,6 +148,7 @@ namespace backend.Controllers
             return Ok("Character linked to story part successfully.");
         }
         [HttpDelete("unlinkCharacterFromStoryPart")]
+        [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> UnlinkCharacterFromStoryPart([FromQuery] int storyPartId, [FromQuery] int characterId)
         {
             if (storyPartId <= 0 || characterId <= 0)
@@ -158,6 +168,8 @@ namespace backend.Controllers
 
 
         [HttpGet("ByStory/{storyId}")]
+        [AllowAnonymous]
+        [Authorize (Roles = "StandardUser,Editor,Admin")]
         public async Task<ActionResult<IEnumerable<StoryPart>>> GetStoryPartsByStoryId(int storyId)
         {
             var storyParts = await _storyPartRepository.GetStoryPartsByStoryIdAsync(storyId);

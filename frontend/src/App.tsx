@@ -14,6 +14,7 @@ import EditStory from "./Pages/stories/EditStory";
 import NewStory from "./Pages/stories/NewStory";
 import NewStoryPart from "./Pages/stories/NewStoryPart";
 import NewCharacter from "./Pages/characters/NewCharacter";
+import Unauthorized from "./Pages/auth/Unauthorized";
 import { UserProvider } from "./Pages/users/UserContext";
 
 function App() {
@@ -41,6 +42,9 @@ function App() {
                 path="/characters/:characterId/edit"
                 element={<EditCharacter />}
               />
+              <Route path="/unauthorized" element={<Unauthorized />} />
+              {/* Add a route to handle 404 - Not Found */}
+              <Route path="*" element={<Unauthorized />} />
             </Routes>
           </div>
           <Footer />

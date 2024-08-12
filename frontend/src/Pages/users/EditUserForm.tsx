@@ -17,8 +17,14 @@ const EditUserForm = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        const token = localStorage.getItem("token"); // Get token from localStorage
         const response = await axios.get(
-          `https://localhost:7023/api/User/${userId}`
+          `https://localhost:7023/api/User/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Add Authorization header
+            },
+          }
         );
         const user = response.data;
         setUsername(user.username);
@@ -49,6 +55,7 @@ const EditUserForm = () => {
     }
 
     try {
+      const token = localStorage.getItem("token"); // Get token from localStorage
       const updatedUserData: any = {
         userId: parseInt(userId || "0"),
         username: username,
@@ -62,7 +69,12 @@ const EditUserForm = () => {
 
       const response = await axios.put(
         `https://localhost:7023/api/User/${userId}`,
-        updatedUserData
+        updatedUserData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Add Authorization header
+          },
+        }
       );
 
       if (response.status !== 204) {

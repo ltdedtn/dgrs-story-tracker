@@ -24,6 +24,7 @@ namespace backend.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Authorize(Roles = "StandardUser,Editor,Admin")]
         public async Task<ActionResult<IEnumerable<Story>>> GetStories()
         {
@@ -31,6 +32,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         [Authorize(Roles = "StandardUser,Editor,Admin")]
         public async Task<ActionResult<Story>> GetStory(int id)
         {

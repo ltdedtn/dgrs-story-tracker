@@ -26,8 +26,15 @@ const CharacterDash: React.FC = () => {
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
+        const token = localStorage.getItem("token"); // Retrieve token from localStorage
+
         const response = await axios.get<Character[]>(
-          "https://localhost:7023/api/Characters"
+          "https://localhost:7023/api/Characters",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Include token in Authorization header
+            },
+          }
         );
         setCharacters(response.data || []);
       } catch (error) {
@@ -49,15 +56,27 @@ const CharacterDash: React.FC = () => {
 
   const fetchStoryParts = async (characterId: number) => {
     try {
+      const token = localStorage.getItem("token"); // Retrieve token from localStorage
+
       const response = await axios.get<StoryPart[]>(
-        `https://localhost:7023/api/Characters/${characterId}/storyparts`
+        `https://localhost:7023/api/Characters/${characterId}/storyparts`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (response.status === 200) {
         const storyParts = response.data || [];
         const updatedStoryParts = await Promise.all(
           storyParts.map(async (storyPart) => {
             const storyResponse = await axios.get(
-              `https://localhost:7023/api/Story/${storyPart.storyId}`
+              `https://localhost:7023/api/Story/${storyPart.storyId}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
             );
             const storyTitle = storyResponse.data.title;
             return { ...storyPart, storyTitle };

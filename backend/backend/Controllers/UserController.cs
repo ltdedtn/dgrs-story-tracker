@@ -13,6 +13,7 @@ using backend.Data;
 using backend.Models;
 using backend.DTOs;
 using backend.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers
 {
@@ -30,6 +31,7 @@ namespace backend.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             var users = await _context.Users
@@ -51,6 +53,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
             var user = await _context.Users
@@ -78,6 +81,7 @@ namespace backend.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<User>> PostUser(User user)
         {
             _context.Users.Add(user);
@@ -86,6 +90,7 @@ namespace backend.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutUser(int id, UserUpdateDto userUpdateDto)
         {
             if (id != userUpdateDto.UserId)
@@ -126,39 +131,40 @@ namespace backend.Controllers
             return NoContent();
         }
 
-[HttpDelete("{id}")]
-public async Task<IActionResult> DeleteUser(int id)
-{
-    var user = await _context.Users
-        .Include(u => u.UserRoles)
-        .FirstOrDefaultAsync(u => u.UserId == id);
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var user = await _context.Users
+                .Include(u => u.UserRoles)
+                .FirstOrDefaultAsync(u => u.UserId == id);
 
-    if (user == null)
-    {
-        return NotFound();
-    }
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-    // Set UserId to null for associated stories
-    var userStories = await _context.Stories
-        .Where(s => s.UserId == id)
-        .ToListAsync();
+            // Set UserId to null for associated stories
+            var userStories = await _context.Stories
+                .Where(s => s.UserId == id)
+                .ToListAsync();
     
-    foreach (var story in userStories)
-    {
-        story.UserId = null;
-    }
+            foreach (var story in userStories)
+            {
+                story.UserId = null;
+            }
 
-    // Remove associated roles
-    var userRoles = user.UserRoles.ToList();
-    _context.UserRoles.RemoveRange(userRoles);
+            // Remove associated roles
+            var userRoles = user.UserRoles.ToList();
+            _context.UserRoles.RemoveRange(userRoles);
 
-    // Remove the user
-    _context.Users.Remove(user);
+            // Remove the user
+            _context.Users.Remove(user);
 
-    await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-    return NoContent();
-}
+            return NoContent();
+        }
 
 
 
@@ -166,14 +172,10 @@ public async Task<IActionResult> DeleteUser(int id)
         public async Task<ActionResult<User>> Register(RegisterUserDto registerUserDto)
         {
             if (await _context.Users.AnyAsync(u => u.Username == registerUserDto.Username))
-            {
                 return BadRequest("Username already exists.");
-            }
 
             if (await _context.Users.AnyAsync(u => u.Email == registerUserDto.Email))
-            {
                 return BadRequest("Email already exists.");
-            }
 
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerUserDto.PasswordHash);
 
@@ -188,20 +190,18 @@ public async Task<IActionResult> DeleteUser(int id)
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            // Get or create the "Guest" role
-            var standardUser = await _context.Roles.FirstOrDefaultAsync(r => r.RoleName == "Standard User");
-            if (standardUser == null)
+            var guestRole = await _context.Roles.FirstOrDefaultAsync(r => r.RoleName == "Guest");
+            if (guestRole == null)
             {
-                standardUser = new Role { RoleName = "Guest" };
-                _context.Roles.Add(standardUser);
+                guestRole = new Role { RoleName = "Guest" };
+                _context.Roles.Add(guestRole);
                 await _context.SaveChangesAsync();
             }
 
-            // Assign the "Guest" role to the new user
             var userRole = new UserRole
             {
                 UserId = user.UserId,
-                RoleId = standardUser.RoleId
+                RoleId = guestRole.RoleId
             };
 
             _context.UserRoles.Add(userRole);
@@ -211,20 +211,14 @@ public async Task<IActionResult> DeleteUser(int id)
         }
 
 
-
         [HttpPost("Login")]
         public async Task<ActionResult<User>> Login(LoginDto loginDto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u =>
-                (u.Username == loginDto.Username || u.Email == loginDto.Username));
-
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == loginDto.Username || u.Email == loginDto.Username);
             if (user == null || !VerifyPassword(loginDto.Password, user.PasswordHash))
-            {
                 return Unauthorized();
-            }
 
             var token = GenerateJwtToken(user);
-
             return Ok(new { Token = token, Username = user.Username });
         }
 
@@ -236,12 +230,11 @@ public async Task<IActionResult> DeleteUser(int id)
         private string GenerateJwtToken(User user)
         {
             var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-        new Claim(ClaimTypes.Name, user.Username),
-    };
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                new Claim(ClaimTypes.Name, user.Username)
+            };
 
-            // Add roles as claims
             var userRoles = _context.UserRoles
                 .Include(ur => ur.Role)
                 .Where(ur => ur.UserId == user.UserId)
@@ -269,6 +262,7 @@ public async Task<IActionResult> DeleteUser(int id)
         }
 
         [HttpPost("{userId}/roles/{roleId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AssignRole(int userId, int roleId)
         {
             var user = await _context.Users.FindAsync(userId);
@@ -296,6 +290,7 @@ public async Task<IActionResult> DeleteUser(int id)
             return NoContent();
         }
         [HttpDelete("{userId}/roles/{roleId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> RemoveRole(int userId, int roleId)
         {
             var userRole = await _context.UserRoles
@@ -314,6 +309,7 @@ public async Task<IActionResult> DeleteUser(int id)
 
 
         [HttpPut("{userId}/roles")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateUserRoles(int userId, [FromBody] List<int> roleIds)
         {
             var user = await _context.Users.FindAsync(userId);
