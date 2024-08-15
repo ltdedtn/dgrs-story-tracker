@@ -26,13 +26,13 @@ const CharacterDash: React.FC = () => {
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
-        const token = localStorage.getItem("token"); // Retrieve token from localStorage
+        const token = localStorage.getItem("token");
 
         const response = await axios.get<Character[]>(
           "https://localhost:7023/api/Characters",
           {
             headers: {
-              Authorization: `Bearer ${token}`, // Include token in Authorization header
+              Authorization: `Bearer ${token}`,
             },
           }
         );
@@ -56,7 +56,7 @@ const CharacterDash: React.FC = () => {
 
   const fetchStoryParts = async (characterId: number) => {
     try {
-      const token = localStorage.getItem("token"); // Retrieve token from localStorage
+      const token = localStorage.getItem("token");
 
       const response = await axios.get<StoryPart[]>(
         `https://localhost:7023/api/Characters/${characterId}/storyparts`,
@@ -108,9 +108,15 @@ const CharacterDash: React.FC = () => {
       "Are you sure you want to delete this character?"
     );
     if (confirmDelete) {
+      const token = localStorage.getItem("token");
       try {
         await axios.delete(
-          `https://localhost:7023/api/Characters/${characterId}`
+          `https://localhost:7023/api/Characters/${characterId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setCharacters(
           characters.filter(
@@ -131,9 +137,15 @@ const CharacterDash: React.FC = () => {
       "Are you sure you want to unlink this story part?"
     );
     if (confirmDelete) {
+      const token = localStorage.getItem("token");
       try {
         await axios.delete(
-          `https://localhost:7023/api/StoryParts/unlinkCharacterFromStoryPart?storyPartId=${storyPartId}&characterId=${selectedCharacter?.characterId}`
+          `https://localhost:7023/api/StoryParts/unlinkCharacterFromStoryPart?storyPartId=${storyPartId}&characterId=${selectedCharacter?.characterId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setSelectedStoryParts(
           selectedStoryParts.filter(

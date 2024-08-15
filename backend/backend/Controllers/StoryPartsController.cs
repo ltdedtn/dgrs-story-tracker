@@ -24,7 +24,6 @@ namespace backend.Controllers
         // Get all story parts or filter by storyId
         [HttpGet]
         [AllowAnonymous]
-        [Authorize (Roles = "StandardUser,Editor,Admin")]
         public async Task<IActionResult> GetStoryParts([FromQuery] int? storyId)
         {
             var storyParts = await _storyPartRepository.GetStoryPartsAsync(storyId);

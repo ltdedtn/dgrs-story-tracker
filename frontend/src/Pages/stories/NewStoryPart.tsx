@@ -15,9 +15,15 @@ const NewStoryPart = () => {
 
   // Fetch available stories for the dropdown
   const fetchStories = async () => {
+    const token = localStorage.getItem("token");
     try {
       const response = await axios.get<{ storyId: number; title: string }[]>(
-        "https://localhost:7023/api/Story" // Updated endpoint
+        "https://localhost:7023/api/Story",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setStories(response.data);
     } catch (error) {
@@ -47,6 +53,7 @@ const NewStoryPart = () => {
     }
     try {
       const formData = new FormData();
+      const token = localStorage.getItem("token");
       formData.append("content", content);
       formData.append("storyId", storyId.toString());
       if (imageFile) {
@@ -56,6 +63,7 @@ const NewStoryPart = () => {
       await axios.post("https://localhost:7023/api/StoryParts", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
         },
       });
       navigate("/stories");

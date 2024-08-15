@@ -20,9 +20,15 @@ const StoryDash = () => {
 
   useEffect(() => {
     const fetchStories = async () => {
+      const token = localStorage.getItem("token");
       try {
         const response = await axios.get<Story[]>(
-          "https://localhost:7023/api/Story"
+          "https://localhost:7023/api/Story",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setStories(response.data);
       } catch (error) {
@@ -40,9 +46,15 @@ const StoryDash = () => {
   useEffect(() => {
     if (selectedStory) {
       const fetchStoryParts = async () => {
+        const token = localStorage.getItem("token");
         try {
           const url = `https://localhost:7023/api/StoryParts/ByStory/${selectedStory.storyId}`;
-          const response = await axios.get<StoryPart[]>(url);
+
+          const response = await axios.get<StoryPart[]>(url, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
           setStoryParts(response.data);
         } catch (error) {
           if (axios.isAxiosError(error) && error.response?.status === 404) {

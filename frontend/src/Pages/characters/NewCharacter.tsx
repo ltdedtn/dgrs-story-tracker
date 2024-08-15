@@ -24,14 +24,14 @@ const NewCharacter = () => {
       const formData = new FormData();
       formData.append("Name", name);
       formData.append("Description", description || "");
-      // Omit StoryId from the form data
       if (imageFile) {
         formData.append("imageFile", imageFile);
       }
-
+      const token = localStorage.getItem("token");
       await axios.post("https://localhost:7023/api/Characters", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
         },
       });
 

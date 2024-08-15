@@ -4,7 +4,7 @@ import { Role } from "../../models/User";
 interface RoleChangeModalProps {
   isOpen: boolean;
   onClose: () => void;
-  roles: Role[]; // This will be static in this case
+  roles: Role[];
   onRoleChange: (roleId: number) => void;
 }
 

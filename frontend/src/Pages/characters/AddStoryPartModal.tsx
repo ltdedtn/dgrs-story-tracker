@@ -27,10 +27,16 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
 
   useEffect(() => {
     const fetchStories = async () => {
+      const token = localStorage.getItem("token");
       setIsLoadingStories(true);
       try {
         const response = await axios.get<Story[]>(
-          "https://localhost:7023/api/Story"
+          "https://localhost:7023/api/Story",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setStories(response.data);
       } catch (error) {
@@ -47,10 +53,16 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
   useEffect(() => {
     const fetchStoryParts = async () => {
       if (selectedStoryId) {
+        const token = localStorage.getItem("token");
         setIsLoadingStoryParts(true);
         try {
           const response = await axios.get<StoryPart[]>(
-            `https://localhost:7023/api/StoryParts?storyId=${selectedStoryId}`
+            `https://localhost:7023/api/StoryParts?storyId=${selectedStoryId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
           setStoryParts(response.data);
         } catch (error) {
@@ -60,7 +72,7 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
           setIsLoadingStoryParts(false);
         }
       } else {
-        setStoryParts([]); // Clear story parts if no story is selected
+        setStoryParts([]);
       }
     };
 
@@ -75,25 +87,40 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
       return;
     }
 
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setError("No authentication token found. Please log in again.");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "https://localhost:7023/api/StoryParts/linkCharacterToStoryPart",
         {
           storyPartId: selectedStoryPartId,
           characterId: characterId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
       if (response.status === 200) {
-        console.log("Character linked to story part successfully.");
-        onStoryPartAdded(); // Notify parent component to refresh the story parts
-        onClose(); // Close the modal
+        onStoryPartAdded();
+        onClose();
       } else {
+        console.error("Failed with status code:", response.status);
         setError("Failed to link character to story part. Please try again.");
       }
     } catch (error) {
       console.error("Error linking character to story part", error);
-      setError("Failed to link character to story part. Please try again.");
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        setError("Unauthorized access. Please log in again.");
+      } else {
+        setError("Failed to link character to story part. Please try again.");
+      }
     }
   };
 

@@ -24,14 +24,15 @@ const NewStory = () => {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("description", description);
-      formData.append("userId", ""); // Sending an empty string to represent null
+      formData.append("userId", "");
       if (imageFile) {
-        formData.append("imageFile", imageFile); // Ensure this key matches the backend parameter name
+        formData.append("imageFile", imageFile);
       }
-
+      const token = localStorage.getItem("token");
       await axios.post("https://localhost:7023/api/Story", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
         },
       });
       navigate("/stories");

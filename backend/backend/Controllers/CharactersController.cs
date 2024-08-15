@@ -48,6 +48,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("{id}/storyparts")]
+        [AllowAnonymous]
         [Authorize(Roles = "StandardUser,Editor,Admin")]
         public async Task<ActionResult<IEnumerable<StoryPart>>> GetStoryPartsByCharacterId(int id)
         {
