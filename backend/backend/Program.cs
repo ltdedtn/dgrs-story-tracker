@@ -21,16 +21,19 @@ Env.Load();
 // Retrieve environment variables
 var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
 var jwtKey = Environment.GetEnvironmentVariable("jwt_token");
+var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
 
-if (string.IsNullOrEmpty(jwtKey))
-{
-    throw new InvalidOperationException("JWT_KEY environment variable is not set.");
-}
+// Configure app settings to include environment variables
+var configuration = builder.Configuration;
 
-var jwtKeyBytes = Encoding.UTF8.GetBytes(jwtKey);
+// Update connection string and JWT settings with environment variables
+var connectionString = configuration.GetConnectionString("DefaultConnection")
+    .Replace("DefaultPassword", dbPassword ?? "DefaultPassword");
 
-var connectionString = $"Server=192.168.1.4,1433;Database=Phase 2;User Id=Ben;Password={dbPassword};Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;";
+configuration["Jwt:Key"] = jwtKey ?? "DefaultJwtKey";
+configuration["Jwt:Issuer"] = jwtIssuer ?? "DefaultIssuer";
 
+// Add services to the container
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -43,13 +46,12 @@ builder.Services.AddAuthentication(options =>
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(jwtKeyBytes),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"])),
         ValidateIssuer = true,
         ValidateAudience = true,
-        ValidIssuer = "Phase 2",
-        ValidAudience = "Phase 2"
+        ValidIssuer = configuration["Jwt:Issuer"],
+        ValidAudience = configuration["Jwt:Issuer"]
     };
-
 });
 
 builder.Services.AddControllers();
@@ -71,11 +73,11 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(builder =>
+    options.AddDefaultPolicy(policy =>
     {
-        builder.WithOrigins("http://localhost:3000")
-               .AllowAnyMethod()
-               .AllowAnyHeader();
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
     });
 });
 
@@ -86,6 +88,7 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
