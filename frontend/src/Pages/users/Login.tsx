@@ -39,7 +39,7 @@ const Login = () => {
 
       setUsername(username);
 
-      navigate("/dash");
+      navigate("/stories");
     } catch (error) {
       console.error("Login error:", error);
       setError("Login failed. Please try again.");
