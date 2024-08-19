@@ -15,6 +15,7 @@ export interface StoryPart {
     description: string;
     storyId: number;
     imageUrl: string;
+    relationshipStatus: 'friendly' | 'neutral' | 'enemy';
     storyParts?: StoryPart[];
   }
   

@@ -10,6 +10,7 @@ namespace backend.Models
         public int? StoryId { get; set; } // Nullable
         public DateTime CreatedAt { get; set; }
         public string? ImageUrl { get; set; } // Nullable
+        public string? Description { get; set; }
 
         public Story? Story { get; set; } // Nullable
         public ICollection<StoryPartCharacter> StoryPartCharacters { get; set; } = new List<StoryPartCharacter>();

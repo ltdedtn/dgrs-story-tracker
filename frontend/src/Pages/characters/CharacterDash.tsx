@@ -100,7 +100,7 @@ const CharacterDash: React.FC = () => {
 
   const handleCharacterClick = (character: Character) => {
     setSelectedCharacter(character);
-    setIsCharacterExpanded(false); // Reset the expanded state when selecting a new character
+    setIsCharacterExpanded(false);
   };
 
   const handleDelete = async (characterId: number) => {
@@ -197,6 +197,19 @@ const CharacterDash: React.FC = () => {
   const isStoryPartExpanded = (storyPartId: number) =>
     expandedStoryPartId === storyPartId;
 
+  const getOverlayColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case "friendly":
+        return "bg-green-500";
+      case "neutral":
+        return "bg-black bg-opacity-50";
+      case "enemy":
+        return "bg-red-500";
+      default:
+        return "bg-black bg-opacity-50";
+    }
+  };
+
   if (loading) {
     return <div className="text-center">Loading...</div>;
   }
@@ -237,7 +250,9 @@ const CharacterDash: React.FC = () => {
             characters.map((character) => (
               <div
                 key={character.characterId}
-                className="flex-shrink-0 w-64 h-48 relative bg-gray-200 dark:bg-gray-800 rounded-lg overflow-hidden cursor-pointer"
+                className={`flex-shrink-0 w-64 h-48 relative rounded-lg overflow-hidden cursor-pointer ${getOverlayColor(
+                  character.relationshipStatus
+                )}`}
                 onClick={() => handleCharacterClick(character)}
               >
                 <img
@@ -245,7 +260,11 @@ const CharacterDash: React.FC = () => {
                   alt={character.name}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white dark:bg-opacity-75 text-center py-2 text-sm">
+                <div
+                  className={`absolute bottom-0 left-0 w-full ${getOverlayColor(
+                    character.relationshipStatus
+                  )} bg-opacity-50 text-white text-center py-2 text-sm`}
+                >
                   {character.name}
                 </div>
               </div>
@@ -285,6 +304,9 @@ const CharacterDash: React.FC = () => {
             alt={selectedCharacter.name}
             className="w-48 h-48 object-cover mx-auto rounded-lg"
           />
+          <h2 className="text-xl font-bold">
+            {selectedCharacter.name} - ({selectedCharacter.relationshipStatus})
+          </h2>
           <p
             className={`mt-4 text-lg overflow-hidden ${
               isDescriptionExpanded ? "max-h-full" : "max-h-24"

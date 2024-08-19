@@ -72,7 +72,8 @@ namespace backend.Controllers
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    StoryId = model.StoryId
+                    StoryId = model.StoryId,
+                    RelationshipStatus = model.RelationshipStatus
                 };
 
                 if (imageFile != null && imageFile.Length > 0)
@@ -95,6 +96,38 @@ namespace backend.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine($"Error creating character: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        [HttpPut("{id}")]
+        [Authorize(Roles = "Editor,Admin")]
+        public async Task<IActionResult> UpdateCharacter(int id, [FromForm] CharacterUpdateDto model)
+        {
+            if (id != model.CharacterId)
+            {
+                return BadRequest("Character ID mismatch");
+            }
+
+            try
+            {
+                var character = await _characterRepository.GetCharacterByIdAsync(id);
+                if (character == null)
+                {
+                    return NotFound();
+                }
+
+                character.Name = model.Name;
+                character.Description = model.Description;
+                character.ImageUrl = model.ImageUrl;
+                character.RelationshipStatus = model.RelationshipStatus;
+
+                await _characterRepository.UpdateCharacterAsync(character);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating character: {ex}");
                 return StatusCode(500, "Internal server error");
             }
         }

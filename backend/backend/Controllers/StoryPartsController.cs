@@ -63,6 +63,7 @@ namespace backend.Controllers
                 {
                     Content = model.Content,
                     StoryId = model.StoryId,
+                    Description = model.Description,
                     CreatedAt = DateTime.UtcNow,
                 };
 

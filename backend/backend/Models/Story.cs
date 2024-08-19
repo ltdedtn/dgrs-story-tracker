@@ -9,6 +9,7 @@ namespace backend.Models
         public int StoryId { get; set; }
         public string Title { get; set; } = string.Empty; // Ensure non-nullable
         public string? Description { get; set; } // Nullable
+        public string? Content { get; set; } // New Content field, Nullable
         public DateTime CreatedAt { get; set; }
         public int? UserId { get; set; } // Nullable
         public string? ImageUrl { get; set; } // Nullable

@@ -6,6 +6,7 @@ export interface Story {
   storyId: number;
   title: string;
   description: string;
+  content: string | null;
   createdAt: string;
   userId: number;
   imageUrl: string;

@@ -32,7 +32,7 @@ const UserDash = () => {
         );
         setUsers(response.data);
       } catch (error) {
-        if ((error as any).response?.status === 401) {
+        if ((error as any).response?.status === 403) {
           navigate("/unauthorized");
         } else {
           setError("Failed to fetch users. Please try again later.");
@@ -63,8 +63,12 @@ const UserDash = () => {
         });
         setUsers(users.filter((user) => user.userId !== userId));
       } catch (error) {
-        console.error("Error deleting user", error);
-        setError("Failed to delete user. Please try again later.");
+        if ((error as any).response?.status === 403) {
+          console.error("Unauthorized to delete user", error);
+          navigate("/unauthorized");
+        } else {
+          setError("Failed to fetch users. Please try again later.");
+        }
       }
     }
   };

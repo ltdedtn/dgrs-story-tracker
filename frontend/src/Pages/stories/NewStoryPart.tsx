@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 const NewStoryPart = () => {
   const [content, setContent] = useState<string>("");
-  const [storyId, setStoryId] = useState<number | "">(""); // Initialize with an empty string
+  const [description, setDescription] = useState<string>("");
+  const [storyId, setStoryId] = useState<number | "">("");
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null); // State for image preview
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [stories, setStories] = useState<{ storyId: number; title: string }[]>(
     []
@@ -32,7 +33,6 @@ const NewStoryPart = () => {
     }
   };
 
-  // Load stories on component mount
   useEffect(() => {
     fetchStories();
   }, []);
@@ -55,9 +55,10 @@ const NewStoryPart = () => {
       const formData = new FormData();
       const token = localStorage.getItem("token");
       formData.append("content", content);
+      formData.append("description", description);
       formData.append("storyId", storyId.toString());
       if (imageFile) {
-        formData.append("imageFile", imageFile); // Ensure this key matches the backend parameter name
+        formData.append("imageFile", imageFile);
       }
 
       await axios.post("https://localhost:7023/api/StoryParts", formData, {
@@ -88,6 +89,20 @@ const NewStoryPart = () => {
             onChange={(e) => setContent(e.target.value)}
             className="textarea textarea-bordered w-full"
             rows={4}
+            required
+          ></textarea>
+        </div>
+        <div className="form-control">
+          <label htmlFor="description" className="label">
+            <span className="label-text">Summary</span>
+          </label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="textarea textarea-bordered w-full"
+            rows={3}
+            placeholder="Add a short summary for this story part"
             required
           ></textarea>
         </div>

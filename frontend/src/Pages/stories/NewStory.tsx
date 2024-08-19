@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 const NewStory = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [content, setContent] = useState<string>(""); // New state for content
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null); // State for image preview
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -14,7 +15,7 @@ const NewStory = () => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       setImageFile(file);
-      setImagePreview(URL.createObjectURL(file)); // Set preview URL
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
@@ -24,6 +25,7 @@ const NewStory = () => {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("description", description);
+      formData.append("content", content); // Append content to form data
       formData.append("userId", "");
       if (imageFile) {
         formData.append("imageFile", imageFile);
@@ -61,8 +63,21 @@ const NewStory = () => {
           />
         </div>
         <div className="form-control">
+          <div className="form-control">
+            <label htmlFor="content" className="label">
+              <span className="label-text">Content</span>
+            </label>
+            <textarea
+              id="content"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              className="textarea textarea-bordered w-full"
+              rows={6}
+              required
+            ></textarea>
+          </div>
           <label htmlFor="description" className="label">
-            <span className="label-text">Description</span>
+            <span className="label-text">Summary</span>
           </label>
           <textarea
             id="description"
@@ -73,6 +88,7 @@ const NewStory = () => {
             required
           ></textarea>
         </div>
+
         <div className="form-control">
           <label htmlFor="image" className="label">
             <span className="label-text">Image</span>

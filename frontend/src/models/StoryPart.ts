@@ -6,6 +6,7 @@ export interface StoryPart {
   storyId: number;
   createdAt: string;
   imageUrl: string;
+  description: string;
   story: string;
   storyPartCharacters: StoryPartCharacter[];
 }

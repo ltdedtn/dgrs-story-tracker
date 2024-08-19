@@ -54,6 +54,7 @@ namespace backend.Controllers
                 {
                     Title = storyDto.Title,
                     Description = storyDto.Description,
+                    Content = storyDto.Content,
                     CreatedAt = DateTime.UtcNow,
                     UserId = storyDto.UserId
                 };
@@ -81,6 +82,7 @@ namespace backend.Controllers
             }
         }
 
+
         [HttpPut("{id}")]
         [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> PutStory(int id, StoryUpdateDto storyDto)
@@ -98,11 +100,13 @@ namespace backend.Controllers
 
             story.Title = storyDto.Title;
             story.Description = storyDto.Description;
+            story.Content = storyDto.Content;
             story.ImageUrl = storyDto.ImageUrl;
 
             await _storyRepository.UpdateStoryAsync(story);
             return NoContent();
         }
+
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]

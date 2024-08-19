@@ -13,6 +13,7 @@ const StoryDash = () => {
   const [expandedPartId, setExpandedPartId] = useState<number | null>(null);
   const [isDescriptionExpanded, setIsDescriptionExpanded] =
     useState<boolean>(false);
+
   const navigate = useNavigate();
 
   const storiesCarouselRef = useRef<HTMLDivElement>(null);
@@ -192,18 +193,30 @@ const StoryDash = () => {
       {selectedStory && (
         <div className="mt-8 text-center">
           <h2 className="text-3xl font-bold mb-4">{selectedStory.title}</h2>
-          <div className="max-w-3xl mx-auto mb-4 text-left">
-            <div
-              className={`text-lg ${
-                isDescriptionExpanded ? "" : "line-clamp-3"
-              }`}
-            >
-              {selectedStory.description}
+          <div>
+            <div className="text-xl">Content</div>
+            <div className="max-w-3xl mx-auto mb-4 text-left">
+              {selectedStory.content}
             </div>
-            <button className="mt-2 rounded" onClick={toggleDescription}>
-              {isDescriptionExpanded ? "Read Less" : "Read More"}
-            </button>
           </div>
+          <div>
+            <div className="text-xl">Summary</div>
+            <div className="max-w-3xl mx-auto mb-4 text-left">
+              <div
+                className={`text-lg ${
+                  isDescriptionExpanded ? "" : "line-clamp-3"
+                }`}
+              >
+                {selectedStory.description}
+              </div>
+              {selectedStory.description.length > 100 && (
+                <button className="mt-2 rounded" onClick={toggleDescription}>
+                  {isDescriptionExpanded ? "Read Less" : "Read More"}
+                </button>
+              )}
+            </div>
+          </div>
+
           <div className="relative">
             <button
               className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
@@ -244,18 +257,33 @@ const StoryDash = () => {
                       />
                     )}
                     <div>
-                      {expandedPartId === part.partId
-                        ? part.content
-                        : `${part.content.split("\n")[0]}...`}
+                      <div className="text-xl">Content</div>
+                      <div className="max-w-3xl mx-auto mb-4 text-left">
+                        {expandedPartId === part.partId
+                          ? part.content
+                          : part.content.length > 100
+                          ? `${part.content.slice(0, 100)}...`
+                          : part.content}
+                      </div>
+                      {part.content.length > 100 && (
+                        <button
+                          className="mt-2 px-3 rounded"
+                          onClick={() => toggleExpandPart(part.partId)}
+                        >
+                          {expandedPartId === part.partId
+                            ? "Read Less"
+                            : "Read More"}
+                        </button>
+                      )}
                     </div>
-                    <button
-                      className="mt-2 py-1 px-3 rounded"
-                      onClick={() => toggleExpandPart(part.partId)}
-                    >
-                      {expandedPartId === part.partId
-                        ? "Read Less"
-                        : "Read More"}
-                    </button>
+                    <div>
+                      <div className="text-xl py-1">Summary</div>
+                      <div className="max-w-3xl mx-auto mb-4 text-left">
+                        {expandedPartId === part.partId
+                          ? part.description || "No summary available."
+                          : part.description || "No summary available."}
+                      </div>
+                    </div>
                   </div>
                 ))
               )}
