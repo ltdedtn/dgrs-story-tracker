@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace backend.Models
 {
@@ -9,7 +7,7 @@ namespace backend.Models
         public int StoryId { get; set; }
         public string Title { get; set; } = string.Empty; // Ensure non-nullable
         public string? Description { get; set; } // Nullable
-        public string? Content { get; set; } // New Content field, Nullable
+        public string? Content { get; set; } // Nullable
         public DateTime CreatedAt { get; set; }
         public int? UserId { get; set; } // Nullable
         public string? ImageUrl { get; set; } // Nullable
@@ -18,5 +16,9 @@ namespace backend.Models
         public ICollection<Character> Characters { get; set; } = new List<Character>();
         [JsonIgnore]
         public ICollection<StoryPart> StoryParts { get; set; } = new List<StoryPart>();
+
+        // New Foreign Key for StoryGroup
+        public int? StoryGroupId { get; set; }
+        public StoryGroup? StoryGroup { get; set; } // Nullable
     }
 }

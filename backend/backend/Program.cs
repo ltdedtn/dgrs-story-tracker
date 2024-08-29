@@ -62,6 +62,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IStoryRepository, StoryRepository>();
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IStoryPartRepository, StoryPartRepository>();
+builder.Services.AddScoped<IStoryGroupRepository, StoryGroupRepository>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 
 builder.Services.AddAuthorization(options =>
