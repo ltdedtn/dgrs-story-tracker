@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using backend.Models;
 
+
 namespace backend.Data
 {
     public class BackendContext : DbContext
@@ -38,15 +39,18 @@ namespace backend.Data
                 .HasForeignKey(spc => spc.CharacterId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Configure the primary key for StoryPart
+            // StoryPart configurations
             modelBuilder.Entity<StoryPart>()
-                .HasKey(sp => sp.PartId);
+                .HasKey(sp => sp.StoryPartId);
 
-            // Configure the one-to-many relationship between Story and StoryPart
             modelBuilder.Entity<StoryPart>()
                 .HasOne(sp => sp.Story)
                 .WithMany(s => s.StoryParts)
                 .HasForeignKey(sp => sp.StoryId);
+
+            // Story configurations
+            modelBuilder.Entity<Story>()
+                .HasKey(s => s.StoryId);
 
             // Configure many-to-many relationship between User and Role
             modelBuilder.Entity<UserRole>()
@@ -61,12 +65,6 @@ namespace backend.Data
                 .HasOne(ur => ur.Role)
                 .WithMany(r => r.UserRoles)
                 .HasForeignKey(ur => ur.RoleId);
-
-            // Configure one-to-many relationship between StoryGroup and Story
-            modelBuilder.Entity<StoryGroup>()
-                .HasMany(sg => sg.Stories)
-                .WithOne(s => s.StoryGroup)
-                .HasForeignKey(s => s.StoryGroupId);
         }
     }
 }

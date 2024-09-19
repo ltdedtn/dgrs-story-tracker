@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using backend.DTOs;
 using backend.Models;
-using backend.Repositories; // Add the repository namespace
+using backend.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System;
+using System.IO;
 
 namespace backend.Controllers
 {
@@ -14,7 +16,7 @@ namespace backend.Controllers
     [ApiController]
     public class StoryPartsController : ControllerBase
     {
-        private readonly IStoryPartRepository _storyPartRepository; // Use repository
+        private readonly IStoryPartRepository _storyPartRepository;
 
         public StoryPartsController(IStoryPartRepository storyPartRepository)
         {
@@ -34,7 +36,7 @@ namespace backend.Controllers
         // Get a single story part by ID
         [HttpGet("{id}")]
         [AllowAnonymous]
-        [Authorize (Roles = "StandardUser,Editor,Admin")]
+        [Authorize(Roles = "StandardUser,Editor,Admin")]
         public async Task<ActionResult<StoryPart>> GetStoryPart(int id)
         {
             var storyPart = await _storyPartRepository.GetStoryPartByIdAsync(id);
@@ -77,15 +79,14 @@ namespace backend.Controllers
                         await imageFile.CopyToAsync(fileStream);
                     }
 
-                    storyPart.ImageUrl = "/images/" + fileName;
+                    storyPart.ImageUrl = $"/images/{fileName}";
                 }
 
                 var createdStoryPart = await _storyPartRepository.AddStoryPartAsync(storyPart);
-                return CreatedAtAction(nameof(GetStoryPart), new { id = createdStoryPart.PartId }, createdStoryPart);
+                return CreatedAtAction(nameof(GetStoryPart), new { id = createdStoryPart.StoryPartId }, createdStoryPart);
             }
             catch (Exception ex)
             {
-                // Log the exception
                 Console.WriteLine($"Error creating story part: {ex}");
                 return StatusCode(500, "Internal server error");
             }
@@ -94,16 +95,28 @@ namespace backend.Controllers
         // Update an existing story part
         [HttpPut("{id}")]
         [Authorize(Roles = "Editor,Admin")]
-        public async Task<IActionResult> PutStoryPart(int id, StoryPart storyPart)
+        public async Task<IActionResult> PutStoryPart(int id, [FromBody] StoryPartUpdateDto model)
         {
-            if (id != storyPart.PartId)
+            if (id != model.PartId)
             {
-                return BadRequest();
+                return BadRequest("StoryPart ID mismatch");
             }
 
             try
             {
-                await _storyPartRepository.UpdateStoryPartAsync(storyPart);
+                var existingStoryPart = await _storyPartRepository.GetStoryPartByIdAsync(id);
+                if (existingStoryPart == null)
+                {
+                    return NotFound();
+                }
+
+                existingStoryPart.Content = model.Content;
+                existingStoryPart.StoryId = model.StoryId;
+                existingStoryPart.Description = model.Description;
+                existingStoryPart.ImageUrl = model.ImageUrl;
+
+                await _storyPartRepository.UpdateStoryPartAsync(existingStoryPart);
+                return NoContent();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -116,19 +129,37 @@ namespace backend.Controllers
                     throw;
                 }
             }
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating story part: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         // Delete a story part
         [HttpDelete("{id}")]
-        [Authorize (Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteStoryPart(int id)
         {
-            await _storyPartRepository.DeleteStoryPartAsync(id);
-            return NoContent();
+            try
+            {
+                var storyPart = await _storyPartRepository.GetStoryPartByIdAsync(id);
+                if (storyPart == null)
+                {
+                    return NotFound();
+                }
+
+                await _storyPartRepository.DeleteStoryPartAsync(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting story part: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
+        // Link character to story part
         [HttpPost("linkCharacterToStoryPart")]
         [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> LinkCharacterToStoryPart([FromBody] LinkCharacterToStoryPartDto dto)
@@ -138,15 +169,23 @@ namespace backend.Controllers
                 return BadRequest("Invalid data.");
             }
 
-            var result = await _storyPartRepository.LinkCharacterToStoryPartAsync(dto.StoryPartId, dto.CharacterId);
-
-            if (!result)
+            try
             {
-                return NotFound("Story part or character not found.");
+                var result = await _storyPartRepository.LinkCharacterToStoryPartAsync(dto.StoryPartId, dto.CharacterId);
+                if (!result)
+                {
+                    return NotFound("Story part or character not found.");
+                }
+                return Ok("Character linked to story part successfully.");
             }
-
-            return Ok("Character linked to story part successfully.");
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error linking character to story part: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
+
+        // Unlink character from story part
         [HttpDelete("unlinkCharacterFromStoryPart")]
         [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> UnlinkCharacterFromStoryPart([FromQuery] int storyPartId, [FromQuery] int characterId)
@@ -156,20 +195,26 @@ namespace backend.Controllers
                 return BadRequest("Invalid data.");
             }
 
-            var result = await _storyPartRepository.UnlinkCharacterFromStoryPartAsync(storyPartId, characterId);
-
-            if (!result)
+            try
             {
-                return NotFound("Story part or character not found.");
+                var result = await _storyPartRepository.UnlinkCharacterFromStoryPartAsync(storyPartId, characterId);
+                if (!result)
+                {
+                    return NotFound("Story part or character not found.");
+                }
+                return Ok("Character unlinked from story part successfully.");
             }
-
-            return Ok("Character unlinked from story part successfully.");
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error unlinking character from story part: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
-
+        // Get story parts by story ID
         [HttpGet("ByStory/{storyId}")]
         [AllowAnonymous]
-        [Authorize (Roles = "StandardUser,Editor,Admin")]
+        [Authorize(Roles = "StandardUser,Editor,Admin")]
         public async Task<ActionResult<IEnumerable<StoryPart>>> GetStoryPartsByStoryId(int storyId)
         {
             var storyParts = await _storyPartRepository.GetStoryPartsByStoryIdAsync(storyId);
@@ -180,5 +225,6 @@ namespace backend.Controllers
 
             return Ok(storyParts);
         }
+
     }
 }

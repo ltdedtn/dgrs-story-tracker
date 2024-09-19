@@ -28,7 +28,7 @@ namespace backend.Repositories
             return await _context.StoryParts
                 .Include(sp => sp.Story)
                 .Include(sp => sp.StoryPartCharacters)
-                .FirstOrDefaultAsync(sp => sp.PartId == id);
+                .FirstOrDefaultAsync(sp => sp.StoryPartId == id);
         }
 
         public async Task<StoryPart> AddStoryPartAsync(StoryPart storyPart)
@@ -48,7 +48,7 @@ namespace backend.Repositories
         {
             var storyPart = await _context.StoryParts
                 .Include(sp => sp.StoryPartCharacters)
-                .FirstOrDefaultAsync(sp => sp.PartId == id);
+                .FirstOrDefaultAsync(sp => sp.StoryPartId == id);
 
             if (storyPart == null) return;
 
@@ -62,7 +62,7 @@ namespace backend.Repositories
         {
             var storyPart = await _context.StoryParts
                 .Include(sp => sp.StoryPartCharacters)
-                .FirstOrDefaultAsync(sp => sp.PartId == storyPartId);
+                .FirstOrDefaultAsync(sp => sp.StoryPartId == storyPartId);
 
             if (storyPart == null)
             {
@@ -86,7 +86,7 @@ namespace backend.Repositories
 
         public async Task<bool> StoryPartExistsAsync(int id)
         {
-            return await _context.StoryParts.AnyAsync(e => e.PartId == id);
+            return await _context.StoryParts.AnyAsync(e => e.StoryPartId == id);
         }
 
         public async Task<IEnumerable<StoryPart>> GetStoryPartsByStoryIdAsync(int storyId)
@@ -96,7 +96,7 @@ namespace backend.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<StoryPart>> GetStoryPartsByCharacterIdAsync(int characterId) 
+        public async Task<IEnumerable<StoryPart>> GetStoryPartsByCharacterIdAsync(int characterId)
         {
             return await _context.StoryParts
                 .Where(sp => sp.StoryPartCharacters.Any(spc => spc.CharacterId == characterId))

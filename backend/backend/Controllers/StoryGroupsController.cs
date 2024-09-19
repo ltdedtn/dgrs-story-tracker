@@ -23,36 +23,59 @@ namespace backend.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<StoryGroup>>> GetStoryGroups()
         {
-            var storyGroups = await _storyGroupRepository.GetAllStoryGroupsAsync();
-            return Ok(storyGroups);
+            try
+            {
+                var storyGroups = await _storyGroupRepository.GetAllStoryGroupsAsync();
+                return Ok(storyGroups);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving story groups: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpGet("{id}")]
         [Authorize(Roles = "StandardUser,Editor,Admin")]
         public async Task<ActionResult<StoryGroup>> GetStoryGroup(int id)
         {
-            var storyGroup = await _storyGroupRepository.GetStoryGroupByIdAsync(id);
-            if (storyGroup == null)
+            try
             {
-                return NotFound();
+                var storyGroup = await _storyGroupRepository.GetStoryGroupByIdAsync(id);
+                if (storyGroup == null)
+                {
+                    return NotFound();
+                }
+                return Ok(storyGroup);
             }
-            return Ok(storyGroup);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving story group: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost]
         [Authorize(Roles = "Editor,Admin")]
         public async Task<ActionResult<StoryGroup>> PostStoryGroup([FromForm] StoryGroupCreateDto model)
         {
-            var storyGroup = new StoryGroup
+            try
             {
-                Title = model.Title,
-                Description = model.Description,
-                ImageUrl = model.ImageUrl
-            };
+                var storyGroup = new StoryGroup
+                {
+                    Title = model.Title,
+                    Description = model.Description,
+                    ImageUrl = model.ImageUrl
+                };
 
-            var createdStoryGroup = await _storyGroupRepository.AddStoryGroupAsync(storyGroup);
-
-            return CreatedAtAction(nameof(GetStoryGroup), new { id = createdStoryGroup.StoryGroupId }, createdStoryGroup);
+                var createdStoryGroup = await _storyGroupRepository.AddStoryGroupAsync(storyGroup);
+                return CreatedAtAction(nameof(GetStoryGroup), new { id = createdStoryGroup.StoryGroupId }, createdStoryGroup);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error creating story group: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPut("{id}")]
@@ -64,27 +87,48 @@ namespace backend.Controllers
                 return BadRequest("StoryGroup ID mismatch");
             }
 
-            var storyGroup = await _storyGroupRepository.GetStoryGroupByIdAsync(id);
-            if (storyGroup == null)
+            try
             {
-                return NotFound();
+                var storyGroup = await _storyGroupRepository.GetStoryGroupByIdAsync(id);
+                if (storyGroup == null)
+                {
+                    return NotFound();
+                }
+
+                storyGroup.Title = model.Title;
+                storyGroup.Description = model.Description;
+                storyGroup.ImageUrl = model.ImageUrl;
+
+                await _storyGroupRepository.UpdateStoryGroupAsync(storyGroup);
+                return NoContent();
             }
-
-            storyGroup.Title = model.Title;
-            storyGroup.Description = model.Description;
-            storyGroup.ImageUrl = model.ImageUrl;
-
-            await _storyGroupRepository.UpdateStoryGroupAsync(storyGroup);
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating story group: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteStoryGroup(int id)
         {
-            await _storyGroupRepository.DeleteStoryGroupAsync(id);
-            return NoContent();
+            try
+            {
+                var storyGroup = await _storyGroupRepository.GetStoryGroupByIdAsync(id);
+                if (storyGroup == null)
+                {
+                    return NotFound();
+                }
+
+                await _storyGroupRepository.DeleteStoryGroupAsync(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting story group: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }

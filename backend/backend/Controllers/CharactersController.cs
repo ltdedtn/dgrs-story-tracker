@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using backend.Models;
 using backend.Repositories;
 using backend.DTOs;
-using Microsoft.AspNetCore.Authorization; // Add this
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Security.Claims;
 
 namespace backend.Controllers
 {
@@ -27,13 +27,11 @@ namespace backend.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Authorize(Roles = "Guest,StandardUser,Editor,Admin")]
         public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
         {
             var characters = await _characterRepository.GetCharactersAsync();
             return Ok(characters);
         }
-
 
         [HttpGet("{id}")]
         [Authorize(Roles = "StandardUser,Editor,Admin")]
@@ -49,7 +47,6 @@ namespace backend.Controllers
 
         [HttpGet("{id}/storyparts")]
         [AllowAnonymous]
-        [Authorize(Roles = "StandardUser,Editor,Admin")]
         public async Task<ActionResult<IEnumerable<StoryPart>>> GetStoryPartsByCharacterId(int id)
         {
             var storyParts = await _storyPartRepository.GetStoryPartsByCharacterIdAsync(id);
@@ -64,7 +61,7 @@ namespace backend.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Editor,Admin")]
-        public async Task<ActionResult<Character>> PostCharacter([FromForm] CharacterCreateDto model, IFormFile imageFile)
+        public async Task<ActionResult<Character>> PostCharacter([FromForm] CharacterCreateDto model, IFormFile? imageFile)
         {
             try
             {
@@ -72,8 +69,7 @@ namespace backend.Controllers
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    StoryId = model.StoryId,
-                    RelationshipStatus = model.RelationshipStatus
+                    RelationshipTag = model.RelationshipTag // Update to match the model property
                 };
 
                 if (imageFile != null && imageFile.Length > 0)
@@ -99,6 +95,7 @@ namespace backend.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
         [HttpPut("{id}")]
         [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> UpdateCharacter(int id, [FromForm] CharacterUpdateDto model)
@@ -119,7 +116,7 @@ namespace backend.Controllers
                 character.Name = model.Name;
                 character.Description = model.Description;
                 character.ImageUrl = model.ImageUrl;
-                character.RelationshipStatus = model.RelationshipStatus;
+                character.RelationshipTag = model.RelationshipTag; // Update to match the model property
 
                 await _characterRepository.UpdateCharacterAsync(character);
 

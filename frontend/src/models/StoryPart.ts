@@ -1,7 +1,8 @@
 import { StoryPartCharacter } from './StoryPartCharacter';
 
 export interface StoryPart {
-  partId: number;
+  storyPartId: number;
+  title: string;
   content: string;
   storyId: number;
   createdAt: string;

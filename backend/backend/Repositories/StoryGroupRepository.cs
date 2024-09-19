@@ -17,6 +17,7 @@ namespace backend.Repositories
 
         public async Task<IEnumerable<StoryGroup>> GetAllStoryGroupsAsync()
         {
+            // Include related stories for each story group
             return await _context.StoryGroup
                 .Include(sg => sg.Stories)
                 .ToListAsync();
@@ -24,6 +25,7 @@ namespace backend.Repositories
 
         public async Task<StoryGroup?> GetStoryGroupByIdAsync(int id)
         {
+            // Include related stories for the specific story group
             return await _context.StoryGroup
                 .Include(sg => sg.Stories)
                 .FirstOrDefaultAsync(sg => sg.StoryGroupId == id);
@@ -49,6 +51,10 @@ namespace backend.Repositories
             {
                 _context.StoryGroup.Remove(storyGroup);
                 await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new KeyNotFoundException("StoryGroup not found");
             }
         }
     }

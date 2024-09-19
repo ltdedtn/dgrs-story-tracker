@@ -19,7 +19,6 @@ var builder = WebApplication.CreateBuilder(args);
 Env.Load();
 
 // Retrieve environment variables
-var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
 var jwtKey = Environment.GetEnvironmentVariable("jwt_token");
 var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
 
@@ -27,8 +26,7 @@ var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
 var configuration = builder.Configuration;
 
 // Update connection string and JWT settings with environment variables
-var connectionString = configuration.GetConnectionString("DefaultConnection")
-    .Replace("DefaultPassword", dbPassword ?? "DefaultPassword");
+var connectionString = configuration.GetConnectionString("DefaultConnection");
 
 configuration["Jwt:Key"] = jwtKey ?? "DefaultJwtKey";
 configuration["Jwt:Issuer"] = jwtIssuer ?? "DefaultIssuer";
@@ -56,13 +54,20 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<BackendContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString, sqlOptions =>
+    {
+        // Enable retry on failure for transient errors
+        sqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 5, // Number of retry attempts
+            maxRetryDelay: TimeSpan.FromSeconds(10), // Delay between retries
+            errorNumbersToAdd: null // SQL error codes that should trigger a retry
+        );
+    }));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IStoryRepository, StoryRepository>();
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IStoryPartRepository, StoryPartRepository>();
-builder.Services.AddScoped<IStoryGroupRepository, StoryGroupRepository>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 
 builder.Services.AddAuthorization(options =>

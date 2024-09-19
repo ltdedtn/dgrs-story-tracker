@@ -6,6 +6,6 @@
         public string? Description { get; set; }
         public string? ImageUrl { get; set; }
         public int? StoryId { get; set; }
-        public string RelationshipStatus { get; set; } = "Neutral";
+        public string RelationshipTag { get; set; } = "Neutral";
     }
 }

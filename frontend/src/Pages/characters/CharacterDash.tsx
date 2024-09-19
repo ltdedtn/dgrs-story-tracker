@@ -251,7 +251,7 @@ const CharacterDash: React.FC = () => {
               <div
                 key={character.characterId}
                 className={`flex-shrink-0 w-64 h-48 relative rounded-lg overflow-hidden cursor-pointer ${getOverlayColor(
-                  character.relationshipStatus
+                  character.relationshipTag
                 )}`}
                 onClick={() => handleCharacterClick(character)}
               >
@@ -262,7 +262,7 @@ const CharacterDash: React.FC = () => {
                 />
                 <div
                   className={`absolute bottom-0 left-0 w-full ${getOverlayColor(
-                    character.relationshipStatus
+                    character.relationshipTag
                   )} bg-opacity-50 text-white text-center py-2 text-sm`}
                 >
                   {character.name}
@@ -305,7 +305,7 @@ const CharacterDash: React.FC = () => {
             className="w-48 h-48 object-cover mx-auto rounded-lg"
           />
           <h2 className="text-xl font-bold">
-            {selectedCharacter.name} - ({selectedCharacter.relationshipStatus})
+            {selectedCharacter.name} - ({selectedCharacter.relationshipTag})
           </h2>
           <p
             className={`mt-4 text-lg overflow-hidden ${

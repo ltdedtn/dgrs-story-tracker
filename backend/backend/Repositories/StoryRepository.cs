@@ -2,6 +2,7 @@
 using backend.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace backend.Repositories
@@ -15,17 +16,35 @@ namespace backend.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Story>> GetStoriesAsync()
-        {
-            return await _context.Stories.ToListAsync();
-        }
-
-        public async Task<Story> GetStoryByIdAsync(int id)
+        public async Task<IEnumerable<StoryDto>> GetStoriesAsync()
         {
             return await _context.Stories
-                .Include(s => s.StoryParts)
-                .Include(s => s.Characters)
-                .FirstOrDefaultAsync(s => s.StoryId == id);
+                .Select(s => new StoryDto
+                {
+                    StoryId = s.StoryId,
+                    Title = s.Title,
+                    Description = s.Description,
+                    Content = s.Content,
+                    CreatedAt = s.CreatedAt,
+                    ImageUrl = s.ImageUrl
+                })
+                .ToListAsync();
+        }
+
+        public async Task<StoryDto> GetStoryByIdAsync(int id)
+        {
+            return await _context.Stories
+                .Where(s => s.StoryId == id)
+                .Select(s => new StoryDto
+                {
+                    StoryId = s.StoryId,
+                    Title = s.Title,
+                    Description = s.Description,
+                    Content = s.Content,
+                    CreatedAt = s.CreatedAt,
+                    ImageUrl = s.ImageUrl
+                })
+                .FirstOrDefaultAsync();
         }
 
         public async Task<Story> AddStoryAsync(Story story)

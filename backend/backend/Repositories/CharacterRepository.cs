@@ -31,11 +31,12 @@ namespace backend.Repositories
         {
             _context.Characters.Add(character);
             await _context.SaveChangesAsync();
-            return character; // Ensure this matches the return type of Task<Character>
+            return character; // This should match the return type of Task<Character>
         }
 
         public async Task UpdateCharacterAsync(Character character)
         {
+            // Attach the entity and mark it as modified
             _context.Entry(character).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
@@ -60,6 +61,5 @@ namespace backend.Repositories
 
             await _context.SaveChangesAsync();
         }
-
     }
 }

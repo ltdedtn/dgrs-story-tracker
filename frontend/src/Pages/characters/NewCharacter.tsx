@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 const NewCharacter = () => {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [relationshipStatus, setRelationshipStatus] =
-    useState<string>("Neutral"); // Default to "Neutral"
+  const [relationshipTag, setRelationshipTag] = useState<string>("Neutral"); // Default to "Neutral"
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +25,7 @@ const NewCharacter = () => {
       const formData = new FormData();
       formData.append("Name", name);
       formData.append("Description", description || "");
-      formData.append("RelationshipStatus", relationshipStatus); // Include relationship status
+      formData.append("RelationshipTag", relationshipTag); // Include relationship status
       if (imageFile) {
         formData.append("imageFile", imageFile);
       }
@@ -81,9 +80,9 @@ const NewCharacter = () => {
             <span className="label-text">Relationship Status</span>
           </label>
           <select
-            id="relationshipStatus"
-            value={relationshipStatus}
-            onChange={(e) => setRelationshipStatus(e.target.value)}
+            id="relationshipTag"
+            value={relationshipTag}
+            onChange={(e) => setRelationshipTag(e.target.value)}
             className="select select-bordered w-full"
           >
             <option value="Friendly">Friendly</option>

@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using backend.Data;
 using backend.Models;
 using backend.DTOs;
 using backend.Repositories;
-using Microsoft.AspNetCore.Authorization; // Add this
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace backend.Controllers
 {
@@ -25,28 +23,63 @@ namespace backend.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Authorize(Roles = "StandardUser,Editor,Admin")]
-        public async Task<ActionResult<IEnumerable<Story>>> GetStories()
+        public async Task<ActionResult<IEnumerable<StoryDto>>> GetStories()
         {
-            return Ok(await _storyRepository.GetStoriesAsync());
+            try
+            {
+                var stories = await _storyRepository.GetStoriesAsync();
+                var storyDtos = stories.Select(story => new StoryDto
+                {
+                    StoryId = story.StoryId,
+                    Title = story.Title,
+                    Description = story.Description,
+                    Content = story.Content,
+                    CreatedAt = story.CreatedAt,
+                    ImageUrl = story.ImageUrl
+                });
+                return Ok(storyDtos);
+            }
+            catch (Exception ex)
+            {
+                // Use structured logging for better traceability
+                // e.g., _logger.LogError($"Error retrieving stories: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        [Authorize(Roles = "StandardUser,Editor,Admin")]
-        public async Task<ActionResult<Story>> GetStory(int id)
+        public async Task<ActionResult<StoryDto>> GetStory(int id)
         {
-            var story = await _storyRepository.GetStoryByIdAsync(id);
-            if (story == null)
+            try
             {
-                return NotFound();
+                var story = await _storyRepository.GetStoryByIdAsync(id);
+                if (story == null)
+                {
+                    return NotFound();
+                }
+                var storyDto = new StoryDto
+                {
+                    StoryId = story.StoryId,
+                    Title = story.Title,
+                    Description = story.Description,
+                    Content = story.Content,
+                    CreatedAt = story.CreatedAt,
+                    ImageUrl = story.ImageUrl
+                };
+                return Ok(storyDto);
             }
-            return Ok(story);
+            catch (Exception ex)
+            {
+                // Use structured logging
+                // e.g., _logger.LogError($"Error retrieving story: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost]
         [Authorize(Roles = "Editor,Admin")]
-        public async Task<ActionResult<Story>> PostStory([FromForm] StoryCreateDto storyDto, [FromForm] IFormFile imageFile)
+        public async Task<ActionResult<StoryDto>> PostStory([FromForm] StoryCreateDto storyDto, [FromForm] IFormFile? imageFile)
         {
             try
             {
@@ -73,53 +106,49 @@ namespace backend.Controllers
                 }
 
                 var createdStory = await _storyRepository.AddStoryAsync(story);
-                return CreatedAtAction(nameof(GetStory), new { id = createdStory.StoryId }, createdStory);
+                var storyDtoResponse = new StoryDto
+                {
+                    StoryId = createdStory.StoryId,
+                    Title = createdStory.Title,
+                    Description = createdStory.Description,
+                    Content = createdStory.Content,
+                    CreatedAt = createdStory.CreatedAt,
+                    ImageUrl = createdStory.ImageUrl
+                };
+
+                return CreatedAtAction(nameof(GetStory), new { id = createdStory.StoryId }, storyDtoResponse);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error creating story: {ex}");
+                // Use structured logging
+                // e.g., _logger.LogError($"Error creating story: {ex}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
-
-        [HttpPut("{id}")]
-        [Authorize(Roles = "Editor,Admin")]
-        public async Task<IActionResult> PutStory(int id, StoryUpdateDto storyDto)
-        {
-            if (id != storyDto.StoryId)
-            {
-                return BadRequest("Story ID mismatch");
-            }
-
-            var story = await _storyRepository.GetStoryByIdAsync(id);
-            if (story == null)
-            {
-                return NotFound();
-            }
-
-            story.Title = storyDto.Title;
-            story.Description = storyDto.Description;
-            story.Content = storyDto.Content;
-            story.ImageUrl = storyDto.ImageUrl;
-
-            await _storyRepository.UpdateStoryAsync(story);
-            return NoContent();
-        }
 
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteStory(int id)
         {
-            var story = await _storyRepository.GetStoryByIdAsync(id);
-            if (story == null)
+            try
             {
-                return NotFound();
-            }
+                var story = await _storyRepository.GetStoryByIdAsync(id);
+                if (story == null)
+                {
+                    return NotFound();
+                }
 
-            await _storyRepository.DeleteStoryAsync(id);
-            return NoContent();
+                await _storyRepository.DeleteStoryAsync(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                // Use structured logging
+                // e.g., _logger.LogError($"Error deleting story: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }

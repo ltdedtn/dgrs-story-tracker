@@ -140,6 +140,14 @@ F:\Programming Projects\Phase-2-2024\backend\backend\bin\Debug\net8.0\backend.st
 F:\Programming Projects\Phase-2-2024\backend\backend\bin\Debug\net8.0\DotNetEnv.dll
 F:\Programming Projects\Phase-2-2024\backend\backend\bin\Debug\net8.0\Sprache.dll
 F:\Programming Projects\Phase-2-2024\backend\backend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.csproj.AssemblyReference.cache
+F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.GeneratedMSBuildEditorConfig.editorconfig
+F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.AssemblyInfoInputs.cache
+F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.AssemblyInfo.cs
+F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.csproj.CoreCompileInputs.cache
+F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.MvcApplicationPartsAssemblyInfo.cs
+F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.MvcApplicationPartsAssemblyInfo.cache
+F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.sourcelink.json
 F:\Programming Projects\dgrs-story-tracker\backend\backend\bin\Debug\net8.0\appsettings.Development.json
 F:\Programming Projects\dgrs-story-tracker\backend\backend\bin\Debug\net8.0\appsettings.json
 F:\Programming Projects\dgrs-story-tracker\backend\backend\bin\Debug\net8.0\backend.staticwebassets.runtime.json
@@ -260,13 +268,6 @@ F:\Programming Projects\dgrs-story-tracker\backend\backend\bin\Debug\net8.0\runt
 F:\Programming Projects\dgrs-story-tracker\backend\backend\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 F:\Programming Projects\dgrs-story-tracker\backend\backend\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 F:\Programming Projects\dgrs-story-tracker\backend\backend\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
-F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.csproj.AssemblyReference.cache
-F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.GeneratedMSBuildEditorConfig.editorconfig
-F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.AssemblyInfoInputs.cache
-F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.AssemblyInfo.cs
-F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.csproj.CoreCompileInputs.cache
-F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.MvcApplicationPartsAssemblyInfo.cs
-F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.MvcApplicationPartsAssemblyInfo.cache
 F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\staticwebassets.build.json
 F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\staticwebassets.development.json
 F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\staticwebassets\msbuild.backend.Microsoft.AspNetCore.StaticWebAssets.props
@@ -281,4 +282,3 @@ F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\refi
 F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.pdb
 F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.genruntimeconfig.cache
 F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\ref\backend.dll
-F:\Programming Projects\dgrs-story-tracker\backend\backend\obj\Debug\net8.0\backend.sourcelink.json

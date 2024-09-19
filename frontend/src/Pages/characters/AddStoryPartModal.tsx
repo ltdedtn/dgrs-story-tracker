@@ -165,7 +165,9 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
             <select
               id="storyPartId"
               value={selectedStoryPartId}
-              onChange={(e) => setSelectedStoryPartId(Number(e.target.value))}
+              onChange={(e) => {
+                setSelectedStoryPartId(Number(e.target.value));
+              }}
               className="select select-bordered w-full dark:bg-gray-700 dark:text-white"
               required
             >
@@ -174,8 +176,8 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
                 <option>Loading story parts...</option>
               ) : (
                 storyParts.map((part) => (
-                  <option key={part.partId} value={part.partId}>
-                    {part.content}
+                  <option key={part.storyPartId} value={part.storyPartId}>
+                    {part.title}
                   </option>
                 ))
               )}

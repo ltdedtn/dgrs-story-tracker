@@ -75,6 +75,7 @@ const StoryDash = () => {
   }, [selectedStory]);
 
   const handleStoryClick = (story: Story) => {
+    console.log(story);
     setSelectedStory(story);
     setIsDescriptionExpanded(false);
   };
@@ -246,20 +247,20 @@ const StoryDash = () => {
               ) : (
                 storyParts.map((part) => (
                   <div
-                    key={part.partId}
+                    key={part.storyPartId}
                     className="flex-shrink-0 w-64 rounded-lg p-4"
                   >
                     {part.imageUrl && (
                       <img
                         src={`https://localhost:7023/${part.imageUrl}`}
-                        alt={`Story Part ${part.partId}`}
+                        alt={`Story Part ${part.storyPartId}`}
                         className="w-full h-40 object-cover mb-4"
                       />
                     )}
                     <div>
                       <div className="text-xl">Content</div>
                       <div className="max-w-3xl mx-auto mb-4 text-left">
-                        {expandedPartId === part.partId
+                        {expandedPartId === part.storyPartId
                           ? part.content
                           : part.content.length > 100
                           ? `${part.content.slice(0, 100)}...`
@@ -268,9 +269,9 @@ const StoryDash = () => {
                       {part.content.length > 100 && (
                         <button
                           className="mt-2 px-3 rounded"
-                          onClick={() => toggleExpandPart(part.partId)}
+                          onClick={() => toggleExpandPart(part.storyPartId)}
                         >
-                          {expandedPartId === part.partId
+                          {expandedPartId === part.storyPartId
                             ? "Read Less"
                             : "Read More"}
                         </button>
@@ -279,7 +280,7 @@ const StoryDash = () => {
                     <div>
                       <div className="text-xl py-1">Summary</div>
                       <div className="max-w-3xl mx-auto mb-4 text-left">
-                        {expandedPartId === part.partId
+                        {expandedPartId === part.storyPartId
                           ? part.description || "No summary available."
                           : part.description || "No summary available."}
                       </div>
