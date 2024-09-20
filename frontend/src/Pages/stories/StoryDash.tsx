@@ -15,7 +15,6 @@ const StoryDash = () => {
     useState<boolean>(false);
 
   const navigate = useNavigate();
-
   const storiesCarouselRef = useRef<HTMLDivElement>(null);
   const storyPartsCarouselRef = useRef<HTMLDivElement>(null);
 
@@ -50,7 +49,6 @@ const StoryDash = () => {
         const token = localStorage.getItem("token");
         try {
           const url = `https://localhost:7023/api/StoryParts/ByStory/${selectedStory.storyId}`;
-
           const response = await axios.get<StoryPart[]>(url, {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -75,17 +73,8 @@ const StoryDash = () => {
   }, [selectedStory]);
 
   const handleStoryClick = (story: Story) => {
-    console.log(story);
     setSelectedStory(story);
     setIsDescriptionExpanded(false);
-  };
-
-  const handleAddStoryPartClick = () => {
-    navigate("/storyPart/new");
-  };
-
-  const handleCreateStoryClick = () => {
-    navigate("/stories/new");
   };
 
   const scrollCarousel = (
@@ -101,12 +90,60 @@ const StoryDash = () => {
     }
   };
 
+  const isScrollLeftEnabled = () => {
+    const container = storiesCarouselRef.current;
+    if (container) {
+      return container.scrollLeft > 0;
+    }
+    return false;
+  };
+
+  const isScrollRightEnabled = () => {
+    const container = storiesCarouselRef.current;
+    if (container) {
+      return (
+        container.scrollWidth > container.clientWidth + container.scrollLeft
+      );
+    }
+    return false;
+  };
+
+  const isStoryPartsScrollLeftEnabled = () => {
+    const container = storyPartsCarouselRef.current;
+    if (container) {
+      return container.scrollLeft > 0;
+    }
+    return false;
+  };
+
+  const isStoryPartsScrollRightEnabled = () => {
+    const container = storyPartsCarouselRef.current;
+    if (container) {
+      return (
+        container.scrollWidth > container.clientWidth + container.scrollLeft
+      );
+    }
+    return false;
+  };
+
   const toggleExpandPart = (partId: number) => {
     setExpandedPartId(expandedPartId === partId ? null : partId);
   };
 
   const toggleDescription = () => {
     setIsDescriptionExpanded(!isDescriptionExpanded);
+  };
+  const isScrollableLeft = (carouselRef: React.RefObject<HTMLDivElement>) => {
+    const container = carouselRef.current;
+    return container && container.scrollLeft > 0;
+  };
+
+  const isScrollableRight = (carouselRef: React.RefObject<HTMLDivElement>) => {
+    const container = carouselRef.current;
+    return (
+      container &&
+      container.scrollWidth > container.scrollLeft + container.clientWidth
+    );
   };
 
   if (loading) {
@@ -119,26 +156,58 @@ const StoryDash = () => {
 
   return (
     <div className="p-4">
-      <div className="relative flex items-center overflow-hidden">
+      <div className="mb-4 flex justify-between items-center">
+        <h1 className="text-3xl font-bold">Stories</h1>
         <button
-          className="absolute left-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
-          onClick={() => scrollCarousel(-1, storiesCarouselRef)}
+          className="btn btn-primary"
+          onClick={() => navigate("/stories/new")}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
+          Create New Story
         </button>
+      </div>
+      <div className="relative flex items-center overflow-hidden">
+        {isScrollableRight(storiesCarouselRef) && (
+          <button
+            className="absolute left-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
+            onClick={() => scrollCarousel(-1, storiesCarouselRef)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+        )}
+        {isScrollableLeft(storiesCarouselRef) && (
+          <button
+            className="absolute right-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
+            onClick={() => scrollCarousel(1, storiesCarouselRef)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
+        )}
         <div
           className="flex overflow-x-auto scroll-smooth gap-4 p-4 mx-2"
           ref={storiesCarouselRef}
@@ -150,7 +219,7 @@ const StoryDash = () => {
               <div
                 key={story.storyId}
                 className="flex-shrink-0 w-64 h-48 relative bg-gray-200 rounded-lg overflow-hidden cursor-pointer"
-                onClick={() => handleStoryClick(story)}
+                onClick={() => setSelectedStory(story)}
               >
                 <img
                   src={`https://localhost:7023/${story.imageUrl}`}
@@ -163,160 +232,127 @@ const StoryDash = () => {
               </div>
             ))
           )}
+        </div>
+      </div>
+      <div>
+        <div className="mb-4 flex justify-between items-center">
+          <h1 className="text-3xl font-bold">Story Parts</h1>
           <button
-            className="py-2 px-4 rounded ml-4"
-            onClick={handleCreateStoryClick}
+            className="btn btn-primary"
+            onClick={() => navigate("/storyPart/new")}
           >
-            Add New Story
+            Create New Story Part
           </button>
         </div>
-        <button
-          className="absolute right-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
-          onClick={() => scrollCarousel(1, storiesCarouselRef)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </button>
-      </div>
 
-      {selectedStory && (
-        <div className="mt-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">{selectedStory.title}</h2>
-          <div>
-            <div className="text-xl">Content</div>
-            <div className="max-w-3xl mx-auto mb-4 text-left">
-              {selectedStory.content}
-            </div>
-          </div>
-          <div>
-            <div className="text-xl">Summary</div>
-            <div className="max-w-3xl mx-auto mb-4 text-left">
-              <div
-                className={`text-lg ${
-                  isDescriptionExpanded ? "" : "line-clamp-3"
-                }`}
-              >
-                {selectedStory.description}
+        {selectedStory && (
+          <div className="mt-8 text-center">
+            <h2 className="text-3xl font-bold mb-4">{selectedStory.title}</h2>
+            <div>
+              <div className="text-xl">Content</div>
+              <div className="max-w-3xl mx-auto mb-4 text-left">
+                {selectedStory.content || "No content available"}
               </div>
-              {selectedStory.description.length > 100 && (
-                <button className="mt-2 rounded" onClick={toggleDescription}>
-                  {isDescriptionExpanded ? "Read Less" : "Read More"}
+            </div>
+            <div>
+              <div className="text-xl">Summary</div>
+              <div className="max-w-3xl mx-auto mb-4 text-left">
+                <div
+                  className={`text-lg ${
+                    isDescriptionExpanded ? "" : "line-clamp-3"
+                  }`}
+                >
+                  {selectedStory.description || "No description available"}
+                </div>
+                {selectedStory.description &&
+                  selectedStory.description.length > 100 && (
+                    <button
+                      className="mt-2 rounded"
+                      onClick={toggleDescription}
+                    >
+                      {isDescriptionExpanded ? "Read Less" : "Read More"}
+                    </button>
+                  )}
+              </div>
+            </div>
+
+            <div className="relative flex items-center overflow-hidden">
+              {isScrollableRight(storyPartsCarouselRef) && (
+                <button
+                  className="absolute left-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
+                  onClick={() => scrollCarousel(-1, storyPartsCarouselRef)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
                 </button>
               )}
-            </div>
-          </div>
-
-          <div className="relative">
-            <button
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
-              onClick={() => scrollCarousel(-1, storyPartsCarouselRef)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
-            <div
-              className="flex overflow-x-auto scroll-smooth gap-4 p-4 mx-2"
-              ref={storyPartsCarouselRef}
-            >
-              {storyParts.length === 0 ? (
-                <p>No story parts available</p>
-              ) : (
-                storyParts.map((part) => (
-                  <div
-                    key={part.storyPartId}
-                    className="flex-shrink-0 w-64 rounded-lg p-4"
+              {isScrollableLeft(storyPartsCarouselRef) && (
+                <button
+                  className="absolute right-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
+                  onClick={() => scrollCarousel(1, storyPartsCarouselRef)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
-                    {part.imageUrl && (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              )}
+              <div
+                className="flex overflow-x-auto scroll-smooth gap-4 p-4 mx-2"
+                ref={storyPartsCarouselRef}
+              >
+                {storyParts.length === 0 ? (
+                  <p>No story parts available</p>
+                ) : (
+                  storyParts.map((part) => (
+                    <div
+                      key={part.storyPartId}
+                      className="flex-shrink-0 w-64 h-48 relative bg-gray-200 rounded-lg overflow-hidden"
+                      onClick={() => toggleExpandPart(part.storyPartId)}
+                    >
                       <img
                         src={`https://localhost:7023/${part.imageUrl}`}
-                        alt={`Story Part ${part.storyPartId}`}
-                        className="w-full h-40 object-cover mb-4"
+                        alt={part.title}
+                        className="w-full h-full object-cover"
                       />
-                    )}
-                    <div>
-                      <div className="text-xl">Content</div>
-                      <div className="max-w-3xl mx-auto mb-4 text-left">
-                        {expandedPartId === part.storyPartId
-                          ? part.content
-                          : part.content.length > 100
-                          ? `${part.content.slice(0, 100)}...`
-                          : part.content}
+                      <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-center py-2 text-sm">
+                        {part.title}
                       </div>
-                      {part.content.length > 100 && (
-                        <button
-                          className="mt-2 px-3 rounded"
-                          onClick={() => toggleExpandPart(part.storyPartId)}
-                        >
-                          {expandedPartId === part.storyPartId
-                            ? "Read Less"
-                            : "Read More"}
-                        </button>
+                      {expandedPartId === part.storyPartId && (
+                        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 text-white p-4">
+                          <p>{part.description}</p>
+                        </div>
                       )}
                     </div>
-                    <div>
-                      <div className="text-xl py-1">Summary</div>
-                      <div className="max-w-3xl mx-auto mb-4 text-left">
-                        {expandedPartId === part.storyPartId
-                          ? part.description || "No summary available."
-                          : part.description || "No summary available."}
-                      </div>
-                    </div>
-                  </div>
-                ))
-              )}
-              <button
-                className="py-2 px-4 rounded ml-4"
-                onClick={handleAddStoryPartClick}
-              >
-                Add New Story Part
-              </button>
+                  ))
+                )}
+              </div>
             </div>
-            <button
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
-              onClick={() => scrollCarousel(1, storyPartsCarouselRef)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

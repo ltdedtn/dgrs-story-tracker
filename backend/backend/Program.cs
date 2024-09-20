@@ -65,6 +65,7 @@ builder.Services.AddDbContext<BackendContext>(options =>
     }));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IStoryGroupRepository, StoryGroupRepository>();
 builder.Services.AddScoped<IStoryRepository, StoryRepository>();
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IStoryPartRepository, StoryPartRepository>();

@@ -63,6 +63,7 @@ namespace backend.Controllers
             {
                 var storyPart = new StoryPart
                 {
+                    Title = model.Title,
                     Content = model.Content,
                     StoryId = model.StoryId,
                     Description = model.Description,

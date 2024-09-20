@@ -57,18 +57,31 @@ namespace backend.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Editor,Admin")]
-        public async Task<ActionResult<StoryGroup>> PostStoryGroup([FromForm] StoryGroupCreateDto model)
+        public async Task<ActionResult<StoryGroup>> PostStoryGroup([FromForm] StoryGroupCreateDto model, IFormFile? imageFile)
         {
             try
             {
                 var storyGroup = new StoryGroup
                 {
                     Title = model.Title,
-                    Description = model.Description,
-                    ImageUrl = model.ImageUrl
+                    Description = model.Description
                 };
 
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                    var filePath = Path.Combine("wwwroot", "images", fileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(fileStream);
+                    }
+
+                    storyGroup.ImageUrl = "/images/" + fileName;
+                }
+
                 var createdStoryGroup = await _storyGroupRepository.AddStoryGroupAsync(storyGroup);
+
                 return CreatedAtAction(nameof(GetStoryGroup), new { id = createdStoryGroup.StoryGroupId }, createdStoryGroup);
             }
             catch (Exception ex)
@@ -77,6 +90,7 @@ namespace backend.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Editor,Admin")]

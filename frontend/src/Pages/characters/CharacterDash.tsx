@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import { Character, StoryPart } from "../../models/Character";
 import AddStoryPartModal from "./AddStoryPartModal";
@@ -173,15 +173,18 @@ const CharacterDash: React.FC = () => {
     }
   };
 
-  const scrollCarousel = (direction: number) => {
-    const container = carouselRef.current;
-    if (container) {
-      container.scrollBy({
-        left: direction * container.clientWidth,
-        behavior: "smooth",
-      });
-    }
-  };
+  const scrollCarousel = useCallback(
+    (direction: number, carouselRef: React.RefObject<HTMLDivElement>) => {
+      const container = carouselRef.current;
+      if (container) {
+        container.scrollBy({
+          left: direction * container.clientWidth,
+          behavior: "smooth",
+        });
+      }
+    },
+    []
+  );
 
   const toggleCharacterDescription = () => {
     setIsCharacterExpanded(!isCharacterExpanded);
@@ -209,6 +212,9 @@ const CharacterDash: React.FC = () => {
         return "bg-black bg-opacity-50";
     }
   };
+  const shouldShowCarousel = (items: any[], itemWidth: number) => {
+    return items.length * itemWidth > window.innerWidth;
+  };
 
   if (loading) {
     return <div className="text-center">Loading...</div>;
@@ -217,29 +223,52 @@ const CharacterDash: React.FC = () => {
   if (error) {
     return <div className="text-center text-red-500">{error}</div>;
   }
-
+  const itemWidth = 256;
   return (
     <div className="p-4">
       <div className="relative flex items-center overflow-hidden">
-        <button
-          className="absolute left-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
-          onClick={() => scrollCarousel(-1)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-        </button>
+        {shouldShowCarousel(characters, itemWidth) && (
+          <>
+            <button
+              className="absolute left-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
+              onClick={() => scrollCarousel(-1, carouselRef)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button
+              className="absolute right-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
+              onClick={() => scrollCarousel(1, carouselRef)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </>
+        )}
         <div
           className="flex overflow-x-auto scroll-smooth gap-4 p-4 mx-2"
           ref={carouselRef}
@@ -279,7 +308,7 @@ const CharacterDash: React.FC = () => {
         </div>
         <button
           className="absolute right-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
-          onClick={() => scrollCarousel(1)}
+          onClick={() => scrollCarousel(1, carouselRef)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -384,7 +413,7 @@ const CharacterDash: React.FC = () => {
           </div>
         </div>
       )}
-
+      a
       {isModalOpen && selectedCharacter && (
         <AddStoryPartModal
           characterId={selectedCharacter.characterId}

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const NewStoryPart = () => {
+  const [title, setTitle] = useState<string>(""); // Added title state
   const [content, setContent] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [storyId, setStoryId] = useState<number | "">("");
@@ -11,7 +12,7 @@ const NewStoryPart = () => {
   const [error, setError] = useState<string | null>(null);
   const [stories, setStories] = useState<{ storyId: number; title: string }[]>(
     []
-  ); // For dropdown
+  );
   const navigate = useNavigate();
 
   // Fetch available stories for the dropdown
@@ -41,7 +42,7 @@ const NewStoryPart = () => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       setImageFile(file);
-      setImagePreview(URL.createObjectURL(file)); // Set preview URL
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
@@ -54,6 +55,7 @@ const NewStoryPart = () => {
     try {
       const formData = new FormData();
       const token = localStorage.getItem("token");
+      formData.append("title", title); // Append title
       formData.append("content", content);
       formData.append("description", description);
       formData.append("storyId", storyId.toString());
@@ -79,6 +81,19 @@ const NewStoryPart = () => {
       <h1 className="text-2xl font-bold mb-4">Create New Story Part</h1>
       {error && <div className="alert alert-error mb-4">{error}</div>}
       <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="form-control">
+          <label htmlFor="title" className="label">
+            <span className="label-text">Title</span>
+          </label>
+          <input
+            id="title"
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="input input-bordered w-full"
+            required
+          />
+        </div>
         <div className="form-control">
           <label htmlFor="content" className="label">
             <span className="label-text">Content</span>

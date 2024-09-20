@@ -7,6 +7,8 @@ import Login from "./Pages/users/Login";
 import SignUp from "./Pages/users/NewUserForm";
 import UserDash from "./Pages/users/UserDash";
 import EditUserForm from "./Pages/users/EditUserForm";
+import StoryGroupDash from "./Pages/storyGroups/StoryGroupDash";
+import NewStoryGroup from "./Pages/storyGroups/NewStoryGroup";
 import StoryDash from "./Pages/stories/StoryDash";
 import CharacterDash from "./Pages/characters/CharacterDash";
 import EditCharacter from "./Pages/characters/EditCharacter";
@@ -32,6 +34,8 @@ function App() {
                 path="/dash/users/:userId/edit"
                 element={<EditUserForm />}
               />
+              <Route path="/storygroup" element={<StoryGroupDash />} />
+              <Route path="/newStoryGroup" element={<NewStoryGroup />} />
               <Route path="/stories" element={<StoryDash />} />
               <Route path="/stories/new" element={<NewStory />} />
               <Route path="/stories/:storyId/edit" element={<EditStory />} />

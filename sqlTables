@@ -55,11 +55,14 @@ CREATE TABLE StoryParts
     Content TEXT NOT NULL,
     Description TEXT NULL,
     CreatedBy INT NOT NULL,
+    StoryId INT NOT NULL,
+    CreatedAt DATETIME NOT NULL DEFAULT GETDATE(),
+    ImageUrl NVARCHAR(255) NULL,
     FOREIGN KEY (StoryId) REFERENCES Stories(StoryId),
 );
 
 -- StoryGroups Table
-CREATE TABLE StoryGroups
+CREATE TABLE StoryGroup
 (
     StoryGroupId INT IDENTITY(1,1) PRIMARY KEY,
     Title NVARCHAR(255) NOT NULL,
