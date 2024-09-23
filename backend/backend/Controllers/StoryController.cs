@@ -35,7 +35,8 @@ namespace backend.Controllers
                     Description = story.Description,
                     Content = story.Content,
                     CreatedAt = story.CreatedAt,
-                    ImageUrl = story.ImageUrl
+                    ImageUrl = story.ImageUrl,
+                    StoryGroupId = story.StoryGroupId
                 });
                 return Ok(storyDtos);
             }
@@ -89,7 +90,6 @@ namespace backend.Controllers
                     Description = storyDto.Description,
                     Content = storyDto.Content,
                     CreatedAt = DateTime.UtcNow,
-                    UserId = storyDto.UserId
                 };
 
                 if (imageFile != null && imageFile.Length > 0)
@@ -150,5 +150,20 @@ namespace backend.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        // Get stories by story group ID
+        [HttpGet("ByStoryGroup/{storyGroupId}")]
+        [AllowAnonymous]
+        [Authorize(Roles = "StandardUser,Editor,Admin")]
+        public async Task<ActionResult<IEnumerable<Story>>> GetStoriesByStoryGroupId(int storyGroupId)
+        {
+            var stories = await _storyRepository.GetStoriesByStoryGroupIdAsync(storyGroupId);
+            if (stories == null || !stories.Any())
+            {
+                return Ok(new List<Story>());
+            }
+
+            return Ok(stories);
+        }
+
     }
 }

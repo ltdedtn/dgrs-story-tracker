@@ -26,7 +26,8 @@ namespace backend.Repositories
                     Description = s.Description,
                     Content = s.Content,
                     CreatedAt = s.CreatedAt,
-                    ImageUrl = s.ImageUrl
+                    ImageUrl = s.ImageUrl,
+                    StoryGroupId = s.StoryGroupId
                 })
                 .ToListAsync();
         }
@@ -42,7 +43,8 @@ namespace backend.Repositories
                     Description = s.Description,
                     Content = s.Content,
                     CreatedAt = s.CreatedAt,
-                    ImageUrl = s.ImageUrl
+                    ImageUrl = s.ImageUrl,
+                    StoryGroupId= s.StoryGroupId
                 })
                 .FirstOrDefaultAsync();
         }
@@ -69,5 +71,12 @@ namespace backend.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<IEnumerable<Story>> GetStoriesByStoryGroupIdAsync(int storyGroupId)
+        {
+            return await _context.Stories
+                .Where(s => s.StoryGroupId == storyGroupId)
+                .ToListAsync();
+        }
+
     }
 }

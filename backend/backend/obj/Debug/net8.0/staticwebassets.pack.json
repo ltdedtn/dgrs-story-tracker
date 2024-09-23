@@ -1,6 +1,14 @@
 {
   "Files": [
     {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\01bf07f6-6253-4ae3-b58f-34da14dae1aa.jpg",
+      "PackagePath": "staticwebassets\\images\\01bf07f6-6253-4ae3-b58f-34da14dae1aa.jpg"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\0212625b-68f9-446e-ae52-bb76a5a50a8e.jpg",
+      "PackagePath": "staticwebassets\\images\\0212625b-68f9-446e-ae52-bb76a5a50a8e.jpg"
+    },
+    {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\028d6703-a6fd-4573-99e7-ee9abc044878.jpg",
       "PackagePath": "staticwebassets\\images\\028d6703-a6fd-4573-99e7-ee9abc044878.jpg"
     },

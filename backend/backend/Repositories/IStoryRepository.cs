@@ -11,5 +11,7 @@ namespace backend.Repositories
         Task<Story> AddStoryAsync(Story story);
         Task UpdateStoryAsync(Story story);
         Task DeleteStoryAsync(int id);
+        Task<IEnumerable<Story>> GetStoriesByStoryGroupIdAsync(int storyGroupId);
+
     }
 }

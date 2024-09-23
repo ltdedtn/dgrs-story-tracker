@@ -20,12 +20,6 @@ namespace backend.Repositories
             return await _context.Users.ToListAsync();
         }
 
-        public async Task<User> GetUserByIdAsync(int id)
-        {
-            return await _context.Users
-                .Include(u => u.Stories)
-                .FirstOrDefaultAsync(u => u.UserId == id);
-        }
 
         public async Task<User> AddUserAsync(User user)
         {

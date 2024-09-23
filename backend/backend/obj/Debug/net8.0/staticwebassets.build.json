@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "IQ8gLv04PyeAYnsmEjQ+9PYT00jO1LxXMt04XlJrjFk=",
+  "Hash": "61IBcbnOTnpcKg2hupyBJCeCiIgGR8pK599IT41YWJM=",
   "Source": "backend",
   "BasePath": "_content/backend",
   "Mode": "Default",
@@ -16,6 +16,44 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\01bf07f6-6253-4ae3-b58f-34da14dae1aa.jpg",
+      "SourceId": "backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\",
+      "BasePath": "_content/backend",
+      "RelativePath": "images/01bf07f6-6253-4ae3-b58f-34da14dae1aa.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\01bf07f6-6253-4ae3-b58f-34da14dae1aa.jpg"
+    },
+    {
+      "Identity": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\0212625b-68f9-446e-ae52-bb76a5a50a8e.jpg",
+      "SourceId": "backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\",
+      "BasePath": "_content/backend",
+      "RelativePath": "images/0212625b-68f9-446e-ae52-bb76a5a50a8e.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\0212625b-68f9-446e-ae52-bb76a5a50a8e.jpg"
+    },
     {
       "Identity": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\028d6703-a6fd-4573-99e7-ee9abc044878.jpg",
       "SourceId": "backend",

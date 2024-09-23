@@ -1,15 +1,41 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const NewStory = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [content, setContent] = useState<string>(""); // New state for content
+  const [content, setContent] = useState<string>("");
+  const [storyGroupId, setStoryGroupId] = useState<number | "">("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [storyGroups, setStoryGroups] = useState<
+    { storyGroupId: number; name: string }[]
+  >([]);
   const navigate = useNavigate();
+
+  // Fetch available story groups for the dropdown
+  const fetchStoryGroups = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.get<
+        { storyGroupId: number; name: string }[]
+      >("https://localhost:7023/api/StoryGroups", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setStoryGroups(response.data);
+    } catch (error) {
+      console.error("Error fetching story groups", error);
+      setError("Failed to fetch story groups. Please try again.");
+    }
+  };
+
+  useEffect(() => {
+    fetchStoryGroups();
+  }, []);
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -25,8 +51,8 @@ const NewStory = () => {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("description", description);
-      formData.append("content", content); // Append content to form data
-      formData.append("userId", "");
+      formData.append("content", content);
+      formData.append("storyGroupId", storyGroupId.toString()); // Append StoryGroupId
       if (imageFile) {
         formData.append("imageFile", imageFile);
       }
@@ -63,19 +89,19 @@ const NewStory = () => {
           />
         </div>
         <div className="form-control">
-          <div className="form-control">
-            <label htmlFor="content" className="label">
-              <span className="label-text">Content</span>
-            </label>
-            <textarea
-              id="content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              className="textarea textarea-bordered w-full"
-              rows={6}
-              required
-            ></textarea>
-          </div>
+          <label htmlFor="content" className="label">
+            <span className="label-text">Content</span>
+          </label>
+          <textarea
+            id="content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className="textarea textarea-bordered w-full"
+            rows={6}
+            required
+          ></textarea>
+        </div>
+        <div className="form-control">
           <label htmlFor="description" className="label">
             <span className="label-text">Summary</span>
           </label>
@@ -88,7 +114,25 @@ const NewStory = () => {
             required
           ></textarea>
         </div>
-
+        <div className="form-control">
+          <label htmlFor="storyGroupId" className="label">
+            <span className="label-text">Story Group</span>
+          </label>
+          <select
+            id="storyGroupId"
+            value={storyGroupId}
+            onChange={(e) => setStoryGroupId(Number(e.target.value) || "")}
+            className="select select-bordered w-full"
+            required
+          >
+            <option value="">Select a story group</option>
+            {storyGroups.map((group) => (
+              <option key={group.storyGroupId} value={group.storyGroupId}>
+                {group.name}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="form-control">
           <label htmlFor="image" className="label">
             <span className="label-text">Image</span>

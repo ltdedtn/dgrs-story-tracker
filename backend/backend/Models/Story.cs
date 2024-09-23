@@ -9,16 +9,13 @@ namespace backend.Models
         public string? Description { get; set; }
         public string? Content { get; set; }
         public DateTime CreatedAt { get; set; }
-        public int? UserId { get; set; }
         public string? ImageUrl { get; set; }
+        public int? StoryGroupId { get; set; }
 
-        public User? User { get; set; }
         public ICollection<Character> Characters { get; set; } = new List<Character>();
         [JsonIgnore]
         public ICollection<StoryPart> StoryParts { get; set; } = new List<StoryPart>();
 
-        // New Foreign Key for StoryGroup
-        public int? StoryGroupId { get; set; }
-        public StoryGroup? StoryGroup { get; set; }
+        
     }
 }

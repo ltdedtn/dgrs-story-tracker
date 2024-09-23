@@ -144,15 +144,7 @@ namespace backend.Controllers
                 return NotFound();
             }
 
-            // Set UserId to null for associated stories
-            var userStories = await _context.Stories
-                .Where(s => s.UserId == id)
-                .ToListAsync();
     
-            foreach (var story in userStories)
-            {
-                story.UserId = null;
-            }
 
             // Remove associated roles
             var userRoles = user.UserRoles.ToList();

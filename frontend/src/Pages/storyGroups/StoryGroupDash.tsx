@@ -51,7 +51,7 @@ const StoryGroupDash = () => {
         const token = localStorage.getItem("token");
         try {
           const response = await axios.get<Story[]>(
-            `https://localhost:7023/api/Stories/ByStoryGroup/${selectedStoryGroup.storyGroupId}`,
+            `https://localhost:7023/api/Story/ByStoryGroup/${selectedStoryGroup.storyGroupId}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -79,6 +79,7 @@ const StoryGroupDash = () => {
               headers: { Authorization: `Bearer ${token}` },
             }
           );
+          console.log(response.data);
           setStoryParts(response.data);
         } catch (error) {
           console.error("Error fetching story parts", error);
@@ -126,6 +127,8 @@ const StoryGroupDash = () => {
   }, [storyParts]);
 
   const handleStoryGroupClick = (storyGroup: StoryGroup) => {
+    console.log("check");
+    console.log(storyGroup);
     setSelectedStoryGroup(storyGroup);
     setSelectedStory(null);
   };
@@ -165,7 +168,7 @@ const StoryGroupDash = () => {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-4 h-full">
       <div className="mb-4 flex justify-between items-center">
         <h1 className="text-3xl font-bold">Story Groups</h1>
         <button
@@ -182,7 +185,20 @@ const StoryGroupDash = () => {
             className="absolute left-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
             onClick={() => scrollCarousel(-1, storyGroupsCarouselRef)}
           >
-            {/* Left arrow SVG */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
           </button>
         )}
         <div
@@ -211,21 +227,80 @@ const StoryGroupDash = () => {
             className="absolute right-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
             onClick={() => scrollCarousel(1, storyGroupsCarouselRef)}
           >
-            {/* Right arrow SVG */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
           </button>
         )}
       </div>
 
       {selectedStoryGroup && (
-        <div className="mt-8">
+        <div className="mt-8 text-center">
           <h2 className="text-3xl font-bold">{selectedStoryGroup.title}</h2>
+          <br />
+          <div>
+            <div className="text-xl">Description</div>
+            <div className="max-w-3xl mx-auto mb-4 text-left">
+              <div
+                className={`text-lg ${
+                  isDescriptionExpanded ? "" : "line-clamp-3"
+                }`}
+              >
+                {selectedStoryGroup.description || "No description available"}
+              </div>
+              {selectedStoryGroup.description &&
+                selectedStoryGroup.description.length > 100 && (
+                  <button className="mt-2 rounded" onClick={toggleDescription}>
+                    {isDescriptionExpanded ? "Read Less" : "Read More"}
+                  </button>
+                )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {selectedStoryGroup && (
+        <div className="mt-8 ">
+          <div className="mb-4 flex justify-between items-center">
+            <h1 className="text-3xl font-bold">Stories</h1>
+            <button
+              className="btn btn-primary"
+              onClick={() => navigate("/stories/new")}
+            >
+              Create New Story
+            </button>
+          </div>
           <div className="relative flex items-center overflow-hidden">
             {showStoryButtons && (
               <button
                 className="absolute left-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
                 onClick={() => scrollCarousel(-1, storiesCarouselRef)}
               >
-                {/* Left arrow SVG */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
               </button>
             )}
             <div
@@ -254,20 +329,35 @@ const StoryGroupDash = () => {
                 className="absolute right-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
                 onClick={() => scrollCarousel(1, storiesCarouselRef)}
               >
-                {/* Right arrow SVG */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
               </button>
             )}
           </div>
 
           {selectedStory && (
-            <div className="mt-8">
+            <div className="mt-8 text-center">
               <h3 className="text-3xl font-bold">{selectedStory.title}</h3>
+
               <div>
                 <div className="text-xl">Content</div>
                 <div className="max-w-3xl mx-auto mb-4 text-left">
                   {selectedStory.content || "No content available"}
                 </div>
               </div>
+
               <div>
                 <div className="text-xl">Summary</div>
                 <div className="max-w-3xl mx-auto mb-4 text-left">
@@ -289,54 +379,114 @@ const StoryGroupDash = () => {
                     )}
                 </div>
               </div>
+
+              <div className="mb-4 flex justify-between items-center">
+                <h1 className="text-3xl font-bold">Story Parts</h1>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => navigate("/storyPart/new")}
+                >
+                  Create New Story Part
+                </button>
+              </div>
+
               <div className="relative flex items-center overflow-hidden">
                 {showStoryPartButtons && (
                   <button
                     className="absolute left-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
                     onClick={() => scrollCarousel(-1, storyPartsCarouselRef)}
                   >
-                    {/* Left arrow SVG */}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
                   </button>
                 )}
                 <div
                   className="flex overflow-x-auto scroll-smooth gap-4 p-4 mx-2"
                   ref={storyPartsCarouselRef}
                 >
-                  {storyParts.map((part) => (
-                    <div
-                      key={part.storyPartId}
-                      className="flex-shrink-0 w-64 h-48 relative bg-gray-200 rounded-lg overflow-hidden"
-                    >
-                      <img
-                        src={`https://localhost:7023/${part.imageUrl}`}
-                        alt={part.title}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-center py-2 text-sm">
-                        {part.title}
-                      </div>
+                  {storyParts.length === 0 ? (
+                    <p>No story parts available</p>
+                  ) : (
+                    storyParts.map((part) => (
                       <div
-                        className={`absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 text-white p-4 ${
-                          expandedPartId === part.storyPartId ? "" : "hidden"
-                        }`}
+                        key={part.storyPartId}
+                        className="flex-shrink-0 w-64 rounded-lg cursor-pointer"
                       >
-                        <p>{part.description}</p>
+                        {part.imageUrl && (
+                          <div className="relative">
+                            <img
+                              src={`https://localhost:7023/${part.imageUrl}`}
+                              alt={`Story Part ${part.storyPartId}`}
+                              className="w-full h-40 object-cover"
+                            />
+                            <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-center py-2 text-sm">
+                              {part.title}
+                            </div>
+                          </div>
+                        )}
+                        <div className="p-2">
+                          <div className="text-xl">Content</div>
+                          <div className="mb-4 text-left">
+                            {expandedPartId === part.storyPartId
+                              ? part.content
+                              : part.content.length > 100
+                              ? `${part.content.slice(0, 100)}...`
+                              : part.content}
+                          </div>
+                          {part.content.length > 100 && (
+                            <button
+                              className="mt-2 px-3 rounded"
+                              onClick={() => toggleExpandPart(part.storyPartId)}
+                            >
+                              {expandedPartId === part.storyPartId
+                                ? "Read Less"
+                                : "Read More"}
+                            </button>
+                          )}
+                          <div className="text-xl py-1">Summary</div>
+                          <div className="mb-4 text-left">
+                            {expandedPartId === part.storyPartId
+                              ? part.description || "No summary available."
+                              : part.description || "No summary available."}
+                          </div>
+                        </div>
                       </div>
-                      <button
-                        onClick={() => toggleExpandPart(part.storyPartId)}
-                        className="absolute top-1 right-1 text-white"
-                      >
-                        {expandedPartId === part.storyPartId ? "Hide" : "Show"}
-                      </button>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
                 {showStoryPartButtons && (
                   <button
                     className="absolute right-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
                     onClick={() => scrollCarousel(1, storyPartsCarouselRef)}
                   >
-                    {/* Right arrow SVG */}
+                    {
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    }
                   </button>
                 )}
               </div>

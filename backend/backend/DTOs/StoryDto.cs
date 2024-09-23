@@ -8,5 +8,6 @@
         public string? Content { get; set; }
         public DateTime CreatedAt { get; set; }
         public string? ImageUrl { get; set; }
+        public int? StoryGroupId { get; set; }
     }
 }
