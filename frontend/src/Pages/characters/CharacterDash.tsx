@@ -27,7 +27,6 @@ const CharacterDash: React.FC = () => {
     const fetchCharacters = async () => {
       try {
         const token = localStorage.getItem("token");
-
         const response = await axios.get<Character[]>(
           "https://localhost:7023/api/Characters",
           {
@@ -57,7 +56,6 @@ const CharacterDash: React.FC = () => {
   const fetchStoryParts = async (characterId: number) => {
     try {
       const token = localStorage.getItem("token");
-
       const response = await axios.get<StoryPart[]>(
         `https://localhost:7023/api/Characters/${characterId}/storyparts`,
         {
@@ -149,7 +147,7 @@ const CharacterDash: React.FC = () => {
         );
         setSelectedStoryParts(
           selectedStoryParts.filter(
-            (storyPart) => storyPart.partId !== storyPartId
+            (storyPart) => storyPart.storyPartId !== storyPartId
           )
         );
       } catch (error) {
@@ -173,18 +171,16 @@ const CharacterDash: React.FC = () => {
     }
   };
 
-  const scrollCarousel = useCallback(
-    (direction: number, carouselRef: React.RefObject<HTMLDivElement>) => {
-      const container = carouselRef.current;
-      if (container) {
-        container.scrollBy({
-          left: direction * container.clientWidth,
-          behavior: "smooth",
-        });
-      }
-    },
-    []
-  );
+  const scrollCarousel = useCallback((direction: number) => {
+    const container = carouselRef.current;
+    if (container) {
+      const scrollAmount = direction * 300; // Change this value to adjust scroll distance
+      container.scrollBy({
+        left: scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  }, []);
 
   const toggleCharacterDescription = () => {
     setIsCharacterExpanded(!isCharacterExpanded);
@@ -212,6 +208,7 @@ const CharacterDash: React.FC = () => {
         return "bg-black bg-opacity-50";
     }
   };
+
   const shouldShowCarousel = (items: any[], itemWidth: number) => {
     return items.length * itemWidth > window.innerWidth;
   };
@@ -223,6 +220,7 @@ const CharacterDash: React.FC = () => {
   if (error) {
     return <div className="text-center text-red-500">{error}</div>;
   }
+
   const itemWidth = 256;
   return (
     <div className="p-4">
@@ -231,7 +229,7 @@ const CharacterDash: React.FC = () => {
           <>
             <button
               className="absolute left-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
-              onClick={() => scrollCarousel(-1, carouselRef)}
+              onClick={() => scrollCarousel(-1)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -250,7 +248,7 @@ const CharacterDash: React.FC = () => {
             </button>
             <button
               className="absolute right-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
-              onClick={() => scrollCarousel(1, carouselRef)}
+              onClick={() => scrollCarousel(1)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -306,25 +304,6 @@ const CharacterDash: React.FC = () => {
             Add New Character
           </button>
         </div>
-        <button
-          className="absolute right-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
-          onClick={() => scrollCarousel(1, carouselRef)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </button>
       </div>
       {selectedCharacter && (
         <div className="mt-8 max-w-[700px] mx-auto text-center">
@@ -355,7 +334,7 @@ const CharacterDash: React.FC = () => {
             <div className="mt-4">
               {selectedStoryParts.map((storyPart) => (
                 <div
-                  key={storyPart.partId}
+                  key={storyPart.storyPartId}
                   className="mb-4 p-4 rounded-lg shadow-md"
                 >
                   <div className="flex flex-col items-center">
@@ -363,7 +342,7 @@ const CharacterDash: React.FC = () => {
                       {storyPart.storyTitle} -{" "}
                       <button
                         className="text-red-500 hover:text-red-700 mt-2 text-sm"
-                        onClick={() => handleUnlink(storyPart.partId)}
+                        onClick={() => handleUnlink(storyPart.storyPartId)}
                       >
                         Unlink
                       </button>
@@ -371,7 +350,7 @@ const CharacterDash: React.FC = () => {
                   </div>
                   <p
                     className={`mt-2 text-center overflow-hidden ${
-                      isStoryPartExpanded(storyPart.partId)
+                      isStoryPartExpanded(storyPart.storyPartId)
                         ? "max-h-full"
                         : "max-h-24"
                     } transition-all duration-300`}
@@ -381,9 +360,11 @@ const CharacterDash: React.FC = () => {
                   {storyPart.content.length > 100 && (
                     <button
                       className="text-blue-500 hover:text-blue-700 mt-2"
-                      onClick={() => toggleStoryPartContent(storyPart.partId)}
+                      onClick={() =>
+                        toggleStoryPartContent(storyPart.storyPartId)
+                      }
                     >
-                      {isStoryPartExpanded(storyPart.partId)
+                      {isStoryPartExpanded(storyPart.storyId)
                         ? "Read Less"
                         : "Read More"}
                     </button>
@@ -413,7 +394,6 @@ const CharacterDash: React.FC = () => {
           </div>
         </div>
       )}
-      a
       {isModalOpen && selectedCharacter && (
         <AddStoryPartModal
           characterId={selectedCharacter.characterId}

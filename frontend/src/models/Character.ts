@@ -1,5 +1,5 @@
 export interface StoryPart {
-    partId: number;
+  storyPartId: number;
     content: string;
     storyId: number;
     createdAt: string;

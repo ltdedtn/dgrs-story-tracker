@@ -55,9 +55,6 @@ const Header = () => {
               <Link to="/storygroup">Story Groups</Link>
             </li>
             <li>
-              <Link to="/stories">Stories</Link>
-            </li>
-            <li>
               <Link to="/characters">Characters</Link>
             </li>
             <li>
@@ -93,9 +90,6 @@ const Header = () => {
         <ul className="menu menu-horizontal px-1">
           <li>
             <Link to="/storygroup">Story Groups</Link>
-          </li>
-          <li>
-            <Link to="/stories">Stories</Link>
           </li>
           <li>
             <Link to="/characters">Characters</Link>
