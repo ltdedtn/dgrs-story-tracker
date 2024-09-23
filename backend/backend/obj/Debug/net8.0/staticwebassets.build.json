@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "61IBcbnOTnpcKg2hupyBJCeCiIgGR8pK599IT41YWJM=",
+  "Hash": "Xvz1omV/TLU0bTe7jqzkPIeBi23xcc6jIHgJwu91Ya8=",
   "Source": "backend",
   "BasePath": "_content/backend",
   "Mode": "Default",
@@ -16,6 +16,25 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\009c14c0-e57c-42cb-a186-1b98433db51a.jpg",
+      "SourceId": "backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\",
+      "BasePath": "_content/backend",
+      "RelativePath": "images/009c14c0-e57c-42cb-a186-1b98433db51a.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\009c14c0-e57c-42cb-a186-1b98433db51a.jpg"
+    },
     {
       "Identity": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\01bf07f6-6253-4ae3-b58f-34da14dae1aa.jpg",
       "SourceId": "backend",
@@ -471,6 +490,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\38b996be-4077-49c9-8dc4-0a5f556a7451.jpg"
+    },
+    {
+      "Identity": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\3ae0ee34-eead-45f0-8a2a-b6c1fef0ad81.jpg",
+      "SourceId": "backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\",
+      "BasePath": "_content/backend",
+      "RelativePath": "images/3ae0ee34-eead-45f0-8a2a-b6c1fef0ad81.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\3ae0ee34-eead-45f0-8a2a-b6c1fef0ad81.jpg"
     },
     {
       "Identity": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\3cf41495-98c5-43a9-86cf-9d962bc335a3.png",
@@ -1252,6 +1290,25 @@
       "OriginalItemSpec": "wwwroot\\images\\bd280ba1-0088-4fb5-a20f-cb67327d6046.jpg"
     },
     {
+      "Identity": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\bdeb56e5-9485-42d3-9f7d-de52da8f4ec2.jpg",
+      "SourceId": "backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\",
+      "BasePath": "_content/backend",
+      "RelativePath": "images/bdeb56e5-9485-42d3-9f7d-de52da8f4ec2.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\bdeb56e5-9485-42d3-9f7d-de52da8f4ec2.jpg"
+    },
+    {
       "Identity": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\cbc0610b-0d1a-4e92-aba4-3a8160d65d6c.jpg",
       "SourceId": "backend",
       "SourceType": "Discovered",
@@ -1347,6 +1404,25 @@
       "OriginalItemSpec": "wwwroot\\images\\e3b695df-01c5-4180-8565-870cb33382d8.jpg"
     },
     {
+      "Identity": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\e5938321-8580-458e-9bae-1601abc1dd75.jpg",
+      "SourceId": "backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\",
+      "BasePath": "_content/backend",
+      "RelativePath": "images/e5938321-8580-458e-9bae-1601abc1dd75.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\e5938321-8580-458e-9bae-1601abc1dd75.jpg"
+    },
+    {
       "Identity": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\e963d65b-5432-4d2a-8457-b4cba7b58ea7.jpg",
       "SourceId": "backend",
       "SourceType": "Discovered",
@@ -1402,6 +1478,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\eb5a7b6e-0b9e-4672-b85c-217d2c1e8f1b.jpg"
+    },
+    {
+      "Identity": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\eca42ade-6b45-47d2-821d-38b46f49655e.jpg",
+      "SourceId": "backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\",
+      "BasePath": "_content/backend",
+      "RelativePath": "images/eca42ade-6b45-47d2-821d-38b46f49655e.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\eca42ade-6b45-47d2-821d-38b46f49655e.jpg"
     },
     {
       "Identity": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\ecc83f5a-de7e-492a-948a-b0f06802eb10.jpg",

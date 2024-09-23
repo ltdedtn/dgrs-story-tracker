@@ -90,6 +90,7 @@ namespace backend.Controllers
                     Description = storyDto.Description,
                     Content = storyDto.Content,
                     CreatedAt = DateTime.UtcNow,
+                    StoryGroupId = storyDto.StoryGroupId // Set the StoryGroupId here
                 };
 
                 if (imageFile != null && imageFile.Length > 0)
@@ -113,7 +114,8 @@ namespace backend.Controllers
                     Description = createdStory.Description,
                     Content = createdStory.Content,
                     CreatedAt = createdStory.CreatedAt,
-                    ImageUrl = createdStory.ImageUrl
+                    ImageUrl = createdStory.ImageUrl,
+                    StoryGroupId = createdStory.StoryGroupId // Include StoryGroupId in response DTO if needed
                 };
 
                 return CreatedAtAction(nameof(GetStory), new { id = createdStory.StoryId }, storyDtoResponse);
@@ -121,10 +123,10 @@ namespace backend.Controllers
             catch (Exception ex)
             {
                 // Use structured logging
-                // e.g., _logger.LogError($"Error creating story: {ex}");
                 return StatusCode(500, "Internal server error");
             }
         }
+
 
 
 

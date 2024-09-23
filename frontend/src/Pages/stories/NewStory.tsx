@@ -11,8 +11,14 @@ const NewStory = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [storyGroups, setStoryGroups] = useState<
-    { storyGroupId: number; name: string }[]
+    {
+      storyGroupId: number;
+      title: string;
+      description: string;
+      imageUrl: string;
+    }[]
   >([]);
+
   const navigate = useNavigate();
 
   // Fetch available story groups for the dropdown
@@ -20,13 +26,19 @@ const NewStory = () => {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.get<
-        { storyGroupId: number; name: string }[]
+        {
+          storyGroupId: number;
+          title: string;
+          description: string;
+          imageUrl: string;
+        }[]
       >("https://localhost:7023/api/StoryGroups", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       setStoryGroups(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching story groups", error);
       setError("Failed to fetch story groups. Please try again.");
@@ -128,7 +140,7 @@ const NewStory = () => {
             <option value="">Select a story group</option>
             {storyGroups.map((group) => (
               <option key={group.storyGroupId} value={group.storyGroupId}>
-                {group.name}
+                {group.title} {/* Display the title here */}
               </option>
             ))}
           </select>
