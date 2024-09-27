@@ -38,7 +38,6 @@ const NewStory = () => {
         },
       });
       setStoryGroups(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching story groups", error);
       setError("Failed to fetch story groups. Please try again.");
@@ -64,7 +63,7 @@ const NewStory = () => {
       formData.append("title", title);
       formData.append("description", description);
       formData.append("content", content);
-      formData.append("storyGroupId", storyGroupId.toString()); // Append StoryGroupId
+      formData.append("storyGroupId", storyGroupId.toString());
       if (imageFile) {
         formData.append("imageFile", imageFile);
       }
@@ -157,11 +156,7 @@ const NewStory = () => {
           />
           {imagePreview && (
             <div className="mt-4">
-              <img
-                src={imagePreview}
-                alt="Preview"
-                className="w-32 h-32 object-cover"
-              />
+              <img src={imagePreview} alt="Preview" className="object-cover" />
             </div>
           )}
         </div>

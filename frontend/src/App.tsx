@@ -9,12 +9,13 @@ import UserDash from "./Pages/users/UserDash";
 import EditUserForm from "./Pages/users/EditUserForm";
 import StoryGroupDash from "./Pages/storyGroups/StoryGroupDash";
 import NewStoryGroup from "./Pages/storyGroups/NewStoryGroup";
-import StoryDash from "./Pages/stories/StoryDash";
+import EditStoryGroup from "./Pages/storyGroups/EditStoryGroup";
 import CharacterDash from "./Pages/characters/CharacterDash";
 import EditCharacter from "./Pages/characters/EditCharacter";
 import EditStory from "./Pages/stories/EditStory";
 import NewStory from "./Pages/stories/NewStory";
 import NewStoryPart from "./Pages/stories/NewStoryPart";
+import EditStoryPart from "./Pages/stories/EditStoryPart";
 import NewCharacter from "./Pages/characters/NewCharacter";
 import Unauthorized from "./Pages/auth/Unauthorized";
 import { UserProvider } from "./Pages/users/UserContext";
@@ -34,12 +35,19 @@ function App() {
                 path="/dash/users/:userId/edit"
                 element={<EditUserForm />}
               />
-              <Route path="/storygroup" element={<StoryGroupDash />} />
+              <Route path="/stories" element={<StoryGroupDash />} />
               <Route path="/newStoryGroup" element={<NewStoryGroup />} />
-              <Route path="/stories" element={<StoryDash />} />
+              <Route
+                path="/edit-story-group/:storyGroupId"
+                element={<EditStoryGroup />}
+              />
               <Route path="/stories/new" element={<NewStory />} />
-              <Route path="/stories/:storyId/edit" element={<EditStory />} />
+              <Route path="/edit-story/:storyId" element={<EditStory />} />
               <Route path="/storyPart/new" element={<NewStoryPart />} />
+              <Route
+                path="/edit-story-part/:storyPartId"
+                element={<EditStoryPart />}
+              />
               <Route path="/characters" element={<CharacterDash />} />
               <Route path="/characters/new" element={<NewCharacter />} />
               <Route

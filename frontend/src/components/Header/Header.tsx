@@ -52,7 +52,7 @@ const Header = () => {
             className="menu menu-sm dropdown-content mt-3 z-50 w-52 p-2 shadow bg-base-100 rounded-box"
           >
             <li>
-              <Link to="/storygroup">Story Groups</Link>
+              <Link to="/stories">Story Groups</Link>
             </li>
             <li>
               <Link to="/characters">Characters</Link>
@@ -89,7 +89,7 @@ const Header = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link to="/storygroup">Story Groups</Link>
+            <Link to="/stories">Story Groups</Link>
           </li>
           <li>
             <Link to="/characters">Characters</Link>

@@ -34,7 +34,8 @@ namespace backend.Repositories
 
         public async Task<StoryDto> GetStoryByIdAsync(int id)
         {
-            return await _context.Stories
+            var story = await _context.Stories
+                .Include(s => s.StoryGroup) // Include the StoryGroup
                 .Where(s => s.StoryId == id)
                 .Select(s => new StoryDto
                 {
@@ -44,10 +45,20 @@ namespace backend.Repositories
                     Content = s.Content,
                     CreatedAt = s.CreatedAt,
                     ImageUrl = s.ImageUrl,
-                    StoryGroupId= s.StoryGroupId
+                    StoryGroupId = s.StoryGroupId // Verify if this still returns null
                 })
                 .FirstOrDefaultAsync();
+
+            return story;
         }
+
+
+        public async Task<Story> GetStoryEntityByIdAsync(int id)
+        {
+            return await _context.Stories
+                .FirstOrDefaultAsync(s => s.StoryId == id);
+        }
+
 
         public async Task<Story> AddStoryAsync(Story story)
         {

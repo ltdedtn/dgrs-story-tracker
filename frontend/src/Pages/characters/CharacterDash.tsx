@@ -157,10 +157,6 @@ const CharacterDash: React.FC = () => {
     }
   };
 
-  const handleCreateCharacter = () => {
-    navigate("/characters/new");
-  };
-
   const handleAddStoryPartClick = () => {
     setIsModalOpen(true);
   };
@@ -224,6 +220,15 @@ const CharacterDash: React.FC = () => {
   const itemWidth = 256;
   return (
     <div className="p-4">
+      <div className="mb-4 flex justify-between items-center">
+        <h1 className="text-3xl font-bold">Characters</h1>
+        <button
+          className="btn btn-primary"
+          onClick={() => navigate("/characters/new")}
+        >
+          Create New Character
+        </button>
+      </div>
       <div className="relative flex items-center overflow-hidden">
         {shouldShowCarousel(characters, itemWidth) && (
           <>
@@ -297,12 +302,6 @@ const CharacterDash: React.FC = () => {
               </div>
             ))
           )}
-          <button
-            className="py-2 px-4 rounded ml-4"
-            onClick={handleCreateCharacter}
-          >
-            Add New Character
-          </button>
         </div>
       </div>
       {selectedCharacter && (

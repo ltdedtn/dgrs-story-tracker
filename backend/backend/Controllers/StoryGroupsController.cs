@@ -94,7 +94,7 @@ namespace backend.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Editor,Admin")]
-        public async Task<IActionResult> UpdateStoryGroup(int id, [FromForm] StoryGroupUpdateDto model)
+        public async Task<IActionResult> UpdateStoryGroup(int id, [FromForm] StoryGroupUpdateDto model, IFormFile? imageFile)
         {
             if (id != model.StoryGroupId)
             {
@@ -109,9 +109,24 @@ namespace backend.Controllers
                     return NotFound();
                 }
 
+                // Update the title and description
                 storyGroup.Title = model.Title;
                 storyGroup.Description = model.Description;
-                storyGroup.ImageUrl = model.ImageUrl;
+
+                // Handle image upload if a new image file is provided
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                    var filePath = Path.Combine("wwwroot", "images", fileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(fileStream);
+                    }
+
+                    // Update the ImageUrl of the story group
+                    storyGroup.ImageUrl = "/images/" + fileName;
+                }
 
                 await _storyGroupRepository.UpdateStoryGroupAsync(storyGroup);
                 return NoContent();
@@ -122,6 +137,7 @@ namespace backend.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]

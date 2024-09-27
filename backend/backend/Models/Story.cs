@@ -14,6 +14,8 @@ namespace backend.Models
 
         public ICollection<Character> Characters { get; set; } = new List<Character>();
         [JsonIgnore]
+        public StoryGroup StoryGroup { get; set; }
+        [JsonIgnore]
         public ICollection<StoryPart> StoryParts { get; set; } = new List<StoryPart>();
 
         

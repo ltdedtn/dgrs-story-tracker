@@ -127,6 +127,52 @@ namespace backend.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        [Authorize(Roles = "Editor,Admin")]
+        public async Task<IActionResult> PutStory(int id, [FromForm] StoryUpdateDto storyDto, [FromForm] IFormFile? imageFile)
+        {
+            // Validate the incoming story ID against the DTO
+            if (id != storyDto.StoryId)
+            {
+                return BadRequest("Story ID mismatch");
+            }
+
+            // Fetch the actual Story entity from the database
+            var story = await _storyRepository.GetStoryEntityByIdAsync(id);
+
+            if (story == null)
+            {
+                return NotFound();
+            }
+
+            // Update properties from the DTO to the Story entity
+            story.Title = storyDto.Title;
+            story.Description = storyDto.Description;
+            story.Content = storyDto.Content;
+            story.StoryGroupId = storyDto.StoryGroupId; // Set StoryGroupId
+
+            // Handle image upload if provided
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                var filePath = Path.Combine("wwwroot", "images", fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await imageFile.CopyToAsync(fileStream);
+                }
+
+                // Update the ImageUrl in the story
+                story.ImageUrl = "/images/" + fileName;
+            }
+
+            // Pass the updated Story entity to the repository method
+            await _storyRepository.UpdateStoryAsync(story);
+
+            return NoContent();
+        }
+
+
 
 
 

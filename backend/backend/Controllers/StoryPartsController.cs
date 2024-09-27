@@ -96,7 +96,7 @@ namespace backend.Controllers
         // Update an existing story part
         [HttpPut("{id}")]
         [Authorize(Roles = "Editor,Admin")]
-        public async Task<IActionResult> PutStoryPart(int id, [FromBody] StoryPartUpdateDto model)
+        public async Task<IActionResult> PutStoryPart(int id, [FromForm] StoryPartUpdateDto model, IFormFile? imageFile)
         {
             if (id != model.PartId)
             {
@@ -111,13 +111,31 @@ namespace backend.Controllers
                     return NotFound();
                 }
 
+                // Update text fields
+                existingStoryPart.Title = model.Title;
                 existingStoryPart.Content = model.Content;
-                existingStoryPart.StoryId = model.StoryId;
                 existingStoryPart.Description = model.Description;
-                existingStoryPart.ImageUrl = model.ImageUrl;
 
+                // If an image file is provided, save it and update the ImageUrl
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                    var filePath = Path.Combine("wwwroot", "images", fileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(fileStream);
+                    }
+
+                    // Update the image URL to the new file path
+                    existingStoryPart.ImageUrl = $"/images/{fileName}";
+                }
+
+                // Save changes to the repository
                 await _storyPartRepository.UpdateStoryPartAsync(existingStoryPart);
-                return NoContent();
+
+                // Return the updated story part, including the new ImageUrl
+                return Ok(existingStoryPart);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -136,6 +154,7 @@ namespace backend.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
 
         // Delete a story part
         [HttpDelete("{id}")]

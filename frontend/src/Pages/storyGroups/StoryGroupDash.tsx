@@ -79,7 +79,6 @@ const StoryGroupDash = () => {
               headers: { Authorization: `Bearer ${token}` },
             }
           );
-          console.log(response.data);
           setStoryParts(response.data);
         } catch (error) {
           console.error("Error fetching story parts", error);
@@ -91,6 +90,94 @@ const StoryGroupDash = () => {
       setStoryParts([]);
     }
   }, [selectedStory]);
+
+  const handleStoryPartDelete = async (storyPartId: number) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this story part?"
+    );
+    if (confirmDelete) {
+      const token = localStorage.getItem("token");
+      try {
+        await axios.delete(
+          `https://localhost:7023/api/StoryParts/${storyPartId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        // Update the state to remove the deleted story part
+        setStoryParts((prevParts) =>
+          prevParts.filter((part) => part.storyPartId !== storyPartId)
+        );
+      } catch (error) {
+        console.error("Error deleting story part", error);
+        setError("Failed to delete story part. Please try again later.");
+      }
+    }
+  };
+
+  const handleStoryGroupDelete = async (storyGroupId: number) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this story group?"
+    );
+    if (confirmDelete) {
+      const token = localStorage.getItem("token");
+      try {
+        await axios.delete(
+          `https://localhost:7023/api/StoryGroups/${storyGroupId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        // Update the state to remove the deleted story group
+        setStoryGroups((prevGroups) =>
+          prevGroups.filter((group) => group.storyGroupId !== storyGroupId)
+        );
+
+        // Optionally, clear the selected story group if it's currently selected
+        if (selectedStoryGroup?.storyGroupId === storyGroupId) {
+          setSelectedStoryGroup(null);
+        }
+      } catch (error) {
+        console.error("Error deleting story group", error);
+        setError("Failed to delete story group. Please try again later.");
+      }
+    }
+  };
+
+  const handleStoryDelete = async (storyId: number) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this story group?"
+    );
+    if (confirmDelete) {
+      const token = localStorage.getItem("token");
+      try {
+        await axios.delete(`https://localhost:7023/api/Story/${storyId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        // Update the state to remove the deleted story
+        setStories((prevStories) =>
+          prevStories.filter((story) => story.storyId !== storyId)
+        );
+
+        // Optionally, clear the selected story if it's currently selected
+        if (selectedStory?.storyId === storyId) {
+          setSelectedStoryGroup(null);
+        }
+      } catch (error) {
+        console.error("Error deleting story", error);
+        setError("Failed to delete story. Please try again later.");
+      }
+    }
+  };
 
   const checkIfScrollable = (
     carouselRef: React.RefObject<HTMLDivElement>,
@@ -127,8 +214,6 @@ const StoryGroupDash = () => {
   }, [storyParts]);
 
   const handleStoryGroupClick = (storyGroup: StoryGroup) => {
-    console.log("check");
-    console.log(storyGroup);
     setSelectedStoryGroup(storyGroup);
     setSelectedStory(null);
   };
@@ -168,7 +253,7 @@ const StoryGroupDash = () => {
   }
 
   return (
-    <div className="p-4 h-full">
+    <div className="p-4 h-full ">
       <div className="mb-4 flex justify-between items-center">
         <h1 className="text-3xl font-bold">Story Groups</h1>
         <button
@@ -180,27 +265,6 @@ const StoryGroupDash = () => {
       </div>
 
       <div className="relative flex items-center overflow-hidden">
-        {showStoryGroupButtons && (
-          <button
-            className="absolute left-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
-            onClick={() => scrollCarousel(-1, storyGroupsCarouselRef)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-        )}
         <div
           className="flex overflow-x-auto scroll-smooth gap-4 p-4 mx-2"
           ref={storyGroupsCarouselRef}
@@ -219,6 +283,54 @@ const StoryGroupDash = () => {
               <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-center py-2 text-sm">
                 {storyGroup.title}
               </div>
+
+              {/* Edit Button */}
+              <button
+                className="absolute top-2 left-2 z-10 bg-blue-500 text-white rounded-full p-2 hover:bg-blue-600"
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent click event from triggering story group click
+                  navigate(`/edit-story-group/${storyGroup.storyGroupId}`); // Navigate to the edit page
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M16 4l4 4-8 8H8v-4l8-8z"
+                  />
+                </svg>
+              </button>
+
+              {/* Delete Button */}
+              <button
+                className="absolute top-2 right-2 z-10 bg-red-500 text-white rounded-full p-2 hover:bg-red-600"
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent click event from triggering story group click
+                  handleStoryGroupDelete(storyGroup.storyGroupId); // Call your delete function here
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
             </div>
           ))}
         </div>
@@ -321,6 +433,53 @@ const StoryGroupDash = () => {
                   <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-center py-2 text-sm">
                     {story.title}
                   </div>
+                  {/* Edit Button */}
+                  <button
+                    className="absolute top-2 left-2 z-10 bg-blue-500 text-white rounded-full p-2 hover:bg-blue-600"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent click event from triggering story group click
+                      navigate(`/edit-story/${story.storyId}`); // Navigate to the edit page
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M16 4l4 4-8 8H8v-4l8-8z"
+                      />
+                    </svg>
+                  </button>
+
+                  {/* Delete Button */}
+                  <button
+                    className="absolute top-2 right-2 z-10 bg-red-500 text-white rounded-full p-2 hover:bg-red-600"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent click event from triggering story group click
+                      handleStoryDelete(story.storyId); // Call your delete function here
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
                 </div>
               ))}
             </div>
@@ -422,21 +581,74 @@ const StoryGroupDash = () => {
                     storyParts.map((part) => (
                       <div
                         key={part.storyPartId}
-                        className="flex-shrink-0 w-64 rounded-lg cursor-pointer"
+                        className="flex-shrink-0 w-64 rounded-lg cursor-pointer relative"
                       >
+                        {/* Image Section */}
                         {part.imageUrl && (
                           <div className="relative">
                             <img
                               src={`https://localhost:7023/${part.imageUrl}`}
                               alt={`Story Part ${part.storyPartId}`}
-                              className="w-full h-40 object-cover"
+                              className="w-full h-40 object-cover rounded-t-lg"
                             />
                             <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-center py-2 text-sm">
                               {part.title}
                             </div>
+
+                            {/* Edit Button */}
+                            <button
+                              className="absolute top-2 left-2 z-10 bg-blue-500 text-white rounded-full p-2 hover:bg-blue-600"
+                              onClick={(e) => {
+                                e.stopPropagation(); // Prevent click event from triggering story group click
+                                navigate(
+                                  `/edit-story-part/${part.storyPartId}`
+                                ); // Navigate to the edit page
+                              }}
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M16 4l4 4-8 8H8v-4l8-8z"
+                                />
+                              </svg>
+                            </button>
+
+                            {/* Delete Button */}
+                            <button
+                              className="absolute top-2 right-2 z-10 bg-red-500 text-white rounded-full p-2 hover:bg-red-600"
+                              onClick={(e) => {
+                                e.stopPropagation(); // Prevent click event from triggering story group click
+                                handleStoryPartDelete(part.storyPartId); // Call your delete function here
+                              }}
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M6 18L18 6M6 6l12 12"
+                                />
+                              </svg>
+                            </button>
                           </div>
                         )}
-                        <div className="p-2">
+
+                        {/* Content and Summary Section */}
+                        <div className="p-4">
                           <div className="text-xl">Content</div>
                           <div className="mb-4 text-left">
                             {expandedPartId === part.storyPartId
@@ -447,7 +659,7 @@ const StoryGroupDash = () => {
                           </div>
                           {part.content.length > 100 && (
                             <button
-                              className="mt-2 px-3 rounded"
+                              className="mt-2 px-3 rounded bg-blue-500 text-white hover:bg-blue-600"
                               onClick={() => toggleExpandPart(part.storyPartId)}
                             >
                               {expandedPartId === part.storyPartId
@@ -455,11 +667,10 @@ const StoryGroupDash = () => {
                                 : "Read More"}
                             </button>
                           )}
-                          <div className="text-xl py-1">Summary</div>
+
+                          <div className="text-xl py-2">Summary</div>
                           <div className="mb-4 text-left">
-                            {expandedPartId === part.storyPartId
-                              ? part.description || "No summary available."
-                              : part.description || "No summary available."}
+                            {part.description || "No summary available."}
                           </div>
                         </div>
                       </div>

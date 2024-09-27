@@ -46,11 +46,18 @@ namespace backend.Data
             modelBuilder.Entity<StoryPart>()
                 .HasOne(sp => sp.Story)
                 .WithMany(s => s.StoryParts)
-                .HasForeignKey(sp => sp.StoryId);
+                .HasForeignKey(sp => sp.StoryId)
+                .OnDelete(DeleteBehavior.Cascade); // Cascade delete on Story -> StoryPart
 
             // Story configurations
             modelBuilder.Entity<Story>()
                 .HasKey(s => s.StoryId);
+
+            modelBuilder.Entity<Story>()
+                .HasOne(s => s.StoryGroup)
+                .WithMany(sg => sg.Stories)
+                .HasForeignKey(s => s.StoryGroupId)
+                .OnDelete(DeleteBehavior.Cascade); // Cascade delete on StoryGroup -> Story
 
             // Configure many-to-many relationship between User and Role
             modelBuilder.Entity<UserRole>()
@@ -66,5 +73,6 @@ namespace backend.Data
                 .WithMany(r => r.UserRoles)
                 .HasForeignKey(ur => ur.RoleId);
         }
+
     }
 }
