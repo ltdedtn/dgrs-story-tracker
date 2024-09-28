@@ -21,12 +21,20 @@
       "PackagePath": "staticwebassets\\images\\07509a2a-7309-4085-b6a8-be12b5ac4f3a.png"
     },
     {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\08914893-bb78-4d0d-8ce1-c20bd9fd534b.jpg",
+      "PackagePath": "staticwebassets\\images\\08914893-bb78-4d0d-8ce1-c20bd9fd534b.jpg"
+    },
+    {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\0931423c-45c9-4d3d-9bd1-38e8398a5c10.jpg",
       "PackagePath": "staticwebassets\\images\\0931423c-45c9-4d3d-9bd1-38e8398a5c10.jpg"
     },
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\09e99e52-b8c0-4555-856b-6d14bc92c6ac.jpg",
       "PackagePath": "staticwebassets\\images\\09e99e52-b8c0-4555-856b-6d14bc92c6ac.jpg"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\0b3cb8dd-8ac5-4934-92c7-8a4ec760bae1.jpg",
+      "PackagePath": "staticwebassets\\images\\0b3cb8dd-8ac5-4934-92c7-8a4ec760bae1.jpg"
     },
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\0c50729e-7c97-4084-a2be-8ae6dc4fb9c3.jpg",
@@ -37,8 +45,16 @@
       "PackagePath": "staticwebassets\\images\\0eabce5f-c18b-4591-9f02-ddf18921af0d.png"
     },
     {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\1057f90c-dd6d-4d9c-8750-177f0b3da913.jpg",
+      "PackagePath": "staticwebassets\\images\\1057f90c-dd6d-4d9c-8750-177f0b3da913.jpg"
+    },
+    {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\12be1563-c999-4dc4-acda-bb92883c0429.png",
       "PackagePath": "staticwebassets\\images\\12be1563-c999-4dc4-acda-bb92883c0429.png"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\150ccffa-c74e-4a21-8f03-aab83b36002c.jpg",
+      "PackagePath": "staticwebassets\\images\\150ccffa-c74e-4a21-8f03-aab83b36002c.jpg"
     },
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\166586a9-9c2b-42ef-9511-51bbc11859e1.jpg",
@@ -69,6 +85,14 @@
       "PackagePath": "staticwebassets\\images\\27f65c3b-2c54-4513-88b8-c9ffc39ce37e.jpg"
     },
     {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\2919605b-e19c-4daa-832f-0eaeea683b42.jpg",
+      "PackagePath": "staticwebassets\\images\\2919605b-e19c-4daa-832f-0eaeea683b42.jpg"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\2a2bfbdd-f1e0-4728-adcb-137e43542475.jpg",
+      "PackagePath": "staticwebassets\\images\\2a2bfbdd-f1e0-4728-adcb-137e43542475.jpg"
+    },
+    {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\2bec77be-bc21-4c79-a281-f7981a1fa40f.jpg",
       "PackagePath": "staticwebassets\\images\\2bec77be-bc21-4c79-a281-f7981a1fa40f.jpg"
     },
@@ -95,6 +119,10 @@
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\35f4035a-0b46-4d93-913a-47b0358ee509.jpg",
       "PackagePath": "staticwebassets\\images\\35f4035a-0b46-4d93-913a-47b0358ee509.jpg"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\372f3886-e213-47fb-a145-ad9c7884dd84.jpg",
+      "PackagePath": "staticwebassets\\images\\372f3886-e213-47fb-a145-ad9c7884dd84.jpg"
     },
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\3798ddd5-c253-424e-9bbb-033bb8606ddc.png",
@@ -133,6 +161,10 @@
       "PackagePath": "staticwebassets\\images\\4c439ae8-98a7-4314-90a3-9e19e7954456.AVIF"
     },
     {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\50d7e7b5-43f5-4b47-9c65-e44ac5001dfa.jpg",
+      "PackagePath": "staticwebassets\\images\\50d7e7b5-43f5-4b47-9c65-e44ac5001dfa.jpg"
+    },
+    {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\519f9f8a-ffa2-4be0-ab25-cf5527ef213c.jpg",
       "PackagePath": "staticwebassets\\images\\519f9f8a-ffa2-4be0-ab25-cf5527ef213c.jpg"
     },
@@ -145,8 +177,24 @@
       "PackagePath": "staticwebassets\\images\\5852328f-0059-40eb-9ff6-5dedd597bb9e.png"
     },
     {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\59585e9a-c94b-4ab3-add8-daed88502966.jpg",
+      "PackagePath": "staticwebassets\\images\\59585e9a-c94b-4ab3-add8-daed88502966.jpg"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\59fe2b57-d0fb-44ef-9c9e-e441a7ebc57d.jpg",
+      "PackagePath": "staticwebassets\\images\\59fe2b57-d0fb-44ef-9c9e-e441a7ebc57d.jpg"
+    },
+    {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\5a2f4b62-21b7-4365-b860-dfc2f070f827.AVIF",
       "PackagePath": "staticwebassets\\images\\5a2f4b62-21b7-4365-b860-dfc2f070f827.AVIF"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\5a6fecc9-49aa-44e6-b1cf-9e161df4e1e2.jpg",
+      "PackagePath": "staticwebassets\\images\\5a6fecc9-49aa-44e6-b1cf-9e161df4e1e2.jpg"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\5cc0e8af-d69f-4e27-ab87-09a707d79dae.jpg",
+      "PackagePath": "staticwebassets\\images\\5cc0e8af-d69f-4e27-ab87-09a707d79dae.jpg"
     },
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\5d4f7e54-65af-499a-a425-64fba246b0b3.png",
@@ -155,6 +203,10 @@
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\5fb8a5a3-c2e4-402d-b5dc-23cf6e6aa2c7.jpg",
       "PackagePath": "staticwebassets\\images\\5fb8a5a3-c2e4-402d-b5dc-23cf6e6aa2c7.jpg"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\627961dd-0394-410e-98a6-ecde1bf8daba.jpg",
+      "PackagePath": "staticwebassets\\images\\627961dd-0394-410e-98a6-ecde1bf8daba.jpg"
     },
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\63462fff-c7d2-44b2-a76a-1514bb80771b.jpg",
@@ -173,12 +225,24 @@
       "PackagePath": "staticwebassets\\images\\65f6b76f-a14c-4d12-909c-4ddaa9cb002d.jpeg"
     },
     {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\6801c831-4b27-43b2-bdb4-a4461d7af763.jpg",
+      "PackagePath": "staticwebassets\\images\\6801c831-4b27-43b2-bdb4-a4461d7af763.jpg"
+    },
+    {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\69aba756-e459-4f25-93cc-63d978078fbe.jpg",
       "PackagePath": "staticwebassets\\images\\69aba756-e459-4f25-93cc-63d978078fbe.jpg"
     },
     {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\6ae04c7c-9b21-41a4-b9f7-534bb2b2fbf4.jpg",
+      "PackagePath": "staticwebassets\\images\\6ae04c7c-9b21-41a4-b9f7-534bb2b2fbf4.jpg"
+    },
+    {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\702e9a61-6b9f-4434-8cc6-ff3cd8c1464f.jpeg",
       "PackagePath": "staticwebassets\\images\\702e9a61-6b9f-4434-8cc6-ff3cd8c1464f.jpeg"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\711475e1-2617-453c-be5b-8623462647d4.jpg",
+      "PackagePath": "staticwebassets\\images\\711475e1-2617-453c-be5b-8623462647d4.jpg"
     },
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\735eb0d1-fd03-4a82-a397-2879f71e871a.jpg",
@@ -193,12 +257,24 @@
       "PackagePath": "staticwebassets\\images\\7485834c-977c-4e59-b2de-51a5d4a76c79.jpg"
     },
     {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\7736fa20-b703-44cd-8bdc-7d3b05c6cf25.jpg",
+      "PackagePath": "staticwebassets\\images\\7736fa20-b703-44cd-8bdc-7d3b05c6cf25.jpg"
+    },
+    {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\77c0c23f-aedf-4577-a0dd-564c65f5e349.jpg",
       "PackagePath": "staticwebassets\\images\\77c0c23f-aedf-4577-a0dd-564c65f5e349.jpg"
     },
     {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\7a053555-fe87-4ef5-8643-b4d70edece73.jpg",
+      "PackagePath": "staticwebassets\\images\\7a053555-fe87-4ef5-8643-b4d70edece73.jpg"
+    },
+    {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\7d5cb437-a650-4af6-8844-7c44c58650e0.jpg",
       "PackagePath": "staticwebassets\\images\\7d5cb437-a650-4af6-8844-7c44c58650e0.jpg"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\7d60afe8-46af-4ea6-9adf-e2994e726d93.jpg",
+      "PackagePath": "staticwebassets\\images\\7d60afe8-46af-4ea6-9adf-e2994e726d93.jpg"
     },
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\8059c922-5c37-4e1b-ad91-05ea2915e7bd.jpg",
@@ -217,8 +293,16 @@
       "PackagePath": "staticwebassets\\images\\8903b233-b413-4dc3-a9e5-6cc1eb07cbf2.png"
     },
     {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\89731140-d4a6-4c83-849f-3077c64dbefc.jpg",
+      "PackagePath": "staticwebassets\\images\\89731140-d4a6-4c83-849f-3077c64dbefc.jpg"
+    },
+    {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\8c276542-7f81-4a0e-86a2-b0260d56cb5d.jpg",
       "PackagePath": "staticwebassets\\images\\8c276542-7f81-4a0e-86a2-b0260d56cb5d.jpg"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\909a3ea5-aa24-483f-ab06-76ce0a5c8650.jpg",
+      "PackagePath": "staticwebassets\\images\\909a3ea5-aa24-483f-ab06-76ce0a5c8650.jpg"
     },
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\91b73294-0e4d-49ea-aa0f-a16fafdd3bf5.png",
@@ -289,6 +373,10 @@
       "PackagePath": "staticwebassets\\images\\ba8bc30d-89a9-4c51-8214-a9608e43a4da.jpg"
     },
     {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\bc68b8d1-edc0-472d-a4fc-831a3d3090f8.jpg",
+      "PackagePath": "staticwebassets\\images\\bc68b8d1-edc0-472d-a4fc-831a3d3090f8.jpg"
+    },
+    {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\bd280ba1-0088-4fb5-a20f-cb67327d6046.jpg",
       "PackagePath": "staticwebassets\\images\\bd280ba1-0088-4fb5-a20f-cb67327d6046.jpg"
     },
@@ -301,16 +389,36 @@
       "PackagePath": "staticwebassets\\images\\bdeb56e5-9485-42d3-9f7d-de52da8f4ec2.jpg"
     },
     {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\bf48db4c-67cd-4061-9618-ead2bdeb31ad.jpg",
+      "PackagePath": "staticwebassets\\images\\bf48db4c-67cd-4061-9618-ead2bdeb31ad.jpg"
+    },
+    {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\c1144eae-2d67-4dec-8f18-2ac8b5181183.jpg",
       "PackagePath": "staticwebassets\\images\\c1144eae-2d67-4dec-8f18-2ac8b5181183.jpg"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\c44649e9-5527-4e53-80d0-c929075a31c0.jpg",
+      "PackagePath": "staticwebassets\\images\\c44649e9-5527-4e53-80d0-c929075a31c0.jpg"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\c4c82263-d809-428a-9f2c-e4e8598ef18b.jpg",
+      "PackagePath": "staticwebassets\\images\\c4c82263-d809-428a-9f2c-e4e8598ef18b.jpg"
     },
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\c511cf98-ebd1-4bb7-836a-9ea2346d339a.jpg",
       "PackagePath": "staticwebassets\\images\\c511cf98-ebd1-4bb7-836a-9ea2346d339a.jpg"
     },
     {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\c6adce11-158b-41b7-94aa-d72d9d9e8b10.jpg",
+      "PackagePath": "staticwebassets\\images\\c6adce11-158b-41b7-94aa-d72d9d9e8b10.jpg"
+    },
+    {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\c864386c-bd7e-4520-8bdf-2be4a57b783f.jpg",
       "PackagePath": "staticwebassets\\images\\c864386c-bd7e-4520-8bdf-2be4a57b783f.jpg"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\ca595a4c-47cd-41b3-b044-9669e02156a8.jpg",
+      "PackagePath": "staticwebassets\\images\\ca595a4c-47cd-41b3-b044-9669e02156a8.jpg"
     },
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\cbc0610b-0d1a-4e92-aba4-3a8160d65d6c.jpg",
@@ -333,6 +441,10 @@
       "PackagePath": "staticwebassets\\images\\d7e45ca8-534d-4117-82ee-4a959e4427d2.jpg"
     },
     {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\dfca6fa4-4012-4204-a0e3-235f4b4315c8.jpg",
+      "PackagePath": "staticwebassets\\images\\dfca6fa4-4012-4204-a0e3-235f4b4315c8.jpg"
+    },
+    {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\e1031f5b-1644-4bf9-b8f2-d3a51d7021bc.jpg",
       "PackagePath": "staticwebassets\\images\\e1031f5b-1644-4bf9-b8f2-d3a51d7021bc.jpg"
     },
@@ -343,6 +455,10 @@
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\e3b695df-01c5-4180-8565-870cb33382d8.jpg",
       "PackagePath": "staticwebassets\\images\\e3b695df-01c5-4180-8565-870cb33382d8.jpg"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\e5664518-ded0-4018-ad7a-e45a1cec2b7f.jpg",
+      "PackagePath": "staticwebassets\\images\\e5664518-ded0-4018-ad7a-e45a1cec2b7f.jpg"
     },
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\e5938321-8580-458e-9bae-1601abc1dd75.jpg",
@@ -371,6 +487,10 @@
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\f2de5782-6634-4e6b-b4e7-0ff33989a34c.jpg",
       "PackagePath": "staticwebassets\\images\\f2de5782-6634-4e6b-b4e7-0ff33989a34c.jpg"
+    },
+    {
+      "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\f36de39d-89e0-4c06-b619-9aff13f44e28.jpg",
+      "PackagePath": "staticwebassets\\images\\f36de39d-89e0-4c06-b619-9aff13f44e28.jpg"
     },
     {
       "Id": "F:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\f3bc9c6c-558c-4105-a1af-52edcfefeef0.jpg",

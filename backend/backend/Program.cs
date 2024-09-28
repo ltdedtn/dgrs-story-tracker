@@ -70,6 +70,7 @@ builder.Services.AddScoped<IStoryRepository, StoryRepository>();
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IStoryPartRepository, StoryPartRepository>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
+builder.Services.AddScoped<ICharacterRelationshipRepository, CharacterRelationshipRepository>();
 
 builder.Services.AddAuthorization(options =>
 {

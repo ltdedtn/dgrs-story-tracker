@@ -5,7 +5,7 @@ import { useUserContext } from "../../Pages/users/UserContext";
 const Header = () => {
   const navigate = useNavigate();
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const { username, setUsername } = useUserContext();
+  const { username, setUsername, role } = useUserContext(); // Destructure role from context
 
   const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTheme = e.target.checked ? "dark" : "light";
@@ -16,6 +16,7 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
+    localStorage.removeItem("role");
     setUsername(null);
     navigate("/login");
   };
@@ -57,9 +58,12 @@ const Header = () => {
             <li>
               <Link to="/characters">Characters</Link>
             </li>
-            <li>
-              <Link to="/dash">Users</Link>
-            </li>
+            {/* Conditionally render Users option based on role */}
+            {role === "Admin" && (
+              <li>
+                <Link to="/dash">Users</Link>
+              </li>
+            )}
             {username ? (
               <li>
                 <button onClick={handleLogout}>Sign Out</button>
@@ -94,9 +98,12 @@ const Header = () => {
           <li>
             <Link to="/characters">Characters</Link>
           </li>
-          <li>
-            <Link to="/dash">Users</Link>
-          </li>
+          {/* Conditionally render Users option based on role */}
+          {role === "Admin" && (
+            <li>
+              <Link to="/dash">Users</Link>
+            </li>
+          )}
         </ul>
       </div>
       <div className="navbar-end hidden lg:flex items-center">

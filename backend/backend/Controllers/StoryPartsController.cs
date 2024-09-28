@@ -182,7 +182,9 @@ namespace backend.Controllers
         // Link character to story part
         [HttpPost("linkCharacterToStoryPart")]
         [Authorize(Roles = "Editor,Admin")]
-        public async Task<IActionResult> LinkCharacterToStoryPart([FromBody] LinkCharacterToStoryPartDto dto)
+        public async Task<IActionResult> LinkCharacterToStoryPart([FromBody] LinkCharacterToStoryPartDto dto,
+            [FromServices] ICharacterRepository characterRepository,
+            [FromServices] ICharacterRelationshipRepository characterRelationshipRepository)
         {
             if (dto == null || dto.StoryPartId <= 0 || dto.CharacterId <= 0)
             {
@@ -191,12 +193,44 @@ namespace backend.Controllers
 
             try
             {
+                // Link the character to the story part
                 var result = await _storyPartRepository.LinkCharacterToStoryPartAsync(dto.StoryPartId, dto.CharacterId);
                 if (!result)
                 {
                     return NotFound("Story part or character not found.");
                 }
-                return Ok("Character linked to story part successfully.");
+
+                // Get all characters already linked to this story part (excluding the new character)
+                var charactersInStoryPart = await characterRepository.GetCharactersByStoryPartIdAsync(dto.StoryPartId);
+                var newCharacter = charactersInStoryPart.FirstOrDefault(c => c.CharacterId == dto.CharacterId);
+                if (newCharacter == null)
+                {
+                    return NotFound("New character not found.");
+                }
+
+                foreach (var character in charactersInStoryPart)
+                {
+                    if (character.CharacterId == dto.CharacterId)
+                    {
+                        continue; // Skip the new character
+                    }
+
+                    // Check if a relationship already exists between the new character and the current character
+                    var existingRelationship = await characterRelationshipRepository.GetRelationshipByCharactersAsync(dto.CharacterId, character.CharacterId);
+                    if (existingRelationship == null)
+                    {
+                        // Create a new relationship with "Unknown" status if no relationship exists
+                        var newRelationship = new CharacterRelationship
+                        {
+                            CharacterAId = dto.CharacterId,
+                            CharacterBId = character.CharacterId,
+                            RelationshipTag = "Unknown"
+                        };
+                        await characterRelationshipRepository.AddRelationshipAsync(newRelationship);
+                    }
+                }
+
+                return Ok("Character linked to story part and relationships created if necessary.");
             }
             catch (Exception ex)
             {
@@ -204,6 +238,7 @@ namespace backend.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
 
         // Unlink character from story part
         [HttpDelete("unlinkCharacterFromStoryPart")]

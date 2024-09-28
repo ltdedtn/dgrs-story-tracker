@@ -4,7 +4,7 @@ import { useUserContext } from "./UserContext";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setUsername } = useUserContext();
+  const { setUsername, setRole } = useUserContext(); // Add setRole here
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -33,11 +33,16 @@ const Login = () => {
       const data = await response.json();
       const token = data.token;
       const username = data.username;
+      const role = data.role; // Assuming your API returns a role property
 
+      // Store token, username, and role in localStorage
       localStorage.setItem("token", token);
       localStorage.setItem("username", username);
+      localStorage.setItem("role", role); // Store role in local storage
 
+      // Set username and role in context
       setUsername(username);
+      setRole(role); // Set the role in context
 
       navigate("/stories");
     } catch (error) {

@@ -11,5 +11,6 @@ namespace backend.Repositories
         Task<Character> AddCharacterAsync(Character character); // Ensure this returns Task<Character>
         Task UpdateCharacterAsync(Character character);
         Task DeleteCharacterAsync(int id);
+        Task<IEnumerable<Character>> GetCharactersByStoryPartIdAsync(int storyPartId);
     }
 }

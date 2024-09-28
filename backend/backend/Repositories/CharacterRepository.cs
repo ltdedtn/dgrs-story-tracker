@@ -61,5 +61,12 @@ namespace backend.Repositories
 
             await _context.SaveChangesAsync();
         }
+        public async Task<IEnumerable<Character>> GetCharactersByStoryPartIdAsync(int storyPartId)
+        {
+            return await _context.StoryPartCharacters
+                .Where(spc => spc.StoryPartId == storyPartId)
+                .Select(spc => spc.Character)
+                .ToListAsync();
+        }
     }
 }

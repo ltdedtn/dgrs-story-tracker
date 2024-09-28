@@ -63,7 +63,7 @@ const NewStory = () => {
       formData.append("title", title);
       formData.append("description", description);
       formData.append("content", content);
-      formData.append("storyGroupId", storyGroupId.toString());
+      formData.append("storyGroupId", storyGroupId.toString()); // Append StoryGroupId
       if (imageFile) {
         formData.append("imageFile", imageFile);
       }

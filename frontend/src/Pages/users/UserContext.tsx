@@ -7,9 +7,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [username, setUsername] = useState<string | null>(
     localStorage.getItem("username")
   );
+  const [role, setRole] = useState<string | null>(
+    localStorage.getItem("role") // Add role state
+  );
 
   return (
-    <UserContext.Provider value={{ username, setUsername }}>
+    <UserContext.Provider value={{ username, setUsername, role, setRole }}>
       {children}
     </UserContext.Provider>
   );

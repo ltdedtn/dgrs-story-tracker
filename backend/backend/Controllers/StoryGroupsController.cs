@@ -145,12 +145,36 @@ namespace backend.Controllers
         {
             try
             {
+                // Fetch the story group to ensure it exists
                 var storyGroup = await _storyGroupRepository.GetStoryGroupByIdAsync(id);
                 if (storyGroup == null)
                 {
                     return NotFound();
                 }
 
+                // Fetch all stories related to this story group
+                var stories = await _storyGroupRepository.GetStoriesByGroupIdAsync(id);
+
+                // Iterate through each story and delete associated story parts
+                foreach (var story in stories)
+                {
+                    // Fetch all story parts for the current story
+                    var storyParts = await _storyGroupRepository.GetStoryPartsByStoryIdAsync(story.StoryId); // Ensure this method exists
+                                                                                                             // Unlink characters before deleting story parts
+                    foreach (var storyPart in storyParts)
+                    {
+                        // Unlink characters
+                        await _storyGroupRepository.UnlinkCharactersFromStoryPartAsync(storyPart.StoryPartId);
+
+                        // Optionally delete the story part
+                        await _storyGroupRepository.DeleteStoryPartAsync(storyPart.StoryPartId);
+                    }
+
+                    // Delete the story after its parts are dealt with
+                    await _storyGroupRepository.DeleteStoryAsync(story.StoryId);
+                }
+
+                // Now delete the story group itself
                 await _storyGroupRepository.DeleteStoryGroupAsync(id);
                 return NoContent();
             }
@@ -160,6 +184,8 @@ namespace backend.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+
 
     }
 }

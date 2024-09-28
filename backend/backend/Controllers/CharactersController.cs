@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using backend.Data;
 
 namespace backend.Controllers
 {
@@ -18,11 +20,19 @@ namespace backend.Controllers
     {
         private readonly ICharacterRepository _characterRepository;
         private readonly IStoryPartRepository _storyPartRepository;
+        private readonly ICharacterRelationshipRepository _characterRelationshipRepository;
+        private readonly BackendContext _context; // Add context for database operations
 
-        public CharactersController(ICharacterRepository characterRepository, IStoryPartRepository storyPartRepository)
+        public CharactersController(
+            ICharacterRepository characterRepository,
+            IStoryPartRepository storyPartRepository,
+            ICharacterRelationshipRepository characterRelationshipRepository,
+            BackendContext context) // Add BackendContext to constructor
         {
             _characterRepository = characterRepository;
             _storyPartRepository = storyPartRepository;
+            _characterRelationshipRepository = characterRelationshipRepository;
+            _context = context; // Assign the context
         }
 
         [HttpGet]
@@ -69,7 +79,7 @@ namespace backend.Controllers
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    RelationshipTag = model.RelationshipTag // Update to match the model property
+                    RelationshipTag = model.RelationshipTag
                 };
 
                 if (imageFile != null && imageFile.Length > 0)
@@ -86,7 +96,6 @@ namespace backend.Controllers
                 }
 
                 var createdCharacter = await _characterRepository.AddCharacterAsync(character);
-
                 return CreatedAtAction(nameof(GetCharacter), new { id = createdCharacter.CharacterId }, createdCharacter);
             }
             catch (Exception ex)
@@ -116,10 +125,9 @@ namespace backend.Controllers
                 character.Name = model.Name;
                 character.Description = model.Description;
                 character.ImageUrl = model.ImageUrl;
-                character.RelationshipTag = model.RelationshipTag; // Update to match the model property
+                character.RelationshipTag = model.RelationshipTag;
 
                 await _characterRepository.UpdateCharacterAsync(character);
-
                 return NoContent();
             }
             catch (Exception ex)
@@ -144,5 +152,84 @@ namespace backend.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpPost("relationship")]
+        public async Task<IActionResult> AddRelationship([FromBody] CharacterRelationship relationship)
+        {
+            if (relationship == null)
+            {
+                return BadRequest("Relationship cannot be null.");
+            }
+
+            var newRelationship = await _characterRelationshipRepository.AddRelationshipAsync(relationship);
+            return CreatedAtAction(nameof(GetRelationshipById), new { id = newRelationship.RelationshipId }, newRelationship);
+        }
+
+
+        [HttpGet("{id}/relationships")]
+        public async Task<ActionResult<IEnumerable<CharacterRelationship>>> GetRelationshipsByCharacterId(int id)
+        {
+            var relationships = await _characterRelationshipRepository.GetRelationshipsByCharacterIdAsync(id);
+
+            if (relationships == null || !relationships.Any())
+            {
+                return NoContent(); // Return 204 if no relationships found
+            }
+
+            return Ok(relationships); // Return the list of relationships
+        }
+
+
+        [HttpGet("relationship/{id}")]
+        [AllowAnonymous] // Adjust as needed
+        public async Task<ActionResult<CharacterRelationship>> GetRelationshipById(int id)
+        {
+            var relationship = await _characterRelationshipRepository.GetRelationshipByIdAsync(id);
+            if (relationship == null)
+            {
+                return NotFound();
+            }
+            return Ok(relationship);
+        }
+
+        [HttpPut("relationship/{id}")]
+        public async Task<IActionResult> UpdateRelationship(int id, [FromBody] RelationshipUpdateDto relationshipDto)
+        {
+            if (id != relationshipDto.RelationshipId)
+            {
+                return BadRequest("Relationship ID mismatch.");
+            }
+
+            var existingRelationship = await _context.CharacterRelationships.FindAsync(id); // Use CharacterRelationships
+            if (existingRelationship == null)
+            {
+                return NotFound("Relationship not found.");
+            }
+
+            // Update the relationship properties
+            existingRelationship.RelationshipTag = relationshipDto.RelationshipTag; // Assuming you have a Status field
+
+            _context.CharacterRelationships.Update(existingRelationship);
+            await _context.SaveChangesAsync();
+
+            return NoContent(); // Indicate success without returning any content
+        }
+
+        [HttpDelete("relationship/{id}")]
+        public async Task<IActionResult> DeleteRelationship(int id)
+        {
+            var existingRelationship = await _context.CharacterRelationships.FindAsync(id); // Use CharacterRelationships
+            if (existingRelationship == null)
+            {
+                return NotFound("Relationship not found.");
+            }
+
+            _context.CharacterRelationships.Remove(existingRelationship);
+            await _context.SaveChangesAsync();
+
+            return NoContent(); // Indicate success without returning any content
+        }
+
+
     }
 }

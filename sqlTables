@@ -89,6 +89,17 @@ CREATE TABLE StoryPartCharacters
     FOREIGN KEY (StoryPartId) REFERENCES StoryParts(StoryPartId),
     FOREIGN KEY (CharacterId) REFERENCES Characters(CharacterId)
 );
+CREATE TABLE CharacterRelationships
+(
+    RelationshipId INT IDENTITY(1,1) PRIMARY KEY,
+    CharacterAId INT NOT NULL,
+    CharacterBId INT NOT NULL,
+    RelationshipTag NVARCHAR(50) CHECK (RelationshipTag IN ('Friendly', 'Neutral', 'Enemy', 'Unknown')) NOT NULL DEFAULT 'Unknown',
+    FOREIGN KEY (CharacterAId) REFERENCES Characters(CharacterId),
+    FOREIGN KEY (CharacterBId) REFERENCES Characters(CharacterId),
+    CHECK (CharacterAId <> CharacterBId)
+);
+
 
 -- Insert default roles into Roles table
 INSERT INTO Roles

@@ -66,7 +66,8 @@ namespace backend.Controllers
                     Description = story.Description,
                     Content = story.Content,
                     CreatedAt = story.CreatedAt,
-                    ImageUrl = story.ImageUrl
+                    ImageUrl = story.ImageUrl,
+                    StoryGroupId = story.StoryGroupId
                 };
                 return Ok(storyDto);
             }

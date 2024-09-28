@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import { Character, StoryPart } from "../../models/Character";
 import AddStoryPartModal from "./AddStoryPartModal";
+import RelationshipModal from "./RelationshipModal";
 import { useNavigate } from "react-router-dom";
 
 const CharacterDash: React.FC = () => {
@@ -13,6 +14,8 @@ const CharacterDash: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isRelationshipModalOpen, setIsRelationshipModalOpen] =
+    useState<boolean>(false);
 
   const [isCharacterExpanded, setIsCharacterExpanded] =
     useState<boolean>(false);
@@ -166,6 +169,12 @@ const CharacterDash: React.FC = () => {
       fetchStoryParts(selectedCharacter.characterId);
     }
   };
+
+  const handleCharacterRelationshipClick = () => {
+    setIsRelationshipModalOpen(true);
+  };
+
+  const handleRelationshipUpdate = () => {};
 
   const scrollCarousel = useCallback((direction: number) => {
     const container = carouselRef.current;
@@ -390,6 +399,12 @@ const CharacterDash: React.FC = () => {
             >
               Delete Character
             </button>
+            <button
+              onClick={handleCharacterRelationshipClick}
+              className="mb-4 py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              View Relationships
+            </button>
           </div>
         </div>
       )}
@@ -398,6 +413,14 @@ const CharacterDash: React.FC = () => {
           characterId={selectedCharacter.characterId}
           onClose={() => setIsModalOpen(false)}
           onStoryPartAdded={handleStoryPartAdded}
+        />
+      )}
+      {isRelationshipModalOpen && selectedCharacter && (
+        <RelationshipModal
+          characterId={selectedCharacter.characterId}
+          onClose={() => setIsRelationshipModalOpen(false)}
+          onUpdate={handleRelationshipUpdate} // Ensure this is the correct prop you want to call
+          onRelationshipUpdated={handleRelationshipUpdate} // This should match the new prop
         />
       )}
     </div>
