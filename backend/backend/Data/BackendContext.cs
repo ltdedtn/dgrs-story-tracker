@@ -27,6 +27,19 @@ namespace backend.Data
             modelBuilder.Entity<CharacterRelationship>()
                 .HasKey(cr => cr.RelationshipId);
 
+            // Set up the relationship for CharacterRelationships to cascade delete
+            modelBuilder.Entity<CharacterRelationship>()
+                .HasOne<Character>(cr => cr.CharacterA)
+                .WithMany(c => c.CharacterRelationshipsA)
+                .HasForeignKey(cr => cr.CharacterAId)
+                .OnDelete(DeleteBehavior.Cascade); // Cascade delete on CharacterA
+
+            modelBuilder.Entity<CharacterRelationship>()
+                .HasOne<Character>(cr => cr.CharacterB)
+                .WithMany(c => c.CharacterRelationshipsB)
+                .HasForeignKey(cr => cr.CharacterBId)
+                .OnDelete(DeleteBehavior.Cascade); // Cascade delete on CharacterB
+
             // StoryPartCharacter many-to-many relationship
             modelBuilder.Entity<StoryPartCharacter>()
                 .HasKey(spc => new { spc.StoryPartId, spc.CharacterId });

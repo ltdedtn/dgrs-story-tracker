@@ -16,4 +16,7 @@ public class Character
     public Story? Story { get; set; }
 
     public ICollection<StoryPartCharacter> StoryPartCharacters { get; set; } = new List<StoryPartCharacter>();
+    public virtual ICollection<CharacterRelationship> CharacterRelationshipsA { get; set; } = new List<CharacterRelationship>(); // Relationships where this character is Character A
+    public virtual ICollection<CharacterRelationship> CharacterRelationshipsB { get; set; } = new List<CharacterRelationship>(); // Relationships where this character is Character B
+
 }

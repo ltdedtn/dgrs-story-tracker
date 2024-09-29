@@ -56,11 +56,19 @@ namespace backend.Repositories
 
             _context.StoryPartCharacters.RemoveRange(storyPartCharacters);
 
+            // Remove related records from CharacterRelationships
+            var relationships = _context.CharacterRelationships
+                                         .Where(cr => cr.CharacterAId == id || cr.CharacterBId == id);
+
+            _context.CharacterRelationships.RemoveRange(relationships);
+
             // Now remove the character
             _context.Characters.Remove(character);
 
+            // Save changes
             await _context.SaveChangesAsync();
         }
+
         public async Task<IEnumerable<Character>> GetCharactersByStoryPartIdAsync(int storyPartId)
         {
             return await _context.StoryPartCharacters
