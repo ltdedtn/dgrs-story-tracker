@@ -44,7 +44,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "StandardUser,Editor,Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<Character>> GetCharacter(int id)
         {
             var character = await _characterRepository.GetCharacterByIdAsync(id);
@@ -193,6 +193,7 @@ namespace backend.Controllers
         }
 
         [HttpPut("relationship/{id}")]
+        [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> UpdateRelationship(int id, [FromBody] RelationshipUpdateDto relationshipDto)
         {
             if (id != relationshipDto.RelationshipId)
@@ -216,6 +217,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete("relationship/{id}")]
+        [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> DeleteRelationship(int id)
         {
             var existingRelationship = await _context.CharacterRelationships.FindAsync(id); // Use CharacterRelationships

@@ -11,10 +11,12 @@ const StoryGroupDash = () => {
     useState<StoryGroup | null>(null);
   const [stories, setStories] = useState<Story[]>([]);
   const [selectedStory, setSelectedStory] = useState<Story | null>(null);
+  const [selectedStoryPart, setSelectedStoryPart] = useState<Story | null>(
+    null
+  );
   const [storyParts, setStoryParts] = useState<StoryPart[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [expandedPartId, setExpandedPartId] = useState<number | null>(null);
   const [isDescriptionExpanded, setIsDescriptionExpanded] =
     useState<boolean>(false);
   const [showStoryGroupButtons, setShowStoryGroupButtons] =
@@ -222,9 +224,10 @@ const StoryGroupDash = () => {
     setSelectedStory(story);
     setIsDescriptionExpanded(false);
   };
-
-  const toggleExpandPart = (partId: number) => {
-    setExpandedPartId(expandedPartId === partId ? null : partId);
+  const handleStoryPartClick = (part: any) => {
+    console.log(part);
+    setSelectedStoryPart(part);
+    setIsDescriptionExpanded(false);
   };
 
   const toggleDescription = () => {
@@ -582,6 +585,7 @@ const StoryGroupDash = () => {
                       <div
                         key={part.storyPartId}
                         className="flex-shrink-0 w-64 rounded-lg cursor-pointer relative"
+                        onClick={() => handleStoryPartClick(part)}
                       >
                         {/* Image Section */}
                         {part.imageUrl && (
@@ -646,33 +650,6 @@ const StoryGroupDash = () => {
                             </button>
                           </div>
                         )}
-
-                        {/* Content and Summary Section */}
-                        <div className="p-4">
-                          <div className="text-xl">Content</div>
-                          <div className="mb-4 text-left">
-                            {expandedPartId === part.storyPartId
-                              ? part.content
-                              : part.content.length > 100
-                              ? `${part.content.slice(0, 100)}...`
-                              : part.content}
-                          </div>
-                          {part.content.length > 100 && (
-                            <button
-                              className="mt-2 px-3 rounded bg-blue-500 text-white hover:bg-blue-600"
-                              onClick={() => toggleExpandPart(part.storyPartId)}
-                            >
-                              {expandedPartId === part.storyPartId
-                                ? "Read Less"
-                                : "Read More"}
-                            </button>
-                          )}
-
-                          <div className="text-xl py-2">Summary</div>
-                          <div className="mb-4 text-left">
-                            {part.description || "No summary available."}
-                          </div>
-                        </div>
                       </div>
                     ))
                   )}
@@ -701,6 +678,41 @@ const StoryGroupDash = () => {
                   </button>
                 )}
               </div>
+              {selectedStoryPart && (
+                <div className="mt-8 text-center">
+                  <h2 className="text-3xl font-bold">
+                    {selectedStoryPart.title}
+                  </h2>
+                  <br />
+                  <div>
+                    <div className="text-xl">Description</div>
+                    <div className="max-w-3xl mx-auto mb-4 text-left">
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: selectedStoryPart.content
+                            ? selectedStoryPart.content.replace(/\n/g, "<br />")
+                            : "No content available",
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-xl">Description</div>
+                    <div className="max-w-3xl mx-auto mb-4 text-left">
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: selectedStoryPart.description
+                            ? selectedStoryPart.description.replace(
+                                /\n/g,
+                                "<br />"
+                              )
+                            : "No description available",
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
