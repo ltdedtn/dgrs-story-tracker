@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "7023:8080"
+    networks:
+      - backend-network
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=192.168.1.11;Database=TESTA;User Id=testuser;Password=testuser;Encrypt=False;TrustServerCertificate=True;
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    networks:
+      - backend-network
+
+networks:
+  backend-network:

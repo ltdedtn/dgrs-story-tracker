@@ -42,7 +42,7 @@ const RelationshipModal: React.FC<RelationshipModalProps> = ({
     const fetchCharacters = async () => {
       try {
         const response = await fetchData(
-          "https://localhost:7023/api/Characters"
+          "http://localhost:7023/api/Characters"
         );
         setCharacters(response.data || []);
       } catch (error) {
@@ -61,7 +61,7 @@ const RelationshipModal: React.FC<RelationshipModalProps> = ({
     const fetchCurrentCharacter = async () => {
       try {
         const response = await fetchData(
-          `https://localhost:7023/api/Characters/${characterId}`
+          `http://localhost:7023/api/Characters/${characterId}`
         );
         setCurrentCharacter(response.data);
       } catch (error) {
@@ -78,7 +78,7 @@ const RelationshipModal: React.FC<RelationshipModalProps> = ({
     const fetchRelationships = async () => {
       try {
         const response = await fetchData(
-          `https://localhost:7023/api/Characters/${characterId}/relationships`
+          `http://localhost:7023/api/Characters/${characterId}/relationships`
         );
 
         // Check if response data is an array before setting it
@@ -108,7 +108,7 @@ const RelationshipModal: React.FC<RelationshipModalProps> = ({
       const token = localStorage.getItem("token");
 
       await axios.put(
-        `https://localhost:7023/api/Characters/relationship/${relationshipId}`,
+        `http://localhost:7023/api/Characters/relationship/${relationshipId}`,
         { relationshipId, relationshipTag },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -170,7 +170,7 @@ const RelationshipModal: React.FC<RelationshipModalProps> = ({
                   <div className="flex items-center mb-2">
                     {relatedCharacter.imageUrl && (
                       <img
-                        src={`https://localhost:7023${relatedCharacter.imageUrl}`}
+                        src={`http://localhost:7023${relatedCharacter.imageUrl}`}
                         alt={relatedCharacter.name}
                         className="w-10 h-10 rounded-full mr-2"
                       />

@@ -34,7 +34,7 @@ const StoryGroupDash = () => {
     const fetchStoryGroups = async () => {
       try {
         const response = await axios.get<StoryGroup[]>(
-          "https://localhost:7023/api/StoryGroups"
+          "http://localhost:7023/api/StoryGroups"
         );
         setStoryGroups(response.data);
       } catch (error) {
@@ -53,7 +53,7 @@ const StoryGroupDash = () => {
         const token = localStorage.getItem("token");
         try {
           const response = await axios.get<Story[]>(
-            `https://localhost:7023/api/Story/ByStoryGroup/${selectedStoryGroup.storyGroupId}`,
+            `http://localhost:7023/api/Story/ByStoryGroup/${selectedStoryGroup.storyGroupId}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -76,7 +76,7 @@ const StoryGroupDash = () => {
         const token = localStorage.getItem("token");
         try {
           const response = await axios.get<StoryPart[]>(
-            `https://localhost:7023/api/StoryParts/ByStory/${selectedStory.storyId}`,
+            `http://localhost:7023/api/StoryParts/ByStory/${selectedStory.storyId}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -101,7 +101,7 @@ const StoryGroupDash = () => {
       const token = localStorage.getItem("token");
       try {
         await axios.delete(
-          `https://localhost:7023/api/StoryParts/${storyPartId}`,
+          `http://localhost:7023/api/StoryParts/${storyPartId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -128,7 +128,7 @@ const StoryGroupDash = () => {
       const token = localStorage.getItem("token");
       try {
         await axios.delete(
-          `https://localhost:7023/api/StoryGroups/${storyGroupId}`,
+          `http://localhost:7023/api/StoryGroups/${storyGroupId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -159,7 +159,7 @@ const StoryGroupDash = () => {
     if (confirmDelete) {
       const token = localStorage.getItem("token");
       try {
-        await axios.delete(`https://localhost:7023/api/Story/${storyId}`, {
+        await axios.delete(`http://localhost:7023/api/Story/${storyId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -279,7 +279,7 @@ const StoryGroupDash = () => {
               onClick={() => handleStoryGroupClick(storyGroup)}
             >
               <img
-                src={`https://localhost:7023/${storyGroup.imageUrl}`}
+                src={`http://localhost:7023/${storyGroup.imageUrl}`}
                 alt={storyGroup.title}
                 className="w-full h-full object-cover"
               />
@@ -429,7 +429,7 @@ const StoryGroupDash = () => {
                   onClick={() => handleStoryClick(story)}
                 >
                   <img
-                    src={`https://localhost:7023/${story.imageUrl}`}
+                    src={`http://localhost:7023/${story.imageUrl}`}
                     alt={story.title}
                     className="w-full h-full object-cover"
                   />
@@ -591,7 +591,7 @@ const StoryGroupDash = () => {
                         {part.imageUrl && (
                           <div className="relative">
                             <img
-                              src={`https://localhost:7023/${part.imageUrl}`}
+                              src={`http://localhost:7023/${part.imageUrl}`}
                               alt={`Story Part ${part.storyPartId}`}
                               className="w-full h-40 object-cover rounded-t-lg"
                             />

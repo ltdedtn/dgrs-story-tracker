@@ -29,7 +29,7 @@ const EditStoryPart = () => {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.get(
-        `https://localhost:7023/api/StoryParts/${storyPartId}`,
+        `http://localhost:7023/api/StoryParts/${storyPartId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ const EditStoryPart = () => {
 
       // Ensure the image URL is prefixed correctly
       if (imageUrl) {
-        setImagePreview(`https://localhost:7023${imageUrl}`); // Load existing image if available
+        setImagePreview(`http://localhost:7023${imageUrl}`); // Load existing image if available
       }
     } catch (error) {
       console.error("Error fetching story part", error);
@@ -58,7 +58,7 @@ const EditStoryPart = () => {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.get<{ storyId: number; title: string }[]>(
-        "https://localhost:7023/api/Story",
+        "http://localhost:7023/api/Story",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -104,7 +104,7 @@ const EditStoryPart = () => {
 
       // Send the updated data to the backend
       const response = await axios.put(
-        `https://localhost:7023/api/StoryParts/${storyPartId}`,
+        `http://localhost:7023/api/StoryParts/${storyPartId}`,
         formData,
         {
           headers: {
@@ -116,7 +116,7 @@ const EditStoryPart = () => {
 
       // After the successful update, update the image preview with the actual URL
       if (response.data.imageUrl) {
-        setImagePreview(`https://localhost:7023${response.data.imageUrl}`);
+        setImagePreview(`http://localhost:7023${response.data.imageUrl}`);
       }
 
       navigate("/stories");

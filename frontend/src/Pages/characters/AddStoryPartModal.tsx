@@ -39,7 +39,7 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
       setIsLoadingStoryGroups(true);
       try {
         const response = await axios.get<StoryGroup[]>(
-          "https://localhost:7023/api/StoryGroups",
+          "http://localhost:7023/api/StoryGroups",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -66,7 +66,7 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
         setIsLoadingStories(true);
         try {
           const response = await axios.get<Story[]>(
-            `https://localhost:7023/api/Story/ByStoryGroup/${selectedStoryGroupId}`,
+            `http://localhost:7023/api/Story/ByStoryGroup/${selectedStoryGroupId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -96,7 +96,7 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
         setIsLoadingStoryParts(true);
         try {
           const response = await axios.get<StoryPart[]>(
-            `https://localhost:7023/api/StoryParts/ByStory/${selectedStoryId}`,
+            `http://localhost:7023/api/StoryParts/ByStory/${selectedStoryId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -134,7 +134,7 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
 
     try {
       const response = await axios.post(
-        "https://localhost:7023/api/StoryParts/linkCharacterToStoryPart",
+        "http://localhost:7023/api/StoryParts/linkCharacterToStoryPart",
         {
           storyPartId: selectedStoryPartId,
           characterId: characterId,

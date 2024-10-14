@@ -30,7 +30,7 @@ const NewCharacter = () => {
         formData.append("imageFile", imageFile);
       }
       const token = localStorage.getItem("token");
-      await axios.post("https://localhost:7023/api/Characters", formData, {
+      await axios.post("http://localhost:7023/api/Characters", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,

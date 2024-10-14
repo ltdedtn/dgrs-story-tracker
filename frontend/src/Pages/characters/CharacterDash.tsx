@@ -31,7 +31,7 @@ const CharacterDash: React.FC = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get<Character[]>(
-          "https://localhost:7023/api/Characters",
+          "http://localhost:7023/api/Characters",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ const CharacterDash: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<StoryPart[]>(
-        `https://localhost:7023/api/Characters/${characterId}/storyparts`,
+        `http://localhost:7023/api/Characters/${characterId}/storyparts`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -72,7 +72,7 @@ const CharacterDash: React.FC = () => {
         const updatedStoryParts = await Promise.all(
           storyParts.map(async (storyPart) => {
             const storyResponse = await axios.get(
-              `https://localhost:7023/api/Story/${storyPart.storyId}`,
+              `http://localhost:7023/api/Story/${storyPart.storyId}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -112,7 +112,7 @@ const CharacterDash: React.FC = () => {
       const token = localStorage.getItem("token");
       try {
         await axios.delete(
-          `https://localhost:7023/api/Characters/${characterId}`,
+          `http://localhost:7023/api/Characters/${characterId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -141,7 +141,7 @@ const CharacterDash: React.FC = () => {
       const token = localStorage.getItem("token");
       try {
         await axios.delete(
-          `https://localhost:7023/api/StoryParts/unlinkCharacterFromStoryPart?storyPartId=${storyPartId}&characterId=${selectedCharacter?.characterId}`,
+          `http://localhost:7023/api/StoryParts/unlinkCharacterFromStoryPart?storyPartId=${storyPartId}&characterId=${selectedCharacter?.characterId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -297,7 +297,7 @@ const CharacterDash: React.FC = () => {
                 onClick={() => handleCharacterClick(character)}
               >
                 <img
-                  src={`https://localhost:7023${character.imageUrl}`}
+                  src={`http://localhost:7023${character.imageUrl}`}
                   alt={character.name}
                   className="w-full h-full object-cover"
                 />
@@ -316,7 +316,7 @@ const CharacterDash: React.FC = () => {
       {selectedCharacter && (
         <div className="mt-8 max-w-[700px] mx-auto text-center">
           <img
-            src={`https://localhost:7023${selectedCharacter.imageUrl}`}
+            src={`http://localhost:7023${selectedCharacter.imageUrl}`}
             alt={selectedCharacter.name}
             className="w-48 h-48 object-cover mx-auto rounded-lg"
           />
