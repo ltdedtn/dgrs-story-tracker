@@ -1,0 +1,52 @@
+# .NET Core specific files
+bin/
+obj/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# VS Code files
+.vscode/
+
+# Visual Studio files
+.vs/
+*.csproj.user
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# ASP.NET Temporary Files
+**/node_modules/
+**/wwwroot/
+**/dist/
+**/bundle/
+**/packages/
+*.log
+
+# User-specific files
+*.rsuser
+*.ruleset
+*.vscode/
+*.psess
+.idea/
+
+# Auto-generated files
+Generated_Code/
+
+# Azure Deployment
+.publish/
+
+# Logs
+*.log
+*.tlog
+
+# Database
+*.mdf
+*.ldf
+*.ndf
+
+# WebAssembly
+wwwroot/css/app.css
+wwwroot/js/app.js
+wwwroot/js/app.js.map

@@ -77,7 +77,7 @@ CREATE TABLE StoryParts
     Title NVARCHAR(255) NOT NULL,
     Content TEXT NOT NULL,
     Description TEXT NULL,
-    CreatedBy INT NOT NULL,
+    CreatedBy INT NULL,
     CreatedAt DATETIME NOT NULL DEFAULT GETDATE(),
     ImageUrl NVARCHAR(255) NULL,
     FOREIGN KEY (StoryId) REFERENCES Stories(StoryId)

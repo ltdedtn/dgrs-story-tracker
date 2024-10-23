@@ -12,6 +12,7 @@ namespace backend.Models
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
         public string ?ImageUrl { get; set; }
+        public int? CreatedBy { get; set; }
 
         // Navigation propertiesa
         public Story? Story { get; set; }

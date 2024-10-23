@@ -19,6 +19,7 @@ import EditStoryPart from "./Pages/stories/EditStoryPart";
 import NewCharacter from "./Pages/characters/NewCharacter";
 import Unauthorized from "./Pages/auth/Unauthorized";
 import { UserProvider } from "./Pages/users/UserContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -28,34 +29,109 @@ function App() {
           <Header />
           <div className="content-container">
             <Routes>
-              <Route path="/dash" element={<UserDash />} />
+              {/* Public Routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/signUp" element={<SignUp />} />
+              <Route path="/unauthorized" element={<Unauthorized />} />
+              
+              {/* Protected Routes */}
+              <Route
+                path="/dash"
+                element={
+                  <ProtectedRoute>
+                    <UserDash />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/dash/users/:userId/edit"
-                element={<EditUserForm />}
+                element={
+                  <ProtectedRoute>
+                    <EditUserForm />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="/stories" element={<StoryGroupDash />} />
-              <Route path="/newStoryGroup" element={<NewStoryGroup />} />
+              <Route
+                path="/stories"
+                element={
+                  <ProtectedRoute>
+                    <StoryGroupDash />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/newStoryGroup"
+                element={
+                  <ProtectedRoute>
+                    <NewStoryGroup />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/edit-story-group/:storyGroupId"
-                element={<EditStoryGroup />}
+                element={
+                  <ProtectedRoute>
+                    <EditStoryGroup />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="/stories/new" element={<NewStory />} />
-              <Route path="/edit-story/:storyId" element={<EditStory />} />
-              <Route path="/storyPart/new" element={<NewStoryPart />} />
+              <Route
+                path="/stories/new"
+                element={
+                  <ProtectedRoute>
+                    <NewStory />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/edit-story/:storyId"
+                element={
+                  <ProtectedRoute>
+                    <EditStory />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/storyPart/new"
+                element={
+                  <ProtectedRoute>
+                    <NewStoryPart />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/edit-story-part/:storyPartId"
-                element={<EditStoryPart />}
+                element={
+                  <ProtectedRoute>
+                    <EditStoryPart />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="/characters" element={<CharacterDash />} />
-              <Route path="/characters/new" element={<NewCharacter />} />
+              <Route
+                path="/characters"
+                element={
+                  <ProtectedRoute>
+                    <CharacterDash />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/characters/new"
+                element={
+                  <ProtectedRoute>
+                    <NewCharacter />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/characters/:characterId/edit"
-                element={<EditCharacter />}
+                element={
+                  <ProtectedRoute>
+                    <EditCharacter />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="/unauthorized" element={<Unauthorized />} />
-              {/* Add a route to handle 404 - Not Found */}
+              {/* Handle 404 */}
               <Route path="*" element={<Unauthorized />} />
             </Routes>
           </div>

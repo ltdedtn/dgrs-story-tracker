@@ -4,8 +4,10 @@ import { Character, StoryPart } from "../../models/Character";
 import AddStoryPartModal from "./AddStoryPartModal";
 import RelationshipModal from "./RelationshipModal";
 import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../users/UserContext";
 
 const CharacterDash: React.FC = () => {
+  const { role } = useUserContext();
   const [characters, setCharacters] = useState<Character[]>([]);
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
     null
@@ -231,12 +233,14 @@ const CharacterDash: React.FC = () => {
     <div className="p-4">
       <div className="mb-4 flex justify-between items-center">
         <h1 className="text-3xl font-bold">Characters</h1>
+        {(role === "Admin" || role === "Editor") && (
         <button
           className="btn btn-primary"
           onClick={() => navigate("/characters/new")}
         >
           Create New Character
         </button>
+        )}
       </div>
       <div className="relative flex items-center overflow-hidden">
         {shouldShowCarousel(characters, itemWidth) && (
@@ -384,12 +388,15 @@ const CharacterDash: React.FC = () => {
             <p>No story parts available</p>
           )}
           <div className="mt-4">
+          {(role === "Admin" || role === "Editor") && (
             <button
               className="py-2 px-4 rounded bg-blue-500 text-white hover:bg-blue-600 mr-4"
               onClick={handleAddStoryPartClick}
             >
               Add Story Parts
             </button>
+          )}
+            {role === "Admin" && (
             <button
               className="font-bold py-2 px-4 rounded bg-red-500 text-white hover:bg-red-600"
               onClick={() =>
@@ -399,6 +406,7 @@ const CharacterDash: React.FC = () => {
             >
               Delete Character
             </button>
+            )}
             <button
               onClick={handleCharacterRelationshipClick}
               className="py-2 px-4 rounded bg-blue-500 text-white hover:bg-blue-600 ml-4"

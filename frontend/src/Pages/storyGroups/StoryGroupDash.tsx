@@ -4,8 +4,10 @@ import { StoryGroup } from "../../models/StoryGroup";
 import { Story } from "../../models/Story";
 import { StoryPart } from "../../models/StoryPart";
 import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../users/UserContext";
 
 const StoryGroupDash = () => {
+  const { role } = useUserContext();
   const [storyGroups, setStoryGroups] = useState<StoryGroup[]>([]);
   const [selectedStoryGroup, setSelectedStoryGroup] =
     useState<StoryGroup | null>(null);
@@ -259,12 +261,14 @@ const StoryGroupDash = () => {
     <div className="p-4 h-full ">
       <div className="mb-4 flex justify-between items-center">
         <h1 className="text-3xl font-bold">Story Groups</h1>
+        {(role === "Admin" || role === "Editor") && (
         <button
           className="btn btn-primary"
           onClick={() => navigate("/newStoryGroup")}
         >
           Create Story Group
         </button>
+        )}
       </div>
 
       <div className="relative flex items-center overflow-hidden">
@@ -286,8 +290,9 @@ const StoryGroupDash = () => {
               <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-center py-2 text-sm">
                 {storyGroup.title}
               </div>
-
+            
               {/* Edit Button */}
+              {(role === "Admin" || role === "Editor") && (
               <button
                 className="absolute top-2 left-2 z-10 bg-blue-500 text-white rounded-full p-2 hover:bg-blue-600"
                 onClick={(e) => {
@@ -310,8 +315,10 @@ const StoryGroupDash = () => {
                   />
                 </svg>
               </button>
+              )}
 
               {/* Delete Button */}
+              {role === "Admin" && (
               <button
                 className="absolute top-2 right-2 z-10 bg-red-500 text-white rounded-full p-2 hover:bg-red-600"
                 onClick={(e) => {
@@ -334,6 +341,7 @@ const StoryGroupDash = () => {
                   />
                 </svg>
               </button>
+              )}
             </div>
           ))}
         </div>
@@ -389,12 +397,14 @@ const StoryGroupDash = () => {
         <div className="mt-8 ">
           <div className="mb-4 flex justify-between items-center">
             <h1 className="text-3xl font-bold">Stories</h1>
+            {(role === "Admin" || role === "Editor") && (
             <button
               className="btn btn-primary"
               onClick={() => navigate("/stories/new")}
             >
               Create New Story
             </button>
+            )}
           </div>
           <div className="relative flex items-center overflow-hidden">
             {showStoryButtons && (
@@ -437,6 +447,7 @@ const StoryGroupDash = () => {
                     {story.title}
                   </div>
                   {/* Edit Button */}
+                  {(role === "Admin" || role === "Editor") && (
                   <button
                     className="absolute top-2 left-2 z-10 bg-blue-500 text-white rounded-full p-2 hover:bg-blue-600"
                     onClick={(e) => {
@@ -459,8 +470,10 @@ const StoryGroupDash = () => {
                       />
                     </svg>
                   </button>
-
+                  )}
+                  
                   {/* Delete Button */}
+                  {role === "Admin" && (
                   <button
                     className="absolute top-2 right-2 z-10 bg-red-500 text-white rounded-full p-2 hover:bg-red-600"
                     onClick={(e) => {
@@ -483,6 +496,7 @@ const StoryGroupDash = () => {
                       />
                     </svg>
                   </button>
+                  )}
                 </div>
               ))}
             </div>
@@ -544,12 +558,14 @@ const StoryGroupDash = () => {
 
               <div className="mb-4 flex justify-between items-center">
                 <h1 className="text-3xl font-bold">Story Parts</h1>
+                {(role === "Admin" || role === "Editor") && (
                 <button
                   className="btn btn-primary"
                   onClick={() => navigate("/storyPart/new")}
                 >
                   Create New Story Part
                 </button>
+                )}
               </div>
 
               <div className="relative flex items-center overflow-hidden">
@@ -600,6 +616,7 @@ const StoryGroupDash = () => {
                             </div>
 
                             {/* Edit Button */}
+                            {(role === "Admin" || role === "Editor") && (
                             <button
                               className="absolute top-2 left-2 z-10 bg-blue-500 text-white rounded-full p-2 hover:bg-blue-600"
                               onClick={(e) => {
@@ -624,8 +641,10 @@ const StoryGroupDash = () => {
                                 />
                               </svg>
                             </button>
+                            )}
 
                             {/* Delete Button */}
+                            {role === "Admin" && (
                             <button
                               className="absolute top-2 right-2 z-10 bg-red-500 text-white rounded-full p-2 hover:bg-red-600"
                               onClick={(e) => {
@@ -648,6 +667,7 @@ const StoryGroupDash = () => {
                                 />
                               </svg>
                             </button>
+                            )}
                           </div>
                         )}
                       </div>

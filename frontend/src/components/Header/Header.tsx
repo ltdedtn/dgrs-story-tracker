@@ -5,7 +5,7 @@ import { useUserContext } from "../../Pages/users/UserContext";
 const Header = () => {
   const navigate = useNavigate();
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const { username, setUsername, role } = useUserContext(); // Destructure role from context
+  const { username, setUsername, role, setRole } = useUserContext(); // Destructure role from context
 
   const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTheme = e.target.checked ? "dark" : "light";
@@ -15,9 +15,8 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    localStorage.removeItem("role");
-    setUsername(null);
+    setUsername(null); // Clear username in context, triggers localStorage update
+    setRole(null); // Clear role in context, triggers localStorage update
     navigate("/login");
   };
 
@@ -26,7 +25,13 @@ const Header = () => {
     document
       .querySelector("html")
       ?.setAttribute("data-theme", localTheme || "light");
-  }, [theme]);
+
+    // Check for token to manage visibility of user-specific content
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setUsername(null); // Clear username if no token
+    }
+  }, [theme, setUsername]);
 
   return (
     <div className="navbar bg-base-100 shadow-lg px-4 sm:px-8">
@@ -65,14 +70,18 @@ const Header = () => {
               </li>
             )}
             {username ? (
-              <li>
-                <button onClick={handleLogout}>Sign Out</button>
-              </li>
+              <>
+                <span>Welcome, {username}!</span>
+                <button className="btn btn-ghost ml-4" onClick={handleLogout}>
+                  Sign Out
+                </button>
+              </>
             ) : (
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
+              <Link to="/login" className="btn btn-ghost">
+                Login
+              </Link>
             )}
+
             <li>
               <label className="swap swap-rotate w-12 h-12">
                 <input

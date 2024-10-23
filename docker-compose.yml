@@ -10,7 +10,9 @@ services:
     networks:
       - backend-network
     environment:
-      - ConnectionStrings__DefaultConnection=Server=192.168.1.11;Database=TESTA;User Id=testuser;Password=testuser;Encrypt=False;TrustServerCertificate=True;
+
+      # JWT Issuer
+      - JWT_ISSUER=ltdedtn
 
 
   frontend:

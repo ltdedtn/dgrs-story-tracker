@@ -204,14 +204,31 @@ namespace backend.Controllers
 
 
         [HttpPost("Login")]
-        public async Task<ActionResult<User>> Login(LoginDto loginDto)
+        public async Task<ActionResult> Login(LoginDto loginDto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == loginDto.Username || u.Email == loginDto.Username);
-            if (user == null || !VerifyPassword(loginDto.Password, user.PasswordHash))
-                return Unauthorized();
+            // Step 1: Find the user by username or email
+            var user = await _context.Users
+                .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+                .FirstOrDefaultAsync(u => u.Username == loginDto.Username || u.Email == loginDto.Username);
 
+            // Step 2: Check if the user exists and if the password is correct
+            if (user == null || !VerifyPassword(loginDto.Password, user.PasswordHash))
+                return Unauthorized("Invalid username or password.");
+
+            // Step 3: Generate the JWT token
             var token = GenerateJwtToken(user);
-            return Ok(new { Token = token, Username = user.Username });
+
+            // Step 4: Retrieve the user's role(s) (assuming one role for simplicity)
+            var role = user.UserRoles.FirstOrDefault()?.Role.RoleName ?? "Guest"; // Default to "Guest" if no role found
+
+            // Step 5: Return the token, username, and role in the response
+            return Ok(new
+            {
+                Token = token,
+                Username = user.Username,
+                Role = role
+            });
         }
 
         private bool VerifyPassword(string password, string passwordHash)
