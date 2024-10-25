@@ -34,7 +34,7 @@ const Login = () => {
 
     try {
       setError(null); // Clear previous error message
-      const response = await fetch("http://localhost:7023/api/User/Login", {
+      const response = await fetch("https://localhost:7023/api/User/Login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +80,8 @@ const Login = () => {
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="form">
             <h2>Login</h2>
-            {error && <p className="text-red-500">{error}</p>} {/* Display error */}
+            {error && <p className="text-red-500">{error}</p>}{" "}
+            {/* Display error */}
           </div>
           <div>
             <label className="label" htmlFor="username">

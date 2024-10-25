@@ -19,7 +19,7 @@ const EditUserForm = () => {
       try {
         const token = localStorage.getItem("token"); // Get token from localStorage
         const response = await axios.get(
-          `http://localhost:7023/api/User/${userId}`,
+          `https://localhost:7023/api/User/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`, // Add Authorization header
@@ -68,7 +68,7 @@ const EditUserForm = () => {
       }
 
       const response = await axios.put(
-        `http://localhost:7023/api/User/${userId}`,
+        `https://localhost:7023/api/User/${userId}`,
         updatedUserData,
         {
           headers: {

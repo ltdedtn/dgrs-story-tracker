@@ -33,7 +33,7 @@ const CharacterDash: React.FC = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get<Character[]>(
-          "http://localhost:7023/api/Characters",
+          "https://localhost:7023/api/Characters",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -62,7 +62,7 @@ const CharacterDash: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<StoryPart[]>(
-        `http://localhost:7023/api/Characters/${characterId}/storyparts`,
+        `https://localhost:7023/api/Characters/${characterId}/storyparts`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -74,7 +74,7 @@ const CharacterDash: React.FC = () => {
         const updatedStoryParts = await Promise.all(
           storyParts.map(async (storyPart) => {
             const storyResponse = await axios.get(
-              `http://localhost:7023/api/Story/${storyPart.storyId}`,
+              `https://localhost:7023/api/Story/${storyPart.storyId}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -114,7 +114,7 @@ const CharacterDash: React.FC = () => {
       const token = localStorage.getItem("token");
       try {
         await axios.delete(
-          `http://localhost:7023/api/Characters/${characterId}`,
+          `https://localhost:7023/api/Characters/${characterId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -143,7 +143,7 @@ const CharacterDash: React.FC = () => {
       const token = localStorage.getItem("token");
       try {
         await axios.delete(
-          `http://localhost:7023/api/StoryParts/unlinkCharacterFromStoryPart?storyPartId=${storyPartId}&characterId=${selectedCharacter?.characterId}`,
+          `https://localhost:7023/api/StoryParts/unlinkCharacterFromStoryPart?storyPartId=${storyPartId}&characterId=${selectedCharacter?.characterId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -234,12 +234,12 @@ const CharacterDash: React.FC = () => {
       <div className="mb-4 flex justify-between items-center">
         <h1 className="text-3xl font-bold">Characters</h1>
         {(role === "Admin" || role === "Editor") && (
-        <button
-          className="btn btn-primary"
-          onClick={() => navigate("/characters/new")}
-        >
-          Create New Character
-        </button>
+          <button
+            className="btn btn-primary"
+            onClick={() => navigate("/characters/new")}
+          >
+            Create New Character
+          </button>
         )}
       </div>
       <div className="relative flex items-center overflow-hidden">
@@ -250,7 +250,7 @@ const CharacterDash: React.FC = () => {
               onClick={() => scrollCarousel(-1)}
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
+                xmlns="https://www.w3.org/2000/svg"
                 className="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -269,7 +269,7 @@ const CharacterDash: React.FC = () => {
               onClick={() => scrollCarousel(1)}
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
+                xmlns="https://www.w3.org/2000/svg"
                 className="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -301,7 +301,7 @@ const CharacterDash: React.FC = () => {
                 onClick={() => handleCharacterClick(character)}
               >
                 <img
-                  src={`http://localhost:7023${character.imageUrl}`}
+                  src={`https://localhost:7023${character.imageUrl}`}
                   alt={character.name}
                   className="w-full h-full object-cover"
                 />
@@ -320,7 +320,7 @@ const CharacterDash: React.FC = () => {
       {selectedCharacter && (
         <div className="mt-8 max-w-[700px] mx-auto text-center">
           <img
-            src={`http://localhost:7023${selectedCharacter.imageUrl}`}
+            src={`https://localhost:7023${selectedCharacter.imageUrl}`}
             alt={selectedCharacter.name}
             className="w-48 h-48 object-cover mx-auto rounded-lg"
           />
@@ -351,15 +351,18 @@ const CharacterDash: React.FC = () => {
                 >
                   <div className="flex flex-col items-center">
                     <h3 className="text-xl font-semibold text-center">
-                      {storyPart.storyTitle} -{" "}
-                      <button
-                        className="text-red-500 hover:text-red-700 mt-2 text-sm"
-                        onClick={() => handleUnlink(storyPart.storyPartId)}
-                      >
-                        Unlink
-                      </button>
+                      {storyPart.storyTitle}{" "}
+                      {role === "Admin" && (
+                        <button
+                          className="text-red-500 hover:text-red-700 mt-2 text-sm"
+                          onClick={() => handleUnlink(storyPart.storyPartId)}
+                        >
+                          Unlink
+                        </button>
+                      )}
                     </h3>
                   </div>
+
                   <p
                     className={`mt-2 text-center overflow-hidden ${
                       isStoryPartExpanded(storyPart.storyPartId)
@@ -388,24 +391,24 @@ const CharacterDash: React.FC = () => {
             <p>No story parts available</p>
           )}
           <div className="mt-4">
-          {(role === "Admin" || role === "Editor") && (
-            <button
-              className="py-2 px-4 rounded bg-blue-500 text-white hover:bg-blue-600 mr-4"
-              onClick={handleAddStoryPartClick}
-            >
-              Add Story Parts
-            </button>
-          )}
+            {(role === "Admin" || role === "Editor") && (
+              <button
+                className="py-2 px-4 rounded bg-blue-500 text-white hover:bg-blue-600 mr-4"
+                onClick={handleAddStoryPartClick}
+              >
+                Add Story Parts
+              </button>
+            )}
             {role === "Admin" && (
-            <button
-              className="font-bold py-2 px-4 rounded bg-red-500 text-white hover:bg-red-600"
-              onClick={() =>
-                selectedCharacter?.characterId &&
-                handleDelete(selectedCharacter.characterId)
-              }
-            >
-              Delete Character
-            </button>
+              <button
+                className="font-bold py-2 px-4 rounded bg-red-500 text-white hover:bg-red-600"
+                onClick={() =>
+                  selectedCharacter?.characterId &&
+                  handleDelete(selectedCharacter.characterId)
+                }
+              >
+                Delete Character
+              </button>
             )}
             <button
               onClick={handleCharacterRelationshipClick}

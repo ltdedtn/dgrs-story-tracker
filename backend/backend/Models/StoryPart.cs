@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace backend.Models
 {
@@ -16,6 +17,7 @@ namespace backend.Models
 
         // Navigation propertiesa
         public Story? Story { get; set; }
+        [JsonIgnore]
         public ICollection<StoryPartCharacter> StoryPartCharacters { get; set; } = new List<StoryPartCharacter>(); // Initialized as empty list
     }
 }

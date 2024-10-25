@@ -33,3 +33,7 @@ build/
 # Generated code from React Scripts
 /build
 /coverage
+
+
+# Tests folder not ready 
+__tests__

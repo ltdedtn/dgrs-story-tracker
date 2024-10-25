@@ -22,7 +22,7 @@ const EditStory = () => {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.get(
-        `http://localhost:7023/api/Story/${storyId}`,
+        `https://localhost:7023/api/Story/${storyId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -36,7 +36,7 @@ const EditStory = () => {
       setContent(content);
       setStoryGroupId(storyGroupId);
       if (imageUrl) {
-        setImagePreview(`http://localhost:7023${imageUrl}`);
+        setImagePreview(`https://localhost:7023${imageUrl}`);
       }
     } catch (error) {
       console.error("Error fetching story data", error);
@@ -51,7 +51,7 @@ const EditStory = () => {
       try {
         const response = await axios.get<
           { storyGroupId: number; title: string }[]
-        >("http://localhost:7023/api/StoryGroups", {
+        >("https://localhost:7023/api/StoryGroups", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -107,7 +107,7 @@ const EditStory = () => {
       }
 
       const token = localStorage.getItem("token");
-      await axios.put(`http://localhost:7023/api/Story/${storyId}`, formData, {
+      await axios.put(`https://localhost:7023/api/Story/${storyId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,

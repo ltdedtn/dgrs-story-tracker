@@ -32,7 +32,7 @@ const NewStory = () => {
           description: string;
           imageUrl: string;
         }[]
-      >("http://localhost:7023/api/StoryGroups", {
+      >("https://localhost:7023/api/StoryGroups", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -68,7 +68,7 @@ const NewStory = () => {
         formData.append("imageFile", imageFile);
       }
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:7023/api/Story", formData, {
+      await axios.post("https://localhost:7023/api/Story", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,

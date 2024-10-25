@@ -23,7 +23,7 @@ const UserDash = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get<User[]>(
-          "http://localhost:7023/api/User",
+          "https://localhost:7023/api/User",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -56,7 +56,7 @@ const UserDash = () => {
     if (confirmDelete) {
       try {
         const token = localStorage.getItem("token");
-        await axios.delete(`http://localhost:7023/api/User/${userId}`, {
+        await axios.delete(`https://localhost:7023/api/User/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -87,7 +87,7 @@ const UserDash = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:7023/api/User/${userId}/roles`,
+        `https://localhost:7023/api/User/${userId}/roles`,
         [newRoleId],
         {
           headers: {

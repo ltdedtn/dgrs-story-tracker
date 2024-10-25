@@ -154,6 +154,7 @@ namespace backend.Controllers
         }
 
         [HttpPost("relationship")]
+        [Authorize(Roles = "Editor,Admin")]
         public async Task<IActionResult> AddRelationship([FromBody] CharacterRelationship relationship)
         {
             if (relationship == null)

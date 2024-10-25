@@ -49,7 +49,7 @@ const NewUserForm = () => {
         email: email,
         passwordHash: password,
       };
-      const response = await fetch("http://localhost:7023/api/User/Register", {
+      const response = await fetch("https://localhost:7023/api/User/Register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

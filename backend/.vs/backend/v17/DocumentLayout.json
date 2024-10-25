@@ -7,6 +7,14 @@
       "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|c:\\programming projects\\dgrs-story-tracker\\backend\\backend\\models\\storypart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\models\\storypart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|c:\\programming projects\\dgrs-story-tracker\\backend\\backend\\models\\story.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\models\\story.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|c:\\programming projects\\dgrs-story-tracker\\backend\\backend\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
@@ -15,16 +23,16 @@
       "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|c:\\programming projects\\dgrs-story-tracker\\backend\\backend\\models\\storygroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\models\\storygroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|c:\\programming projects\\dgrs-story-tracker\\backend\\backend\\models\\story.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\models\\story.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|c:\\programming projects\\dgrs-story-tracker\\backend\\backend\\data\\backendcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\data\\backendcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|c:\\programming projects\\dgrs-story-tracker\\backend\\backend\\services\\authorizationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\services\\authorizationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|c:\\programming projects\\dgrs-story-tracker\\backend\\backend\\models\\storygroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\models\\storygroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|c:\\programming projects\\dgrs-story-tracker\\backend\\backend\\models\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -41,10 +49,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|c:\\programming projects\\dgrs-story-tracker\\backend\\backend\\controllers\\storypartscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\controllers\\storypartscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|c:\\programming projects\\dgrs-story-tracker\\backend\\backend\\models\\storypart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\models\\storypart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|c:\\programming projects\\dgrs-story-tracker\\backend\\backend\\models\\storypartcharacter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -134,15 +138,27 @@
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
-      "VerticalTabListWidth": 100,
+      "VerticalTabListWidth": 352,
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 6,
+              "Title": "AuthorizationService.cs",
+              "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Services\\AuthorizationService.cs",
+              "RelativeDocumentMoniker": "backend\\Services\\AuthorizationService.cs",
+              "ToolTip": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Services\\AuthorizationService.cs",
+              "RelativeToolTip": "backend\\Services\\AuthorizationService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-23T10:48:17.995Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
               "Title": "Dockerfile",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Dockerfile",
               "RelativeDocumentMoniker": "backend\\Dockerfile",
@@ -166,7 +182,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "Character.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Models\\Character.cs",
               "RelativeDocumentMoniker": "backend\\Models\\Character.cs",
@@ -178,25 +194,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "backend\\Properties\\launchSettings.json",
               "ToolTip": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Properties\\launchSettings.json",
               "RelativeToolTip": "backend\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-10-11T01:35:08.249Z"
+              "WhenOpened": "2024-10-11T01:35:08.249Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Program.cs",
               "RelativeDocumentMoniker": "backend\\Program.cs",
               "ToolTip": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Program.cs",
               "RelativeToolTip": "backend\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADwAAAAAAAAAAAAAAG4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-11T01:32:51.105Z"
             },
@@ -215,7 +232,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "backend.csproj",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\backend.csproj",
               "RelativeDocumentMoniker": "backend\\backend.csproj",
@@ -227,7 +244,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "StoryUpdateDto.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\DTOs\\StoryUpdateDto.cs",
               "RelativeDocumentMoniker": "backend\\DTOs\\StoryUpdateDto.cs",
@@ -239,7 +256,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "StoryGroupDto.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\DTOs\\StoryGroupDto.cs",
               "RelativeDocumentMoniker": "backend\\DTOs\\StoryGroupDto.cs",
@@ -251,7 +268,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "StoryCreateDto.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\DTOs\\StoryCreateDto.cs",
               "RelativeDocumentMoniker": "backend\\DTOs\\StoryCreateDto.cs",
@@ -263,7 +280,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "StoryController.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Controllers\\StoryController.cs",
               "RelativeDocumentMoniker": "backend\\Controllers\\StoryController.cs",
@@ -275,7 +292,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "StoryPartDto.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\DTOs\\StoryPartDto.cs",
               "RelativeDocumentMoniker": "backend\\DTOs\\StoryPartDto.cs",
@@ -287,7 +304,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "StoryPartCreateDto.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\DTOs\\StoryPartCreateDto.cs",
               "RelativeDocumentMoniker": "backend\\DTOs\\StoryPartCreateDto.cs",
@@ -299,7 +316,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "StoryDto.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\DTOs\\StoryDto.cs",
               "RelativeDocumentMoniker": "backend\\DTOs\\StoryDto.cs",
@@ -311,7 +328,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "UserUpdateDto.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\DTOs\\UserUpdateDto.cs",
               "RelativeDocumentMoniker": "backend\\DTOs\\UserUpdateDto.cs",
@@ -323,7 +340,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "StoryPartUpdateDto.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\DTOs\\StoryPartUpdateDto.cs",
               "RelativeDocumentMoniker": "backend\\DTOs\\StoryPartUpdateDto.cs",
@@ -335,7 +352,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "StoryGroupUpdateDto.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\DTOs\\StoryGroupUpdateDto.cs",
               "RelativeDocumentMoniker": "backend\\DTOs\\StoryGroupUpdateDto.cs",
@@ -347,7 +364,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "StoryGroupCreateDto.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\DTOs\\StoryGroupCreateDto.cs",
               "RelativeDocumentMoniker": "backend\\DTOs\\StoryGroupCreateDto.cs",
@@ -359,7 +376,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "backend\\Controllers\\UserController.cs",
@@ -371,7 +388,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "StoryPartsController.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Controllers\\StoryPartsController.cs",
               "RelativeDocumentMoniker": "backend\\Controllers\\StoryPartsController.cs",
@@ -383,7 +400,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "StoryGroupsController.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Controllers\\StoryGroupsController.cs",
               "RelativeDocumentMoniker": "backend\\Controllers\\StoryGroupsController.cs",
@@ -395,7 +412,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Repositories\\UserRepository.cs",
               "RelativeDocumentMoniker": "backend\\Repositories\\UserRepository.cs",
@@ -407,7 +424,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "StoryRepository.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Repositories\\StoryRepository.cs",
               "RelativeDocumentMoniker": "backend\\Repositories\\StoryRepository.cs",
@@ -419,7 +436,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "StoryPartRepository.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Repositories\\StoryPartRepository.cs",
               "RelativeDocumentMoniker": "backend\\Repositories\\StoryPartRepository.cs",
@@ -431,7 +448,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "StoryGroupRepository.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Repositories\\StoryGroupRepository.cs",
               "RelativeDocumentMoniker": "backend\\Repositories\\StoryGroupRepository.cs",
@@ -443,7 +460,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "UserRole.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Models\\UserRole.cs",
               "RelativeDocumentMoniker": "backend\\Models\\UserRole.cs",
@@ -455,7 +472,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Models\\User.cs",
               "RelativeDocumentMoniker": "backend\\Models\\User.cs",
@@ -467,7 +484,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "StoryPartCharacter.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Models\\StoryPartCharacter.cs",
               "RelativeDocumentMoniker": "backend\\Models\\StoryPartCharacter.cs",
@@ -479,19 +496,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 1,
               "Title": "StoryPart.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Models\\StoryPart.cs",
               "RelativeDocumentMoniker": "backend\\Models\\StoryPart.cs",
               "ToolTip": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Models\\StoryPart.cs",
               "RelativeToolTip": "backend\\Models\\StoryPart.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-05T04:18:32.059Z"
+              "WhenOpened": "2024-09-05T04:18:32.059Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "StoryGroup.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Models\\StoryGroup.cs",
               "RelativeDocumentMoniker": "backend\\Models\\StoryGroup.cs",
@@ -503,7 +521,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Role.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Models\\Role.cs",
               "RelativeDocumentMoniker": "backend\\Models\\Role.cs",
@@ -515,15 +533,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "Story.cs",
               "DocumentMoniker": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Models\\Story.cs",
               "RelativeDocumentMoniker": "backend\\Models\\Story.cs",
               "ToolTip": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\Models\\Story.cs",
               "RelativeToolTip": "backend\\Models\\Story.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-05T04:16:03.122Z"
+              "WhenOpened": "2024-09-05T04:16:03.122Z",
+              "EditorCaption": ""
             }
           ]
         }
