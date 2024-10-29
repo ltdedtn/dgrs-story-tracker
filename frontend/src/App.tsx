@@ -29,11 +29,21 @@ function App() {
           <Header />
           <div className="content-container">
             <Routes>
+              {/* Default Route to StoryGroupDash */}
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <StoryGroupDash />
+                  </ProtectedRoute>
+                }
+              />
+
               {/* Public Routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/signUp" element={<SignUp />} />
               <Route path="/unauthorized" element={<Unauthorized />} />
-              
+
               {/* Protected Routes */}
               <Route
                 path="/dash"
