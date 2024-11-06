@@ -80,7 +80,20 @@ CREATE TABLE StoryParts
     CreatedBy INT NULL,
     CreatedAt DATETIME NOT NULL DEFAULT GETDATE(),
     ImageUrl NVARCHAR(255) NULL,
-    FOREIGN KEY (StoryId) REFERENCES Stories(StoryId)
+    YoutubeLink NVARCHAR(255) NULL,
+    AADateId INT NOT NULL,
+    FOREIGN KEY (StoryId) REFERENCES Stories(StoryId),
+    FOREIGN KEY (AADateId) REFERENCES AADates(AADateId)
+);
+
+-- AADates Table (Dates linked to StoryParts)
+CREATE TABLE AADates
+(
+    AADateId INT IDENTITY(1,1) PRIMARY KEY,
+    CEYear INT NOT NULL,
+    MonthNumber INT NOT NULL CHECK (MonthNumber BETWEEN 1 AND 12),
+    Day INT NOT NULL CHECK (Day BETWEEN 1 AND 25),
+    IsAD BIT NOT NULL CHECK (IsAD IN (0, 1))
 );
 
 -- StoryGroups Table

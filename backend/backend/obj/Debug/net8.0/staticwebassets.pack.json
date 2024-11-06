@@ -9,8 +9,24 @@
       "PackagePath": "staticwebassets\\images\\0eabf3cb-0f0d-48ce-9730-d520e66e04e5.jpg"
     },
     {
+      "Id": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\13edc7ab-b0e2-4c25-8f0b-018fd229f80e.jpg",
+      "PackagePath": "staticwebassets\\images\\13edc7ab-b0e2-4c25-8f0b-018fd229f80e.jpg"
+    },
+    {
       "Id": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\14474fa0-82ce-450b-858c-84de6c0ef576.jpg",
       "PackagePath": "staticwebassets\\images\\14474fa0-82ce-450b-858c-84de6c0ef576.jpg"
+    },
+    {
+      "Id": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\174297bd-8ff1-4a77-8238-d6f60caea4b7.jpg",
+      "PackagePath": "staticwebassets\\images\\174297bd-8ff1-4a77-8238-d6f60caea4b7.jpg"
+    },
+    {
+      "Id": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\19dd7962-4d6f-4931-a2b2-f4a31de095aa.jpg",
+      "PackagePath": "staticwebassets\\images\\19dd7962-4d6f-4931-a2b2-f4a31de095aa.jpg"
+    },
+    {
+      "Id": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\21bee1f7-d7d9-411e-9cb4-2807eb96e69e.jpg",
+      "PackagePath": "staticwebassets\\images\\21bee1f7-d7d9-411e-9cb4-2807eb96e69e.jpg"
     },
     {
       "Id": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\348d8434-3925-4074-800d-3790de582262.jpg",
@@ -21,12 +37,44 @@
       "PackagePath": "staticwebassets\\images\\3559077d-952c-44df-b3b4-7b7720c82dcd.jpg"
     },
     {
+      "Id": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\4378128f-d230-4ca8-8971-9a95e86e9e95.png",
+      "PackagePath": "staticwebassets\\images\\4378128f-d230-4ca8-8971-9a95e86e9e95.png"
+    },
+    {
+      "Id": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\542dda11-0438-45e8-943a-f62b15279874.jpg",
+      "PackagePath": "staticwebassets\\images\\542dda11-0438-45e8-943a-f62b15279874.jpg"
+    },
+    {
       "Id": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\73ec87c1-7296-47df-9e38-ca955f4eabd8.jpg",
       "PackagePath": "staticwebassets\\images\\73ec87c1-7296-47df-9e38-ca955f4eabd8.jpg"
     },
     {
+      "Id": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\9b9b8234-0c7a-4c3a-9c30-1e118f318729.png",
+      "PackagePath": "staticwebassets\\images\\9b9b8234-0c7a-4c3a-9c30-1e118f318729.png"
+    },
+    {
       "Id": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\a16adf68-944f-4601-9bde-b3112d301c6a.jpg",
       "PackagePath": "staticwebassets\\images\\a16adf68-944f-4601-9bde-b3112d301c6a.jpg"
+    },
+    {
+      "Id": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\cfb11b99-f29a-45e2-8326-22d4f388cfbb.png",
+      "PackagePath": "staticwebassets\\images\\cfb11b99-f29a-45e2-8326-22d4f388cfbb.png"
+    },
+    {
+      "Id": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\d3b2ddeb-dce8-48e0-bf1c-32f99da1e081.jpg",
+      "PackagePath": "staticwebassets\\images\\d3b2ddeb-dce8-48e0-bf1c-32f99da1e081.jpg"
+    },
+    {
+      "Id": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\d8af88d9-51ed-4837-8040-4a70e36beb94.png",
+      "PackagePath": "staticwebassets\\images\\d8af88d9-51ed-4837-8040-4a70e36beb94.png"
+    },
+    {
+      "Id": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\f563ad81-49a6-494e-8032-931dfe19cf81.jpg",
+      "PackagePath": "staticwebassets\\images\\f563ad81-49a6-494e-8032-931dfe19cf81.jpg"
+    },
+    {
+      "Id": "C:\\Programming Projects\\dgrs-story-tracker\\backend\\backend\\wwwroot\\images\\ff9ade1e-c575-4b38-9f89-428ec5bdde33.jpg",
+      "PackagePath": "staticwebassets\\images\\ff9ade1e-c575-4b38-9f89-428ec5bdde33.jpg"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.backend.Microsoft.AspNetCore.StaticWebAssets.props",

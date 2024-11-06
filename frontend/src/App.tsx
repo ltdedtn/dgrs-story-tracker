@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import "./App.css";
+import Summary from "./Pages/summary/Summary";
 import Login from "./Pages/users/Login";
 import SignUp from "./Pages/users/NewUserForm";
 import UserDash from "./Pages/users/UserDash";
@@ -43,6 +44,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signUp" element={<SignUp />} />
               <Route path="/unauthorized" element={<Unauthorized />} />
+              <Route path="/summary" element={<Summary />} />
 
               {/* Protected Routes */}
               <Route

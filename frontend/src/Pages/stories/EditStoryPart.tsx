@@ -14,14 +14,20 @@ const EditStoryPart = () => {
   const [content, setContent] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [storyId, setStoryId] = useState<number | "">("");
+  const [youtubeLink, setYoutubeLink] = useState<string>(""); // New YouTube link field
+
+  const [ceYear, setCeYear] = useState<number | "">("");
+  const [monthNumber, setMonthNumber] = useState<number | "">("");
+  const [day, setDay] = useState<number | "">("");
+  const [isAD, setIsAD] = useState<boolean>(true); // Default to AD
 
   const [imageFile, setImageFile] = useState<File | null>(null);
-
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [stories, setStories] = useState<{ storyId: number; title: string }[]>(
     []
   );
+
   const navigate = useNavigate();
 
   // Fetch the story part data by ID
@@ -37,15 +43,31 @@ const EditStoryPart = () => {
         }
       );
 
-      const { title, content, description, storyId, imageUrl } = response.data;
-      setTitle(title);
-      setContent(content);
-      setDescription(description);
-      setStoryId(storyId);
+      const {
+        title,
+        content,
+        description,
+        storyId,
+        imageUrl,
+        ceYear,
+        monthNumber,
+        day,
+        isAD,
+        youtubeLink,
+      } = response.data;
 
-      // Ensure the image URL is prefixed correctly
+      setTitle(title || "");
+      setContent(content || "");
+      setDescription(description || "");
+      setStoryId(storyId || "");
+      setCeYear(ceYear || "");
+      setMonthNumber(monthNumber || "");
+      setDay(day || "");
+      setIsAD(isAD || true);
+      setYoutubeLink(youtubeLink || "");
+
       if (imageUrl) {
-        setImagePreview(`https://localhost:7023${imageUrl}`); // Load existing image if available
+        setImagePreview(`https://localhost:7023${imageUrl}`);
       }
     } catch (error) {
       console.error("Error fetching story part", error);
@@ -93,17 +115,20 @@ const EditStoryPart = () => {
       const token = localStorage.getItem("token");
 
       formData.append("partId", storyPartId ? storyPartId.toString() : "");
-
       formData.append("title", title);
       formData.append("content", content);
       formData.append("description", description);
+      formData.append("ceYear", ceYear.toString());
+      formData.append("monthNumber", monthNumber.toString());
+      formData.append("day", day.toString());
+      formData.append("isAD", isAD.toString());
+      formData.append("youtubeLink", youtubeLink);
 
       if (imageFile) {
-        formData.append("imageFile", imageFile); // Append the new image file if selected
+        formData.append("imageFile", imageFile);
       }
 
-      // Send the updated data to the backend
-      const response = await axios.put(
+      await axios.put(
         `https://localhost:7023/api/StoryParts/${storyPartId}`,
         formData,
         {
@@ -113,11 +138,6 @@ const EditStoryPart = () => {
           },
         }
       );
-
-      // After the successful update, update the image preview with the actual URL
-      if (response.data.imageUrl) {
-        setImagePreview(`https://localhost:7023${response.data.imageUrl}`);
-      }
 
       navigate("/stories");
     } catch (error) {
@@ -144,6 +164,40 @@ const EditStoryPart = () => {
             required
           />
         </div>
+
+        {/* Date Field */}
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Date</span>
+          </label>
+          <div className="flex space-x-2">
+            <input
+              type="number"
+              value={ceYear}
+              onChange={(e) => setCeYear(Number(e.target.value))}
+              className="input input-bordered w-1/3"
+              required
+            />
+            <input
+              type="number"
+              value={monthNumber}
+              onChange={(e) => setMonthNumber(Number(e.target.value))}
+              min="1"
+              max="12"
+              className="input input-bordered w-1/3"
+              required
+            />
+            <input
+              type="number"
+              value={day}
+              onChange={(e) => setDay(Number(e.target.value))}
+              min="1"
+              max="31"
+              className="input input-bordered w-1/3"
+              required
+            />
+          </div>
+        </div>
         <div className="form-control">
           <label htmlFor="content" className="label">
             <span className="label-text">Content</span>
@@ -157,6 +211,22 @@ const EditStoryPart = () => {
             required
           ></textarea>
         </div>
+
+        {/* YouTube Link Field */}
+        <div className="form-control">
+          <label htmlFor="youtubeLink" className="label">
+            <span className="label-text">YouTube Link</span>
+          </label>
+          <input
+            id="youtubeLink"
+            type="url"
+            value={youtubeLink}
+            onChange={(e) => setYoutubeLink(e.target.value)}
+            className="input input-bordered w-full"
+            placeholder="Enter YouTube URL"
+          />
+        </div>
+
         <div className="form-control">
           <label htmlFor="description" className="label">
             <span className="label-text">Summary</span>
@@ -171,6 +241,7 @@ const EditStoryPart = () => {
             required
           ></textarea>
         </div>
+
         <div className="form-control">
           <label htmlFor="storyId" className="label">
             <span className="label-text">Story</span>
@@ -190,24 +261,28 @@ const EditStoryPart = () => {
             ))}
           </select>
         </div>
+
         <div className="form-control">
           <label htmlFor="imageFile" className="label">
-            <span className="label-text">Image</span>
+            <span className="label-text">Upload Image</span>
           </label>
           <input
-            type="file"
             id="imageFile"
+            type="file"
             onChange={handleImageChange}
-            className="input input-bordered w-full"
+            className="file-input file-input-bordered w-full"
           />
           {imagePreview && (
-            <div className="mt-4">
-              <img src={imagePreview} alt="Preview" className=" object-cover" />
-            </div>
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="mt-4 max-h-48 rounded shadow"
+            />
           )}
         </div>
+
         <button type="submit" className="btn btn-primary w-full">
-          Update Story Part
+          Save Changes
         </button>
       </form>
     </div>

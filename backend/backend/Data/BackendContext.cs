@@ -20,6 +20,8 @@ namespace backend.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<StoryGroup> StoryGroup { get; set; }
+        public DbSet<AADate> AADates { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -65,6 +67,13 @@ namespace backend.Data
                 .WithMany(s => s.StoryParts)
                 .HasForeignKey(sp => sp.StoryId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Add the relationship to AADate
+            modelBuilder.Entity<StoryPart>()
+                .HasOne(sp => sp.AADate)
+                .WithMany() // Assuming AADate does not have a collection of StoryParts
+                .HasForeignKey(sp => sp.AADateId)
+                .OnDelete(DeleteBehavior.Cascade); // Adjust based on your needs
 
             // Story configuration
             modelBuilder.Entity<Story>()

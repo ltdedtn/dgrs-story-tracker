@@ -69,19 +69,6 @@ const Header = () => {
                 <Link to="/dash">Users</Link>
               </li>
             )}
-            {username ? (
-              <>
-                <span>Welcome, {username}!</span>
-                <button className="btn btn-ghost ml-4" onClick={handleLogout}>
-                  Sign Out
-                </button>
-              </>
-            ) : (
-              <Link to="/login" className="btn btn-ghost">
-                Login
-              </Link>
-            )}
-
             <li>
               <label className="swap swap-rotate w-12 h-12">
                 <input
@@ -93,11 +80,32 @@ const Header = () => {
                 <div className="swap-on">☀️</div>
               </label>
             </li>
+            <li>
+              {username ? (
+                <>
+                  <span>Welcome, {username}!</span>
+                  <button className="btn btn-ghost ml-4" onClick={handleLogout}>
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <li>
+                  <Link to="/login" className="btn btn-ghost">
+                    Login
+                  </Link>
+                </li>
+              )}
+            </li>
           </ul>
         </div>
-        <Link to="/" className="btn btn-ghost normal-case text-xl">
-          ltdedtn
-        </Link>
+        <a
+          href="https://degenerousdao.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-ghost normal-case text-xl"
+        >
+          <img src="/dgrslogo.png" alt="Logo" className="h-8 w-auto" />
+        </a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
@@ -106,6 +114,9 @@ const Header = () => {
           </li>
           <li>
             <Link to="/characters">Characters</Link>
+          </li>
+          <li>
+            <Link to="/summary">Summary</Link>
           </li>
           {/* Conditionally render Users option based on role */}
           {role === "Admin" && (

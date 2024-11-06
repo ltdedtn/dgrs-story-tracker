@@ -713,6 +713,31 @@
         "IsRequired": false
       },
       {
+        "Name": "YoutubeLink",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CEYear",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "MonthNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Day",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "IsAD",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      },
+      {
         "Name": "imageFile",
         "Type": "Microsoft.AspNetCore.Http.IFormFile",
         "IsRequired": false
@@ -802,6 +827,31 @@
       {
         "Name": "ImageUrl",
         "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "YoutubeLink",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CEYear",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "MonthNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Day",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "IsAD",
+        "Type": "System.Boolean",
         "IsRequired": false
       },
       {

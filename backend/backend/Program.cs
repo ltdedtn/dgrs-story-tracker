@@ -71,6 +71,9 @@ builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IStoryPartRepository, StoryPartRepository>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddScoped<ICharacterRelationshipRepository, CharacterRelationshipRepository>();
+builder.Services.AddScoped<IAADateRepository, AADateRepository>();
+
+
 
 builder.Services.AddAuthorization(options =>
 {

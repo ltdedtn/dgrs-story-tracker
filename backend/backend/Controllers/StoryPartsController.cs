@@ -17,10 +17,12 @@ namespace backend.Controllers
     public class StoryPartsController : ControllerBase
     {
         private readonly IStoryPartRepository _storyPartRepository;
+        private readonly IAADateRepository _aadateRepository;
 
-        public StoryPartsController(IStoryPartRepository storyPartRepository)
+        public StoryPartsController(IStoryPartRepository storyPartRepository, IAADateRepository aADateRepository)
         {
             _storyPartRepository = storyPartRepository;
+            _aadateRepository = aADateRepository;
         }
 
         // Get all story parts or filter by storyId
@@ -61,6 +63,18 @@ namespace backend.Controllers
 
             try
             {
+                // Create and save AADate
+                var aadate = new AADate
+                {
+                    CEYear = model.CEYear,
+                    MonthNumber = model.MonthNumber,
+                    Day = model.Day,
+                    IsAD = model.IsAD // Convert bool to int (1 for AD, 0 for BC)
+                };
+
+                var savedAADate = await _aadateRepository.AddAADateAsync(aadate); // Ensure you have this method in your IAADateRepository
+
+                // Create new StoryPart
                 var storyPart = new StoryPart
                 {
                     Title = model.Title,
@@ -68,6 +82,8 @@ namespace backend.Controllers
                     StoryId = model.StoryId,
                     Description = model.Description,
                     CreatedAt = DateTime.UtcNow,
+                    AADateId = savedAADate.AADateId, // Link the AADate to the StoryPart
+                    YoutubeLink = model.YoutubeLink
                 };
 
                 if (imageFile != null && imageFile.Length > 0)
@@ -83,6 +99,7 @@ namespace backend.Controllers
                     storyPart.ImageUrl = $"/images/{fileName}";
                 }
 
+                // Save the StoryPart
                 var createdStoryPart = await _storyPartRepository.AddStoryPartAsync(storyPart);
                 return CreatedAtAction(nameof(GetStoryPart), new { id = createdStoryPart.StoryPartId }, createdStoryPart);
             }
@@ -115,6 +132,31 @@ namespace backend.Controllers
                 existingStoryPart.Title = model.Title;
                 existingStoryPart.Content = model.Content;
                 existingStoryPart.Description = model.Description;
+                existingStoryPart.YoutubeLink = model.YoutubeLink;
+
+                // Update or create AADate for the StoryPart
+                var aadate = await _aadateRepository.GetAADateByIdAsync(existingStoryPart.AADateId);
+                if (aadate == null)
+                {
+                    aadate = new AADate
+                    {
+                        CEYear = model.CEYear,
+                        MonthNumber = model.MonthNumber,
+                        Day = model.Day,
+                        IsAD = model.IsAD
+                    };
+                    var savedAADate = await _aadateRepository.AddAADateAsync(aadate);
+                    existingStoryPart.AADateId = savedAADate.AADateId;
+                }
+                else
+                {
+                    // Update existing AADate fields
+                    aadate.CEYear = model.CEYear;
+                    aadate.MonthNumber = model.MonthNumber;
+                    aadate.Day = model.Day;
+                    aadate.IsAD = model.IsAD;
+                    await _aadateRepository.UpdateAADateAsync(aadate);
+                }
 
                 // If an image file is provided, save it and update the ImageUrl
                 if (imageFile != null && imageFile.Length > 0)

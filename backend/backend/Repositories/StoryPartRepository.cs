@@ -19,6 +19,7 @@ namespace backend.Repositories
         public async Task<IEnumerable<StoryPart>> GetStoryPartsAsync(int? storyId)
         {
             return await _context.StoryParts
+                .Include(sp => sp.AADate)
                 .Where(sp => !storyId.HasValue || sp.StoryId == storyId.Value)
                 .ToListAsync();
         }
@@ -26,6 +27,7 @@ namespace backend.Repositories
         public async Task<StoryPart> GetStoryPartByIdAsync(int id)
         {
             return await _context.StoryParts
+                .Include(sp => sp.AADate)
                 .Include(sp => sp.Story)
                 .Include(sp => sp.StoryPartCharacters)
                 .FirstOrDefaultAsync(sp => sp.StoryPartId == id);
@@ -92,6 +94,7 @@ namespace backend.Repositories
         public async Task<IEnumerable<StoryPart>> GetStoryPartsByStoryIdAsync(int storyId)
         {
             return await _context.StoryParts
+                .Include(sp => sp.AADate)
                 .Where(sp => sp.StoryId == storyId)
                 .ToListAsync();
         }
@@ -156,6 +159,5 @@ namespace backend.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
-
     }
 }
