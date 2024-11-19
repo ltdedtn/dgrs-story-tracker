@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace backend.Models
 {
@@ -12,7 +13,9 @@ namespace backend.Models
         public string RelationshipTag { get; set; } // Description of the relationship
 
         // Navigation properties
+        [JsonIgnore]
         public virtual Character CharacterA { get; set; } // Reference to the first character
+        [JsonIgnore]
         public virtual Character CharacterB { get; set; } // Reference to the second character
     }
 }

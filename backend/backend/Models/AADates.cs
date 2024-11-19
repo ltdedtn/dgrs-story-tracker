@@ -1,7 +1,10 @@
-﻿namespace backend.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace backend.Models
 {
-    public class AADate
+    public class AADates
     {
+        [Key]
         public int AADateId { get; set; } // Primary key
         public int CEYear { get; set; }
         public int MonthNumber { get; set; }

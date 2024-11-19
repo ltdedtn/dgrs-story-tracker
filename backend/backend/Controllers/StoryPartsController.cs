@@ -50,6 +50,29 @@ namespace backend.Controllers
 
             return Ok(storyPart);
         }
+        [HttpGet("{id}/storyparts")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<StoryPart>>> GetStoryPartsByCharacterId(int id)
+        {
+            var storyParts = await _storyPartRepository.GetStoryPartsByCharacterIdAsync(id);
+
+            if (storyParts == null || !storyParts.Any())
+            {
+                return Ok(new List<StoryPart>());
+            }
+
+            // Optionally, log or debug the loaded storyParts
+            foreach (var sp in storyParts)
+            {
+                Console.WriteLine($"StoryPart ID: {sp.StoryPartId}, Title: {sp.Title}");
+                // Check for related data
+                Console.WriteLine($"AADate: {sp.AADate}");
+                Console.WriteLine($"Story: {sp.Story?.Title}");
+                Console.WriteLine($"Character Count: {sp.StoryPartCharacters.Count}");
+            }
+
+            return Ok(storyParts);
+        }
 
         // Add a new story part
         [HttpPost]
@@ -64,7 +87,7 @@ namespace backend.Controllers
             try
             {
                 // Create and save AADate
-                var aadate = new AADate
+                var aadate = new AADates
                 {
                     CEYear = model.CEYear,
                     MonthNumber = model.MonthNumber,
@@ -138,7 +161,7 @@ namespace backend.Controllers
                 var aadate = await _aadateRepository.GetAADateByIdAsync(existingStoryPart.AADateId);
                 if (aadate == null)
                 {
-                    aadate = new AADate
+                    aadate = new AADates
                     {
                         CEYear = model.CEYear,
                         MonthNumber = model.MonthNumber,

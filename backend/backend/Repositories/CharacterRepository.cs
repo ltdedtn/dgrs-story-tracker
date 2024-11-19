@@ -18,13 +18,37 @@ namespace backend.Repositories
 
         public async Task<IEnumerable<Character>> GetCharactersAsync()
         {
-            return await _context.Characters.ToListAsync();
+            return await _context.Characters
+                .Include(c => c.StoryPartCharacters)
+                .Include(c => c.CharacterRelationshipsA)
+                .Include(c => c.CharacterRelationshipsB)
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<Character>> GetAllCharactersAsync()
+        {
+            // Return the result as IEnumerable
+            return await _context.Characters
+                .Include(c => c.StoryPartCharacters)
+                    .ThenInclude(spc => spc.StoryPart)
+                        .ThenInclude(sp => sp.Story)
+                .Include(c => c.StoryPartCharacters)
+                    .ThenInclude(spc => spc.StoryPart)
+                        .ThenInclude(sp => sp.AADate)
+                .Include(c => c.CharacterRelationshipsA)
+                .Include(c => c.CharacterRelationshipsB)
+                .ToListAsync();
         }
 
+
+        // Fetch a single character by ID, including related entities
         public async Task<Character> GetCharacterByIdAsync(int id)
         {
             return await _context.Characters
+                .Include(c => c.StoryPartCharacters)
+                .Include(c => c.CharacterRelationshipsA)
+                .Include(c => c.CharacterRelationshipsB)
                 .FirstOrDefaultAsync(c => c.CharacterId == id);
+
         }
 
         public async Task<Character> AddCharacterAsync(Character character)

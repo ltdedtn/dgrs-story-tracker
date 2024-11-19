@@ -43,6 +43,77 @@ namespace backend.Controllers
             return Ok(characters);
         }
 
+        [HttpGet("all")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<object>>> GetAllCharacters()
+        {
+            var characters = await _characterRepository.GetAllCharactersAsync();
+
+            // Create a detailed response for each character
+            var response = characters.Select(character => new
+            {
+                character.CharacterId,
+                character.Name,
+                character.Description,
+                character.ImageUrl,
+                character.RelationshipTag,
+                character.StoryId,
+                StoryPartCharacters = character.StoryPartCharacters.Select(spc => new
+                {
+                    spc.StoryPartId,
+                    StoryPart = new
+                    {
+                        spc.StoryPart.StoryPartId,
+                        spc.StoryPart.StoryId,
+                        spc.StoryPart.Title,
+                        spc.StoryPart.Content,
+                        spc.StoryPart.Description,
+                        spc.StoryPart.CreatedAt,
+                        spc.StoryPart.ImageUrl,
+                        spc.StoryPart.CreatedBy,
+                        spc.StoryPart.YoutubeLink,
+                        spc.StoryPart.AADateId,
+                        Story = spc.StoryPart.Story != null ? new
+                        {
+                            spc.StoryPart.Story.StoryId,
+                            spc.StoryPart.Story.Title,
+                            spc.StoryPart.Story.Description,
+                            spc.StoryPart.Story.Content,
+                            spc.StoryPart.Story.CreatedAt,
+                            spc.StoryPart.Story.ImageUrl,
+                            spc.StoryPart.Story.StoryGroupId,
+                            Characters = spc.StoryPart.Story.Characters.Select(ch => ch.Name)
+                        } : null,
+                        AADate = spc.StoryPart.AADate != null ? new
+                        {
+                            spc.StoryPart.AADate.AADateId,
+                            spc.StoryPart.AADate.CEYear,
+                            spc.StoryPart.AADate.MonthNumber,
+                            spc.StoryPart.AADate.Day,
+                            spc.StoryPart.AADate.IsAD
+                        } : null
+                    },
+                    spc.CharacterId
+                }),
+                CharacterRelationshipsA = character.CharacterRelationshipsA.Select(rel => new
+                {
+                    rel.RelationshipId,
+                    rel.CharacterAId,
+                    rel.CharacterBId,
+                    rel.RelationshipTag
+                }),
+                CharacterRelationshipsB = character.CharacterRelationshipsB.Select(rel => new
+                {
+                    rel.RelationshipId,
+                    rel.CharacterAId,
+                    rel.CharacterBId,
+                    rel.RelationshipTag
+                })
+            }).ToList();
+
+            return Ok(response);
+        }
+
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult<Character>> GetCharacter(int id)

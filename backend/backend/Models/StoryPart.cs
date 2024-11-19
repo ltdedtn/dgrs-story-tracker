@@ -19,7 +19,7 @@ namespace backend.Models
 
         // Navigation properties
         public Story? Story { get; set; }
-        public AADate? AADate { get; set; } // Navigation property to AADate
+        public AADates AADate { get; set; }
         [JsonIgnore]
         public ICollection<StoryPartCharacter> StoryPartCharacters { get; set; } = new List<StoryPartCharacter>();
     }

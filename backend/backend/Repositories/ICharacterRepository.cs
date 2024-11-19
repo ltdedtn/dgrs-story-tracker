@@ -7,6 +7,7 @@ namespace backend.Repositories
     public interface ICharacterRepository
     {
         Task<IEnumerable<Character>> GetCharactersAsync();
+        Task<IEnumerable<Character>> GetAllCharactersAsync();
         Task<Character> GetCharacterByIdAsync(int id);
         Task<Character> AddCharacterAsync(Character character); // Ensure this returns Task<Character>
         Task UpdateCharacterAsync(Character character);

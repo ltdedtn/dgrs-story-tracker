@@ -102,8 +102,11 @@ namespace backend.Repositories
         public async Task<IEnumerable<StoryPart>> GetStoryPartsByCharacterIdAsync(int characterId)
         {
             return await _context.StoryParts
-                .Where(sp => sp.StoryPartCharacters.Any(spc => spc.CharacterId == characterId))
-                .ToListAsync();
+        .Include(sp => sp.AADate)
+        .Include(sp => sp.Story) // Include the Story if necessary
+        .Include(sp => sp.StoryPartCharacters) // Include related characters
+        .Where(sp => sp.StoryPartCharacters.Any(spc => spc.CharacterId == characterId))
+        .ToListAsync();
         }
         // StoryPartRepository.cs
 

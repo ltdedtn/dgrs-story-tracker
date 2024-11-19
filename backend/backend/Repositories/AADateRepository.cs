@@ -14,7 +14,7 @@ namespace backend.Repositories
             _context = context;
         }
 
-        public async Task<AADate> AddAADateAsync(AADate aadate)
+        public async Task<AADates> AddAADateAsync(AADates aadate)
         {
             await _context.AADates.AddAsync(aadate);
             await _context.SaveChangesAsync();
@@ -22,12 +22,12 @@ namespace backend.Repositories
         }
 
 
-        public async Task<AADate> GetAADateByIdAsync(int id)
+        public async Task<AADates> GetAADateByIdAsync(int id)
         {
             return await _context.AADates.FirstOrDefaultAsync(a => a.AADateId == id);
         }
 
-        public async Task UpdateAADateAsync(AADate aadate)
+        public async Task UpdateAADateAsync(AADates aadate)
         {
             _context.Entry(aadate).State = EntityState.Modified;
             await _context.SaveChangesAsync();

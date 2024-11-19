@@ -9,6 +9,8 @@ namespace backend.Models
         public StoryPart StoryPart { get; set; }
 
         public int CharacterId { get; set; }
+
+        [JsonIgnore]
         public Character Character { get; set; }
     }
 

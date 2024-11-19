@@ -63,6 +63,9 @@ const Header = () => {
             <li>
               <Link to="/characters">Characters</Link>
             </li>
+            <li>
+              <Link to="/timeline">Timeline</Link>
+            </li>
             {/* Conditionally render Users option based on role */}
             {role === "Admin" && (
               <li>
@@ -114,6 +117,9 @@ const Header = () => {
           </li>
           <li>
             <Link to="/characters">Characters</Link>
+          </li>
+          <li>
+            <Link to="/timeline">Timeline</Link>
           </li>
           <li>
             <Link to="/summary">Summary</Link>

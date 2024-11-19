@@ -45,6 +45,7 @@ const RelationshipModal: React.FC<RelationshipModalProps> = ({
           "https://localhost:7023/api/Characters"
         );
         setCharacters(response.data || []);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching characters", error);
         setError("Failed to fetch characters. Please try again later.");
@@ -80,7 +81,6 @@ const RelationshipModal: React.FC<RelationshipModalProps> = ({
         const response = await fetchData(
           `https://localhost:7023/api/Characters/${characterId}/relationships`
         );
-
         // Check if response data is an array before setting it
         if (Array.isArray(response.data)) {
           setRelationships(response.data);

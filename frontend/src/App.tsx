@@ -18,6 +18,7 @@ import NewStory from "./Pages/stories/NewStory";
 import NewStoryPart from "./Pages/stories/NewStoryPart";
 import EditStoryPart from "./Pages/stories/EditStoryPart";
 import NewCharacter from "./Pages/characters/NewCharacter";
+import CharacterTimeline from "./Pages/characterTimeline/CharacterTimeline";
 import Unauthorized from "./Pages/auth/Unauthorized";
 import { UserProvider } from "./Pages/users/UserContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -45,6 +46,7 @@ function App() {
               <Route path="/signUp" element={<SignUp />} />
               <Route path="/unauthorized" element={<Unauthorized />} />
               <Route path="/summary" element={<Summary />} />
+              <Route path="/timeline" element={<CharacterTimeline />} />
 
               {/* Protected Routes */}
               <Route

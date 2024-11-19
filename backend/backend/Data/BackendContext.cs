@@ -20,8 +20,7 @@ namespace backend.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<StoryGroup> StoryGroup { get; set; }
-        public DbSet<AADate> AADates { get; set; }
-
+        public DbSet<AADates> AADates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,18 +28,17 @@ namespace backend.Data
             modelBuilder.Entity<CharacterRelationship>()
                 .HasKey(cr => cr.RelationshipId);
 
-            // Set up the relationship for CharacterRelationships to cascade delete
             modelBuilder.Entity<CharacterRelationship>()
-                .HasOne<Character>(cr => cr.CharacterA)
+                .HasOne(cr => cr.CharacterA)
                 .WithMany(c => c.CharacterRelationshipsA)
                 .HasForeignKey(cr => cr.CharacterAId)
-                .OnDelete(DeleteBehavior.Cascade); // Cascade delete on CharacterA
+                .OnDelete(DeleteBehavior.Restrict); // Restrict delete to avoid circular cascade issues
 
             modelBuilder.Entity<CharacterRelationship>()
-                .HasOne<Character>(cr => cr.CharacterB)
+                .HasOne(cr => cr.CharacterB)
                 .WithMany(c => c.CharacterRelationshipsB)
                 .HasForeignKey(cr => cr.CharacterBId)
-                .OnDelete(DeleteBehavior.Cascade); // Cascade delete on CharacterB
+                .OnDelete(DeleteBehavior.Restrict); // Restrict delete to avoid circular cascade issues
 
             // StoryPartCharacter many-to-many relationship
             modelBuilder.Entity<StoryPartCharacter>()
@@ -68,12 +66,12 @@ namespace backend.Data
                 .HasForeignKey(sp => sp.StoryId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Add the relationship to AADate
+            // Configure foreign key relationship manually if needed
             modelBuilder.Entity<StoryPart>()
                 .HasOne(sp => sp.AADate)
-                .WithMany() // Assuming AADate does not have a collection of StoryParts
+                .WithMany()  // AADates doesn't need a collection property
                 .HasForeignKey(sp => sp.AADateId)
-                .OnDelete(DeleteBehavior.Cascade); // Adjust based on your needs
+                .OnDelete(DeleteBehavior.SetNull);  // or whatever delete behavior you prefer
 
             // Story configuration
             modelBuilder.Entity<Story>()
@@ -92,12 +90,14 @@ namespace backend.Data
             modelBuilder.Entity<UserRole>()
                 .HasOne(ur => ur.User)
                 .WithMany(u => u.UserRoles)
-                .HasForeignKey(ur => ur.UserId);
+                .HasForeignKey(ur => ur.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<UserRole>()
                 .HasOne(ur => ur.Role)
                 .WithMany(r => r.UserRoles)
-                .HasForeignKey(ur => ur.RoleId);
+                .HasForeignKey(ur => ur.RoleId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
